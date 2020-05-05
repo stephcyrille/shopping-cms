@@ -1,0 +1,29 @@
+{% load render_bundle from webpack_loader %}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Django REST with React</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fontawesome/all.css' %}" />
+
+    <style>
+      html, body{
+        margin: 0px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="backoffice">
+        <!-- React will load here -->
+    </div>
+  </body>
+
+  {% render_bundle 'backoffice' 'js' %}
+
+</html>
