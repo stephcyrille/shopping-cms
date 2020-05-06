@@ -1,0 +1,114 @@
+.header-middle .container .row {
+    border-bottom: 1px solid #f5f5f5;
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.header-middle .container .row .col-sm-4 {
+    padding-left: 0;
+}
+
+.header-middle .container .row .col-sm-8 {
+    padding-right: 0;
+}
+
+.usa {
+    border-radius: 0;
+    color: #B4B1AB;
+    font-size: 12px;
+    margin-right: 20px;
+    padding: 2px 15px;
+    margin-top: 10px;
+}
+
+.usa:hover {
+    background: #FE980F;
+    color: #fff;
+    border-color: #FE980F;
+}
+
+.usa:active,
+.usa.active {
+    background: none repeat scroll 0 0 #FE980F;
+    -webkit-box-shadow: inherit;
+    box-shadow: inherit;
+    outline: 0 none;
+}
+
+.btn-group.open .dropdown-toggle {
+    background: rgba(0, 0, 0, 0);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus {
+    background-color: #FE980F;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+}
+
+.dropdown-menu.middle-nav>li>a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.428571429;
+    color: #333;
+    white-space: nowrap;
+}
+
+.clearfix.shop-menu-clear{
+    padding-top: 10px;
+}
+
+.shop-menu ul li {
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.shop-menu ul li:last-child {
+    padding-right: 0;
+}
+
+.shop-menu ul li a {
+    background: #FFFFFF;
+    color: #696763;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 0;
+    padding-right: 0;
+    margin-top: 10px;
+}
+
+.shop-menu ul li a i {
+    margin-right: 3px;
+}
+
+.shop-menu ul li a:hover {
+    color: #fe980f;
+    background: #fff;
+}
+
+
+
+/* -----------Responsive------------- */
+/* XS */
+@media (max-width: 767px) {
+    .pull-left {
+        float: unset!important;
+        text-align: center;
+    }
+    .btn-group.pull-right.clearfix{
+        display: block;
+        padding-top: 10px
+    }
+    .nav.navbar-nav{
+        padding-top: 15px
+    }
+}

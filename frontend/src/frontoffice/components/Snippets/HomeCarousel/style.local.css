@@ -1,0 +1,95 @@
+#slider {
+    padding-bottom: 45px;
+}
+
+.carousel-indicators li {
+    background: #C4C4BE;
+}
+
+.carousel-indicators li.active {
+    background: #FE980F;
+}
+
+.carousel-item {
+    padding-left: 100px;
+}
+
+.pricing {
+    position: absolute;
+    right: 40%;
+    top: 52%;
+}
+
+.girl {
+    margin-left: 0;
+}
+
+.carousel-item h1 {
+    color: #B4B1AB;
+    font-family: abel;
+    font-size: 48px;
+    margin-top: 115px;
+}
+
+.carousel-item h1 span {
+    color: #FE980F;
+}
+
+.carousel-item h2 {
+    color: #363432;
+    font-family: 'Roboto', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 22px;
+    margin-top: 10px;
+}
+
+.carousel-item p {
+    color: #363432;
+    font-size: 16px;
+    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+}
+
+.get {
+    background: #FE980F;
+    border: 0 none;
+    border-radius: 0;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    margin-top: 23px;
+}
+
+.carousel-item button:hover {
+    background: #FE980F;
+}
+
+.control-carousel {
+    position: absolute;
+    top: 50%;
+    font-size: 60px;
+    color: #C2C2C1;
+}
+
+.control-carousel:hover {
+    color: #FE980F;
+}
+
+.right {
+    right: 0;
+}
+
+
+
+/* -----------Responsive------------- */
+/* XS */
+@media (max-width: 767px) {
+    .carousel-item {
+        padding: 20px;
+    }
+    .carousel-item .col-sm-6 h1{
+        margin-top: 0px;
+    }
+}

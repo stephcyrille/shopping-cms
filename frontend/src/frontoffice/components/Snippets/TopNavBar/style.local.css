@@ -1,0 +1,97 @@
+
+/*************************
+******* Top Header CSS******
+**************************/
+
+.header_top {
+    background: none repeat scroll 0 0 #F0F0E9;
+}
+
+.contactinfo ul li:first-child {
+    margin-left: -15px;
+}
+
+.contactinfo ul li a {
+    font-size: 12px;
+    color: #696763;
+    font-family: 'Roboto', sans-serif;
+}
+
+.contactinfo ul li a:hover {
+    background: inherit;
+}
+
+.nav.navbar-nav {
+    display: block !important;
+    margin: 0;
+}
+
+.contactinfo, .nav.nav-pills, .nav.nav-pills li{
+    height: 100%;
+}
+
+.nav.nav-pills li a{
+    display: block;
+    padding: 10px 15px 10px 15px;
+}
+
+.social-icons ul li a {
+    border: 0 none;
+    border-radius: 0;
+    color: #696763;
+    padding: 0px;
+}
+
+.social-icons ul li {
+    display: inline-block;
+}
+
+.social-icons ul li a i {
+    padding: 11px 15px;
+    transition: all 0.9s ease 0s;
+    -moz-transition: all 0.9s ease 0s;
+    -webkit-transition: all 0.9s ease 0s;
+    -o-transition: all 0.9s ease 0s;
+}
+
+.social-icons ul li a i:hover {
+    color: #fff;
+    transition: all 0.9s ease 0s;
+    -moz-transition: all 0.9s ease 0s;
+    -webkit-transition: all 0.9s ease 0s;
+    -o-transition: all 0.9s ease 0s;
+}
+
+.fa-facebook:hover {
+    background: #0083C9;
+}
+
+.fa-twitter:hover {
+    background: #5BBCEC;
+}
+
+.fa-linkedin:hover {
+    background: #FF4518;
+}
+
+.fa-dribbble:hover {
+    background: #90C9DC;
+}
+
+.fa-google-plus:hover {
+    background: #CE3C2D;
+}
+
+
+
+/* --------Responsive--------- */
+/* XS */
+@media (max-width: 767px) {
+    .pull-right {
+        float: unset!important;
+        text-align: center;
+    }
+    .nav.nav-pills li {
+        margin: 0 auto;
+    }
+}

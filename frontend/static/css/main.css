@@ -1,0 +1,66 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    font-weight: 400px;
+}
+
+ul li {
+    list-style: none;
+}
+
+a:hover {
+    outline: none;
+    text-decoration: none;
+}
+
+a:focus {
+    outline: none;
+    outline-offset: 0;
+}
+
+a {
+    -webkit-transition: 300ms;
+    transition: 300ms;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Roboto', sans-serif;
+}
+
+.btn:hover,
+.btn:focus {
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.navbar-toggle {
+    background-color: #000;
+}
+
+a#scrollUp {
+    bottom: 0px;
+    right: 10px;
+    padding: 5px 10px;
+    background: #FE980F;
+    color: #FFF;
+    -webkit-animation: bounce 2s ease infinite;
+    animation: bounce 2s ease infinite;
+}
+
+a#scrollUp i {
+    font-size: 30px;
+}
+
+.pull-right {
+    float: right!important;
+}
+
+.pull-left {
+    float: left!important;
+}

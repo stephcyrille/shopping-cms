@@ -3,16 +3,19 @@ import { connect } from "react-redux";
 import { withTranslation } from 'react-i18next';
 
 import Navbar from "app-js/frontoffice/components/Snippets/Navbar/index"
+import HomeCarousel from "app-js/frontoffice/components/Snippets/HomeCarousel/index"
+import CategoryLeftMenu from "app-js/frontoffice/components/Snippets/CategoryLeftMenu/index"
 
 
 import './style.local.css';
 
-
-
+export default
+@withTranslation()
 @connect((state, props) => ({}))
 class Home extends React.Component {
-  componentWillMount() {
-    document.title = 'Home'
+  UNSAFE_componentWillMount() {
+    const { t, i18n } = this.props
+    document.title = t('home', 'Home')
   }
 
 
@@ -25,12 +28,10 @@ class Home extends React.Component {
       <div className="home">
         <Navbar />
         
-        <h1>{t('title', 'I say hein')}</h1>
-        <h1>Hello world!</h1>
+        <HomeCarousel />
 
+        <CategoryLeftMenu />
       </div>
     );
   }
 }
-
-export default withTranslation()(Home);
