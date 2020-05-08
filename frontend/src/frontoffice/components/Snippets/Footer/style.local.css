@@ -1,0 +1,137 @@
+
+/*************************
+*******Footer CSS******
+**************************/
+
+#footer {
+    background: #F0F0E9;
+}
+
+.footer-top .container {
+    border-bottom: 1px solid #E0E0DA;
+    padding-bottom: 20px;
+}
+
+
+.footer-widget {
+    margin-bottom: 68px;
+}
+
+.footer-widget .container {
+    padding-top: 30px;
+}
+
+.single-widget h2 {
+    color: #666663;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 22px;
+    text-transform: uppercase;
+}
+
+.single-widget h2 i {
+    margin-right: 15px;
+}
+
+.single-widget ul li a {
+    color: #8C8C88;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 5px 0;
+}
+
+.single-widget ul li a i {
+    margin-right: 18px;
+}
+
+.single-widget ul li a:hover {
+    background: none;
+    color: #FE980F;
+}
+
+.searchform input {
+    border: 1px solid #DDDDDD;
+    color: #CCCCC6;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    margin-top: 0;
+    outline: medium none;
+    padding: 7px;
+    width: 212px;
+}
+
+.searchform button {
+    background: #FE980F;
+    border: medium none;
+    border-radius: 0;
+    margin-left: -5px;
+    margin-top: -3px;
+    padding: 7px 17px;
+}
+
+.searchform button i {
+    color: #FFFFFF;
+}
+
+.searchform button:hover,
+.searchform button:focus {
+    background-color: #FE980F;
+}
+
+.searchform p {
+    color: #8C8C88;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    margin-top: 25px;
+}
+
+.footer-bottom {
+    background: #D6D6D0;
+    padding-top: 10px;
+}
+
+.footer-bottom p {
+    color: #363432;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    margin-left: 15px;
+}
+
+.footer-bottom p span a {
+    color: #FE980F;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+.nav.nav-pills.nav-stacked.custom li{
+    display: block;
+    width: 100%;
+}
+
+.nav.nav-pills.nav-stacked.custom li a{
+    padding: 10px 10px 0px 0px;
+}
+
+.footer-bottom p.design{
+    text-align: right;
+}
+
+
+
+/* --------Responsive--------- */
+/* XS */
+@media (max-width: 767px) {
+    .col-sm-2.footer_item, .col-sm-3.offset-sm-1.footer_item{
+        padding-top: 40px;
+        text-align: center;
+    }
+    .col-sm-2.footer_item_one{
+        text-align: center;
+    }
+    .footer-bottom p.design {
+        text-align: center;
+    }    
+}

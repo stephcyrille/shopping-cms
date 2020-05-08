@@ -44,10 +44,11 @@
 
 .social-icons ul li {
     display: inline-block;
+    height: 100%;
 }
 
 .social-icons ul li a i {
-    padding: 11px 15px;
+    padding: 12px 15px;
     transition: all 0.9s ease 0s;
     -moz-transition: all 0.9s ease 0s;
     -webkit-transition: all 0.9s ease 0s;

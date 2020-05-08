@@ -64,3 +64,7 @@ a#scrollUp i {
 .pull-left {
     float: left!important;
 }
+
+.nav-justified {
+    width: 100%;
+}

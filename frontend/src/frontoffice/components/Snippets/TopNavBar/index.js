@@ -27,11 +27,11 @@ class TopNavbar extends React.Component {
             <div className="col-sm-6">
               <div className="social-icons pull-right">
                 <ul className="nav navbar-nav">
-                  <li><a href="#"><i className="fa fa-facebook"></i></a></li>
-                  <li><a href="#"><i className="fa fa-twitter"></i></a></li>
-                  <li><a href="#"><i className="fa fa-linkedin"></i></a></li>
-                  <li><a href="#"><i className="fa fa-dribbble"></i></a></li>
-                  <li><a href="#"><i className="fa fa-google-plus"></i></a></li>
+                  <li><a href="#"><i className="fab fa-facebook"></i></a></li>
+                  <li><a href="#"><i className="fab fa-twitter"></i></a></li>
+                  <li><a href="#"><i className="fab fa-linkedin"></i></a></li>
+                  <li><a href="#"><i className="fab fa-dribbble"></i></a></li>
+                  <li><a href="#"><i className="fab fa-google-plus"></i></a></li>
                 </ul>
               </div>
             </div>
