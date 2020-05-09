@@ -21,13 +21,13 @@ class FeatureHome extends React.Component {
                     <img src="/static/images/product1.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</a>
+                    {/* <a href="#" className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</a> */}
                   </div>
                   <div className="product-overlay">
                     <div className="overlay-content">
                       <h2>$56</h2>
                       <p>Easy Polo Black Edition</p>
-                      <a href="#" className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</a>
+                      <a href="/single" className="btn btn-default add-to-cart"><i className="fa fa-eye"></i>Details</a>
                     </div>
                   </div>
               </div>

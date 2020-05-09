@@ -18,7 +18,7 @@ class MiddleNavbar extends React.Component {
           <div className="row">
             <div className="col-md-4 clearfix">
               <div className="logo pull-left">
-                <a href="index.html"><img src="/static/images/logo.png" alt="" /></a>
+                <a href="/"><img src="/static/images/logo.png" alt="" /></a>
               </div>
               <div className="btn-group pull-right clearfix">
                 <div className="btn-group">
@@ -47,11 +47,11 @@ class MiddleNavbar extends React.Component {
             <div className="col-md-8 clearfix shop-menu-clear">
               <div className="shop-menu clearfix pull-right">
                 <ul className="nav navbar-nav">
-                  <li><a href=""><i className="fa fa-user"></i> Account</a></li>
                   <li><a href=""><i className="fa fa-star"></i> Wishlist</a></li>
-                  <li><a href="checkout.html"><i className="fa fa-crosshairs"></i> Checkout</a></li>
-                  <li><a href="cart.html"><i className="fa fa-shopping-cart"></i> Cart</a></li>
-                  <li><a href="login.html"><i className="fa fa-lock"></i> Login</a></li>
+                  {/* <li><a href="checkout.html"><i className="fa fa-crosshairs"></i> Checkout</a></li> */}
+                  <li><a href="cart.html"><i className="fa fa-shopping-cart"></i> <span className="badge badge-secondary">3</span> </a></li>
+                  {/* <li><a href="login.html"><i className="fa fa-lock"></i> Login</a></li> */}
+                  <li><a href=""><i className="fa fa-user"></i> Profile</a></li>
                 </ul>
               </div>
             </div>

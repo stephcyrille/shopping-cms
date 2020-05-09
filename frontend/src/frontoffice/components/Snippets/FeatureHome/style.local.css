@@ -35,6 +35,7 @@ h2.title {
     font-family: 'Roboto', sans-serif;
     font-size: 24px;
     font-weight: 700;
+    padding-top: 20px;
 }
 
 .product-overlay h2 {
@@ -49,6 +50,8 @@ h2.title {
     font-size: 14px;
     font-weight: 400;
     color: #696763;
+    margin-bottom: 0px;
+    padding-bottom: 10px;
 }
 
 .productinfo img {
