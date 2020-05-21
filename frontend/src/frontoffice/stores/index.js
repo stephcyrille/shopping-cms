@@ -8,6 +8,10 @@ import { createBrowserHistory } from "history";
 import { routerMiddleware } from "connected-react-router";
 import { reducer as formReducer } from "redux-form";
 
+import { singleProductCStore } from '../components/SingleProduct/store'
+import { navBarCartCStore } from '../components/Snippets/MiddleNavBar/store'
+import { homeCStore } from '../components/Home/store'
+
 
 // import { authGuardCStore } from "../components/Authentication/store";
 // import { loginCStore } from "../components/Authentication/Login/store";
@@ -20,6 +24,9 @@ const cstore = history =>
   combineReducers({
     router: connectRouter(history),
     form: formReducer,
+    singleProductCStore: singleProductCStore,
+    navBarCartCStore: navBarCartCStore,
+    homeCStore: homeCStore,
   });
 
 export default function configureStore(preloadedState) {

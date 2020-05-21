@@ -13,10 +13,11 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('dashboard', include('frontend.urls_dashboard')),
-    path('', include('frontend.urls_client')),
+    path('apis/', include('backend.urls')),
+    path('dashboard/', include('frontend.urls_dashboard')),
+    path('shop/', include('frontend.urls_client')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    #urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import TopNavbar from '../TopNavBar/index';
 import MiddleNavbar from '../MiddleNavBar/index';
 import HomeMenu from '../HomeMenu/index';
+import MegaNavbar from '../MegaNavBar/index';
 import './style.local.css';
 
 
@@ -13,13 +14,13 @@ class Navbar extends React.Component {
 
 
   render() {
-    var appName = "My App"
 
     return (
       <header id="header">
         <TopNavbar />
         <MiddleNavbar />
-        <HomeMenu />
+        <MegaNavbar />
+        {/* <HomeMenu /> */}
       </header>
     )
   }
