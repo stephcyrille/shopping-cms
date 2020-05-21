@@ -3,7 +3,6 @@ from rest_framework.views import APIView
 from rest_framework import serializers
 from backend.apis.utils import get_upload_host
 from backend.models import Category
-#from rest_framework.permissions import IsAuthenticated
 
 exclude_fields = ["is_archived", "created_by", "modified_by", "created_date", "modified_date"]
 

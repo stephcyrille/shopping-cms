@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Routes from "./routes/routes";
 
 import { clearUser, initAxios } from "./utils/auth_utils";
-import { getSession, saveSession, sessionExpired, clearSession } from "./utils/session_utils";
+import { getSession, saveSession, sessionExpired, clearSession, saveCartSession } from "./utils/session_utils";
 
 // import "url"
 
@@ -32,6 +32,7 @@ class App extends Component {
       // Call the core for getting the new session now
       // this.start_session()
       this.create_new_session()
+      this.create_new_session_cart()
       
     }
   }
@@ -55,6 +56,17 @@ class App extends Component {
       saveSession(JSON.stringify(session))
       
     })
+  }
+
+  
+  create_new_session_cart(){
+    var cart_session = {
+      products: [],
+      total_price: 0,
+      total_items: 0
+    }
+
+    saveCartSession(JSON.stringify(cart_session))
   }
 
 

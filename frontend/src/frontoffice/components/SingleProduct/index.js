@@ -16,7 +16,7 @@ import {
 } from "react-share";
 import { reduxForm, Field, propTypes as reduxFormPropTypes } from "redux-form";
 
-import { getSession } from '../../utils/session_utils'
+import { getSession, saveCartSession } from '../../utils/session_utils'
 import Navbar from "app-js/frontoffice/components/Snippets/Navbar/index"
 import Footer from "app-js/frontoffice/components/Snippets/Footer/index"
 
@@ -90,7 +90,11 @@ class SingleProduct extends React.Component {
         // Toggle state of navbar to true an set time out to reback to false after 3000 
         this.props.dispatch(singleProductCStoreActions.setLoading(false))
         this.props.dispatch(singleProductCStoreActions.setNavCartToggler(true))
-        
+
+        // updating cart session there
+        this.update_cart_session(getSession().cart_id)
+
+        // Toggle cart navbar dropdown
         setTimeout(()=> {
           this.props.dispatch(singleProductCStoreActions.setNavCartToggler(false))
         }, 2000)
@@ -98,11 +102,41 @@ class SingleProduct extends React.Component {
         console.log('Post cart item response-------', response.data)
         
       })
+      .catch(err => {
+        this.props.dispatch(singleProductCStoreActions.setLoading(false))
+        console.error("Error when adding item to cart")
+      })
 
       console.log("Cart IIIIITEEEEMMMM", cart_item)
       this.props.change('quantity', 1);
     }
   }
+
+
+  update_cart_session(cart_id){
+    window.axios
+    .get(`/apis/core/session/carts/update/${cart_id}/`)
+      .then(response => {
+        console.log('Upadting session cart', response.data)
+        var products = response.data.products
+        var total_price = response.data.cart_price
+        var total_items = response.data.cart_quantity
+
+        var cart_session = {
+          products: products,
+          total_price: total_price,
+          total_items: total_items
+        }
+
+        saveCartSession(JSON.stringify(cart_session))
+        this.props.dispatch(navBarCartCStoreActions.setItem(total_items))
+
+      })
+      .catch(err => {
+        console.error('Error on updating cart session', err)
+      })
+  }
+
 
   _handleAddToWhishList(){
     console.log("Product added to whishlist!!!!!!!!!!!!")

@@ -28,5 +28,18 @@ export const sessionExpired = (session) => {
   return false
 };
 
+export const saveCartSession = cart_session => {
+  localStorage.setItem("cart_session", cart_session);
+};
+
+export const getCartSession = () => {
+  let cart_session = JSON.parse(localStorage.getItem("cart_session"));
+  return cart_session;
+};
+
+export const clearCartSession = () => {
+  return localStorage.removeItem("cart_session");
+};
+
 
   

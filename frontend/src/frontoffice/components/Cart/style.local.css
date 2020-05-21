@@ -1,0 +1,44 @@
+.cart-wrapper{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.cart-header{
+    padding-bottom: 5px;
+    border-bottom: 1px solid black;
+}
+
+.cart-header h6{
+    text-transform: uppercase;
+}
+
+.cart-header div{
+    padding: 0px;
+}
+
+.picture-box{
+    padding: 10px 0px;
+}
+
+.cart-description-text{
+    padding: 10px 0px 0px 0px;
+}
+
+.cart-description-text h6{
+    text-transform: uppercase;
+}
+
+.cart-description-text h6 a{
+    color: black;
+}
+
+
+
+
+/* -----------Responsive------------- */
+/* XS */
+@media (max-width: 767px) {
+    .cart-header {
+        display: none;
+    }
+}

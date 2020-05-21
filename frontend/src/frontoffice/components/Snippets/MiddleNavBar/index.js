@@ -4,6 +4,8 @@ import { withTranslation } from 'react-i18next';
 
 import urls from '../.././../routes/urls'
 import './style.local.css';
+import { getSession } from '../../../utils/session_utils'
+import { navBarCartCStoreActions } from './store'
 
 
 
@@ -11,6 +13,27 @@ import './style.local.css';
   navBarCartCStore: state.navBarCartCStore,
 }))
 class MiddleNavbar extends React.Component {
+  componentWillMount(){
+    if(getSession()){
+      this.update_cart_session(getSession().cart_id)
+    }
+  }
+
+
+  update_cart_session(cart_id) {
+    window.axios
+    .get(`/apis/core/session/carts/update/${cart_id}/`)
+      .then(response => {
+        console.log('Upadting session cart', response.data)
+        var products = response.data.products
+        var total_items = response.data.cart_quantity
+        
+        this.props.dispatch(navBarCartCStoreActions.setItem(total_items))
+      })
+      .catch(err => {
+        console.error('Error on updating cart session', err)
+      })
+  }
 
 
   render() {
@@ -55,10 +78,11 @@ class MiddleNavbar extends React.Component {
                   <li><a href=""><i className="fa fa-star"></i> Wishlist</a></li>
                   {/* <li><a href="checkout.html"><i className="fa fa-crosshairs"></i> Checkout</a></li> */}
                   <li className="dropdown">
-                    <a href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" className="dropdown-toggle nav-link">
+                    <a href={`${urls.CART}`} className="nav-link">
+                    {/* <a href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" className="dropdown-toggle nav-link"> */}
                       <i className="fa fa-shopping-cart"></i> <span className="badge badge-secondary">{item_quantity}</span> 
                     </a>
-                    <div className="dropdown-menu cart-dropdown-wrapper" style={{ zIndex: "2000" }}>
+                    {/* <div className="dropdown-menu cart-dropdown-wrapper" style={{ zIndex: "2000" }}>
                       <div class="table-responsive cart_info">
                         <table class="table table-condensed">
                           <thead>
@@ -100,7 +124,7 @@ class MiddleNavbar extends React.Component {
                           </tbody>
                         </table>
                       </div>
-                    </div>
+                    </div> */}
                   </li>
                   {/* <li><a href="login.html"><i className="fa fa-lock"></i> Login</a></li> */}
                   <li><a href=""><i className="fa fa-user"></i> Profile</a></li>

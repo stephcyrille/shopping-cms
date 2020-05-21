@@ -171,7 +171,5 @@ class CartItem(CoreTrackedModel):
     line_total = models.IntegerField(default=1)
 
     def __str__(self):
-        try:
-            return str(self.cart.ref)
-        except:
-            return self.variety.name
+        return 'Cart %s - %s (%s)' % (str(self.cart.ref), self.variety.product.title, self.variety.color.name)
+
