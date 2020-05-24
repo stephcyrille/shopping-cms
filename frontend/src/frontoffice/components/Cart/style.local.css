@@ -32,7 +32,47 @@
     color: black;
 }
 
+.cart_item-img-wrapper{
+    padding-right: 10px !important;
+}
 
+
+.checkout-button{
+    width: 100%;
+    text-align: right;
+    padding-right: 50px;
+}
+
+.checkout-button a{
+     border-radius: 0px;
+}
+
+.bill-info-wrapper{
+    padding: 20px;
+    width: 100%;
+}
+
+.bill-info{
+    border: 1px solid black;
+    width: 100%;
+    padding: 20px;
+}
+
+.total-group p{
+    text-align: right;
+}
+
+.total-group{
+    border-bottom: 1px solid lightgray;
+}
+
+.line-total .price-total{
+    text-align: right;
+}
+
+.line-total{
+    padding-top: 10px;
+}
 
 
 /* -----------Responsive------------- */

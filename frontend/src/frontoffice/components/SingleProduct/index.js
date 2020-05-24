@@ -25,6 +25,8 @@ import './style.local.css';
 // Stores and stores actions importation
 import { singleProductCStoreActions } from "./store";
 import { navBarCartCStoreActions } from "../Snippets/MiddleNavBar/store";
+import urls from '../../routes/urls'
+
 
 const { Panel } = Collapse;
 
@@ -37,11 +39,15 @@ export default
 @reduxForm({ form: "addToCartForm", enableReinitialize: true })
 class SingleProduct extends React.Component {
 
-  componentDidMount(){
-    this.props.change('quantity', this.props.singleProductCStore.quantity);
+  componentWillMount(){
     var slug = this.props.match.params.slug
 
     this._fetchSingleProduct(slug)
+  }
+  
+  componentDidMount(){
+    this.props.change('quantity', this.props.singleProductCStore.quantity);
+    
     console.log("param url prop result!!!!!!!!!!!!", this.props.match.params)
   }
 
@@ -57,6 +63,7 @@ class SingleProduct extends React.Component {
     .catch(
       error => {
         console.error("Errrorr", error)
+        window.location.href = `${urls.NOTFOUND}`;
       }  
     )
   }

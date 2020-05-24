@@ -75,7 +75,7 @@ class MiddleNavbar extends React.Component {
             <div className="col-md-8 clearfix shop-menu-clear">
               <div className="shop-menu clearfix pull-right">
                 <ul className="nav navbar-nav">
-                  <li><a href=""><i className="fa fa-star"></i> Wishlist</a></li>
+                  <li><a href=""><i className="fa fa-heart"></i> Wishlist</a></li>
                   {/* <li><a href="checkout.html"><i className="fa fa-crosshairs"></i> Checkout</a></li> */}
                   <li className="dropdown">
                     <a href={`${urls.CART}`} className="nav-link">

@@ -4,10 +4,11 @@ from rest_framework import serializers
 from backend.apis.utils import get_upload_host
 from backend.models import Product, Variety, Color, Size
 
-#from rest_framework.permissions import IsAuthenticated
+# from rest_framework.permissions import IsAuthenticated
 
 exclude_fields = ["is_archived", "created_by", "modified_by", "created_date", "modified_date", "is_published"]
-exclude_fields_variety = ["is_archived", "created_by", "modified_by", "created_date", "modified_date", "picture1", "picture2", "picture3", "picture4", "product", "is_published"]
+exclude_fields_variety = ["is_archived", "created_by", "modified_by", "created_date", "modified_date", "picture1",
+                          "picture2", "picture3", "picture4", "product", "is_published"]
 
 
 class ColorSerializer(serializers.ModelSerializer):
@@ -43,7 +44,6 @@ class VarietySerializer(serializers.ModelSerializer):
         #     picture = get_upload_host(self.context["request"]) + category.picture1.url
         return pictures
 
-
     class Meta:
         model = Variety
         exclude = exclude_fields_variety
@@ -68,16 +68,17 @@ class ProductHomeSerializer(serializers.ModelSerializer):
 
 
 class ProductsAPIView(APIView):
-    #permission_classes = (AllowAny,)
+    # permission_classes = (AllowAny,)
 
-    def get(self, request, format=None):
+    @staticmethod
+    def get(request, format=None):
         products = Product.objects.all()
-        return Response(ProductHomeSerializer(products, many=True, context={"request":request}).data)
+        return Response(ProductHomeSerializer(products, many=True, context={"request": request}).data)
 
 
 class ProductSingleAPIView(APIView):
-    #permission_classes = (AllowAny,)
+    # permission_classes = (AllowAny,)
 
     def get(self, request, slug):
         product = Product.objects.get(slug=slug)
-        return Response(ProductHomeSerializer(product, context={"request":request}).data)
+        return Response(ProductHomeSerializer(product, context={"request": request}).data)
