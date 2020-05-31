@@ -9,8 +9,10 @@ import Navbar from "app-js/frontoffice/components/Snippets/Navbar/index"
 import Footer from "app-js/frontoffice/components/Snippets/Footer/index"
 
 import { cartCStoreActions } from './store'
+import { navBarCartCStoreActions } from '../Snippets/MiddleNavBar/store'
 import './style.local.css';
-import { getSession } from '../../utils/session_utils'
+import { getSession, saveCartSession } from '../../utils/session_utils'
+import urls from '../../routes/urls'
 
 
 
@@ -23,7 +25,6 @@ class Cart extends React.Component {
 
   componentDidMount(){
     var cart_id = getSession().cart_id
-
     this._fetchCartItems(cart_id)
   }
 
@@ -37,6 +38,9 @@ class Cart extends React.Component {
       
       this.props.dispatch(cartCStoreActions.setLoading(false))
       this.props.dispatch(cartCStoreActions.setCart(cart))
+      this.props.dispatch(cartCStoreActions.setCartSubTotal(cart.total))
+      this.props.dispatch(cartCStoreActions.setCartTotal(cart.total + cart.delivery_price))
+      this.props.dispatch(cartCStoreActions.setCartDeliveryPrice(cart.delivery_price))
     })
     .catch(
       error => {
@@ -47,8 +51,58 @@ class Cart extends React.Component {
   }
 
 
-  _handleRemoveItem(id){
-    console.log('Remove cart item with id', id)
+  _handleRemoveItem(cart_item_id){
+    console.log('Remove cart item with id', cart_item_id)
+     var body = {
+      cart_id : getSession().cart_id,
+      cart_item_id: cart_item_id
+     }
+
+    window.axios
+    .post(`/apis/cart/item/delete/`, { body })
+    .then(response => {
+      // var res = response.data
+      
+      // Updating cart items list
+      var cart_id = getSession().cart_id
+      this._fetchCartItems(cart_id)
+
+      this.update_cart_session(getSession().cart_id)
+    })
+    .catch(
+      error => {
+        console.error("Errrorr", error)
+      }  
+    )
+  }
+
+
+  update_cart_session(cart_id){
+    console.log('===================PAAAAAAAAAAAAAMMMMMMMMMMMMMMMMMMMMMMMMMM')
+    window.axios
+    .get(`/apis/core/session/carts/update/${cart_id}/`)
+      .then(response => {
+        console.log('Upadting session cart', response.data)
+        var products = response.data.products
+        var total_price = response.data.cart_price
+        var total_items = response.data.cart_quantity
+
+        var cart_session = {
+          products: products,
+          total_price: total_price,
+          total_items: total_items
+        }
+
+        saveCartSession(JSON.stringify(cart_session))
+        this.props.dispatch(navBarCartCStoreActions.setItem(total_items))
+        
+        console.log('===================POOOOOOOOO')
+
+
+      })
+      .catch(err => {
+        console.error('Error on updating cart session', err)
+      })
   }
 
 
@@ -60,6 +114,12 @@ class Cart extends React.Component {
     const pagetitle = "Cart | Shop"
     const description = "Votre panier d'achat"
     const siteImage = "/static/images/logo.png"
+    
+    var cart_sub_total = this.props.cartCStore.cart_sub_total
+    var cart_delivery_price = this.props.cartCStore.cart_delivery_price
+    var cart_total = this.props.cartCStore.cart_total
+    
+
 
     return (
       //<!-- Document Wrapper -->
@@ -86,15 +146,13 @@ class Cart extends React.Component {
             <meta property="og:image" content={siteImage} />
         </Helmet>
 
-        <Navbar />
+        <Navbar topNav={true} middleNav={true} megaNav={true} />
     
         <section className="cart-wrapper">
-          <div className="container-fluid">
+          <div className="container">
             <div className="row">
-              <div className="col-sm-2">
-              </div>
               {/* Cart product list */}
-              <div className="col-sm-6">
+              <div className="col-sm-8">
                 <div className="row">
                   <h3 className="" style={{ textTransform: 'uppercase', paddingBottom: '20px' }}>Panier</h3>
                 </div>
@@ -148,7 +206,7 @@ class Cart extends React.Component {
                           <div className="col-sm-2 cart-description-text">
                             <h6 className="">{ val.line_total } FCFA</h6>  
                           </div>
-                          <div className="col-sm-1">
+                          <div className="col-sm-1 delete-item">
                             <button
                               type="button" 
                               className="btn btn-link"
@@ -169,7 +227,7 @@ class Cart extends React.Component {
                 <div className="row">
                   <div className="checkout-button">
                     <a
-                      href="#"
+                      href={`${urls.CHECKOUT}`}
                       className="btn btn-secondary"
                     >
                       Procéder au payment
@@ -185,21 +243,34 @@ class Cart extends React.Component {
                       <div className="total-group">
                         <div className="row">
                           <div className="col-sm-6"><h6 className="">Sous total</h6></div>
-                          <div className="col-sm-6"><p className="">{ cart ? cart.cart_price : 0 } FCFA</p></div>
+                          <div className="col-sm-6"><p className="">{ cart_sub_total } FCFA</p></div>
                         </div>
                         <div className="row">
                           <div className="col-sm-6"><h6 className="">Livraison</h6></div>
-                          <div className="col-sm-6"><p className="">{ delevery_price } FCFA</p></div>
+                          <div className="col-sm-6"><p className="">{ cart_sub_total == 0 ? 0 : cart_delivery_price } FCFA</p></div>
                         </div>
                       </div>
                       <div className="row line-total">
                         <div className="col-sm-6"><h5 className="">Montant Total</h5></div>
-                        <div className="col-sm-6"><h5 className="price-total">{ cart ? cart.cart_price + delevery_price : 0 }</h5></div>
+                        <div className="col-sm-6"><h5 className="price-total">{ cart_sub_total == 0 ? 0 : cart_total } FCFA</h5></div>
                       </div>
                     </div>
                   </div>
                 </div>
 
+                <div className="row">
+                  <div className="checkout-button">
+                    <a
+                      href="#"
+                      className="btn btn-secondary"
+                    >
+                      Commander en tant box
+                    </a>
+                  </div>
+                </div>
+
+                <br />
+                
                 <div className="row">
                   <div className="checkout-button">
                     <a 
@@ -211,18 +282,6 @@ class Cart extends React.Component {
                   </div>
                 </div>
                 
-                <br />
-
-                <div className="row">
-                  <div className="checkout-button">
-                    <a
-                      href="#"
-                      className="btn btn-secondary"
-                    >
-                      Procéder au payment
-                    </a>
-                  </div>
-                </div>
 
 
               </div>

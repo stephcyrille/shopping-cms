@@ -1,0 +1,49 @@
+.command-summary-wrapperr{
+    padding: 20px;
+    width: 100%;
+}
+
+.command-summary{
+    border: 1px solid black;
+    width: 100%;
+    padding: 20px;
+}
+
+.command-total-group p{
+    text-align: right;
+}
+
+.command-total-group{
+    /* border-bottom: 1px solid lightgray; */
+}
+
+.line-total .price-total{
+    text-align: right;
+}
+
+.line-total{
+    padding-top: 10px;
+}
+
+
+.product-row{
+    width: 100%; 
+    margin-right: 0;
+    margin-left: 0; 
+    border-bottom: 1px solid lightgray;
+    padding: 10px 0;
+}
+
+.command-product-wrapper {
+    margin-top: 30px;
+}
+
+.command-product-wrapper h5{
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+    width: 100%;
+}
+
+.command-picture-box, .command-picture-summary{
+    padding-left: 0px;
+}

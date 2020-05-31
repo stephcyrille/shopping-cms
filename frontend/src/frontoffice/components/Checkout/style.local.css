@@ -1,0 +1,57 @@
+.whole_stepper_content{
+    padding: 20px 30px;
+}
+
+.step_two_bloc h2{
+    text-transform: uppercase;
+}
+
+.address_bloc{
+    height: 200px;
+    width: 300px;
+    border: 1px solid lightgray;
+    padding: 20px;
+    margin-top: 20px;
+}
+.address_bloc:hover{
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+
+.place_delivery_choice{
+    margin-top: 40px;
+}
+
+.place_delivery_choice h2{
+    text-transform: uppercase;
+}
+
+
+.delivery_method{
+    border: 1px solid lightgray;
+    margin: 20px 0;
+    padding: 10px 20px;
+}
+.delivery_method.active{
+    border: 1px solid black;
+}
+.delivery_method:hover{
+    border: 1px solid black;
+    cursor: pointer;
+}
+.delivery_method p{
+    margin-bottom: 5px !important;
+}
+.delivery_method h6{
+    text-transform: uppercase;
+}
+
+.delivery_hour{
+    padding-left: 28px;
+}
+
+.cgv{
+    margin-top: 40px;
+    margin-bottom: 30px;
+}

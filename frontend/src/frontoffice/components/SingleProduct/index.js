@@ -218,7 +218,7 @@ class SingleProduct extends React.Component {
         </Helmet>
 
 
-        <Navbar />
+        <Navbar topNav={true} middleNav={true} megaNav={true} />
         
         <div className="container">
           <div className="row">

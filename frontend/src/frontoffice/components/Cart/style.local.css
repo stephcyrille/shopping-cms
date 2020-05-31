@@ -32,6 +32,18 @@
     color: black;
 }
 
+.delete-item button:hover{
+    color: rgb(197, 0, 0);
+}
+
+.delete-item button:active{
+    color: rgb(133, 1, 1);
+}
+
+.delete-item button{
+    color: gray;
+}
+
 .cart_item-img-wrapper{
     padding-right: 10px !important;
 }
@@ -40,11 +52,13 @@
 .checkout-button{
     width: 100%;
     text-align: right;
-    padding-right: 50px;
+    padding-right: 20px;
 }
 
 .checkout-button a{
      border-radius: 0px;
+     padding: 8px 40px;
+     text-transform: uppercase;
 }
 
 .bill-info-wrapper{

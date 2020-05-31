@@ -79,7 +79,8 @@ class Home extends React.Component {
             <meta property="og:image" content={siteImage} />
         </Helmet>
 
-        <Navbar />
+        <Navbar topNav={true} middleNav={true} megaNav={true} /> 
+        
         <HomeCarousel />
         <section>
           <div className="container">

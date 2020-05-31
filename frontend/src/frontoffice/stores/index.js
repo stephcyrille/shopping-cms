@@ -12,6 +12,8 @@ import { singleProductCStore } from '../components/SingleProduct/store'
 import { navBarCartCStore } from '../components/Snippets/MiddleNavBar/store'
 import { homeCStore } from '../components/Home/store'
 import { cartCStore } from '../components/Cart/store'
+import { checkoutCStore } from '../components/Checkout/store'
+import { stepperCStore } from '../components/Checkout/Stepper/store'
 
 
 // import { authGuardCStore } from "../components/Authentication/store";
@@ -29,6 +31,8 @@ const cstore = history =>
     navBarCartCStore: navBarCartCStore,
     homeCStore: homeCStore,
     cartCStore: cartCStore,
+    checkoutCStore: checkoutCStore,
+    stepperCStore: stepperCStore,
   });
 
 export default function configureStore(preloadedState) {

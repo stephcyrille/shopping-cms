@@ -17,9 +17,9 @@ class Navbar extends React.Component {
 
     return (
       <header id="header">
-        <TopNavbar />
-        <MiddleNavbar />
-        <MegaNavbar />
+        { this.props.topNav? <TopNavbar /> : null }
+        { this.props.middleNav? <MiddleNavbar showNav={this.props.middleRightShow} /> : null }
+        { this.props.megaNav? <MegaNavbar /> : null }
         {/* <HomeMenu /> */}
       </header>
     )
