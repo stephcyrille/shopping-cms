@@ -14,6 +14,7 @@ import { homeCStore } from '../components/Home/store'
 import { cartCStore } from '../components/Cart/store'
 import { checkoutCStore } from '../components/Checkout/store'
 import { stepperCStore } from '../components/Checkout/Stepper/store'
+import { step3CStore } from '../components/Checkout/Stepper/Snippeds/Step3/store'
 
 
 // import { authGuardCStore } from "../components/Authentication/store";
@@ -33,6 +34,7 @@ const cstore = history =>
     cartCStore: cartCStore,
     checkoutCStore: checkoutCStore,
     stepperCStore: stepperCStore,
+    step3CStore: step3CStore,
   });
 
 export default function configureStore(preloadedState) {

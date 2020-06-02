@@ -12,6 +12,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import Step3 from './Snippeds/Step3/index'
+
 import clsx from "clsx";
 
 import './style.local.css';
@@ -151,6 +153,10 @@ class StepperComponent extends React.Component {
     });
   };
 
+  _handleHomePage(){
+    window.location.href = "/shop/"; 
+  }
+
   handleReset = () => {
     this.setState({
       activeStep: 1,
@@ -250,13 +256,17 @@ class StepperComponent extends React.Component {
       case 2:
         return (
           <div>
-            Page Paiement
+            <Step3 />
           </div>
           )
       case 3:
         return (
           <div>
-            Page Complete
+            <div className="step4-wrapper">
+              <div className="step4-body">
+                <h2 className="">Commande réussie</h2>
+              </div>
+            </div>
           </div>
           )
       default:
@@ -387,7 +397,7 @@ class StepperComponent extends React.Component {
             </Button>
             <Button
               variant="contained"
-              onClick={this.handleNext}
+              onClick={activeStep === steps.length - 1 ? this._handleHomePage : this.handleNext}
             >
               {activeStep === steps.length - 1 ? "Continuer achats" : "Suivant"}
             </Button>

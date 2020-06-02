@@ -56,7 +56,7 @@ class Home extends React.Component {
 
     return (
       //<!-- Document Wrapper -->
-      <div className="home">
+      <div className="">
         { loading ? ( 
             <div className='home-loading'>
               <div className='reverse-spinner'>

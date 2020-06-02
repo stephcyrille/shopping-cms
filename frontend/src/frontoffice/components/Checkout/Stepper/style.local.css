@@ -47,3 +47,21 @@
 .command-picture-box, .command-picture-summary{
     padding-left: 0px;
 }
+
+
+.step4-wrapper{
+    position: relative;
+    width: 100%;
+    height: 50vh;
+}
+
+.step4-body{
+    position: absolute;
+    width: 100%;
+    top: 25%;
+}
+
+.step4-body h2{
+    text-align: center;
+    text-transform: uppercase;
+}
