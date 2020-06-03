@@ -81,7 +81,252 @@ class Home extends React.Component {
 
         <Navbar topNav={true} middleNav={true} megaNav={true} /> 
         
-        <HomeCarousel />
+        <section>
+          <div className="container">
+            <div className="row">
+              {/* Main Banner home */}
+              <a href="#" className='home_top_banner'> 
+                <div
+                  style={{ 
+                      backgroundImage: `url('/static/images/banner4.jpg')`, 
+                      width: '100%', 
+                      height: '100%', 
+                      backgroundSize: 'cover'
+                  }}
+                >
+                  <div className="banner-wrapper">
+                    <div className="row" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
+                      <div className="col-sm-4" style={{ paddingLeft: 0, paddingRight: 0 }}></div>
+                      <div className="col-sm-2" style={{ paddingLeft: 0, paddingRight: 0 }}></div>
+                      <div className="col-sm-6 baner-text" style={{ paddingTop: 30, paddingRight: 20 }}>
+                        <h4 className='display-4 baner-main-title'>Nouvelle collection Afro chic</h4>
+                        <p className=''>
+                          Explorer une collection au couleurs de l'été <br/>
+                          tropical et d'ambiance festive
+                        </p>
+                        <span href="#" className="">
+                          Découvrir maintenant
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div className="row">
+              <div className="col-sm-6" style={{ paddingLeft: 0, paddingRight: 0 }}>
+                {/* magazine cover */}
+                <div className="row" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
+                  <a href="#" className='home-cover-wrapper'> 
+                    <div
+                      style={{  
+                        backgroundImage: `url('/static/images/cover1.jpg')`, 
+                        width: '100%', 
+                        height: "100%", 
+                        backgroundSize: 'cover'
+                      }}>
+                    </div>
+                  </a>
+                </div>
+                {/* magazine cover end */}
+
+                {/* Next magazine cover row (two pics with legend) */}
+                <h5 className='latest-articles-title'>Les nouveautés</h5>
+                <div className="row latest-row" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
+                  <div className="col-sm-6" style={{ paddingLeft: 0, paddingRight: 10 }}>
+                    <a href="#" className='home-latest-wrapper'> 
+                      <div
+                          style={{  
+                            backgroundImage: `url('/static/images/dress3.png')`, 
+                            width: '100%', 
+                            height: 400, 
+                            backgroundSize: 'cover'
+                          }}>
+                        </div>
+                        <div className="latest-legend display-4">
+                          <h4 className='display-4'>Ensble débardeur</h4>
+                          <p className=''>
+                            Les plus belles robes de notre collection<br />
+                            <span className="">
+                              Regarder &amp; Acheter
+                            </span>
+                          </p>
+                        </div>
+                      </a>
+                  </div>
+                  <div className="col-sm-6" style={{ paddingLeft: 10, paddingRight: 0 }}>
+                    <a href="#" className='home-latest-wrapper'> 
+                      <div
+                        style={{  
+                          backgroundImage: `url('/static/images/dress2.png')`, 
+                          width: '100%', 
+                          height: 400, 
+                          backgroundSize: 'cover'
+                        }}>
+                      </div>
+                      <div className="latest-legend display-4">
+                        <h4 className='display-4'>Mini Top</h4>
+                        <p className=''>
+                          Les plus belles robes de notre collection<br />
+                          <span className="">
+                            Regorder &amp; Acheter
+                          </span>
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                {/* End next magazine two pics */}
+              </div>
+
+              <div className="col-sm-6 home-right-side">
+                <h5 className='what-to-buy-title'>Ce qu'il faut acheter</h5>
+                {/* What to buy */}
+                <div className="row" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
+                  <a href="#" className='home-what-to-buy'> 
+                    <div
+                      style={{  
+                        backgroundImage: `url('/static/images/dress1.jpg')`, 
+                        width: '100%', 
+                        height: 250, 
+                        backgroundSize: 'cover'
+                      }}>
+                    </div>
+                    <div className="what-to-buy-legend">
+                      <h4 className=''>Robes élégantes</h4>
+                      <p className=''>
+                        Les plus belles robes de notre collection
+                      </p>
+                      <span href="#" className="">
+                        Regorder le look
+                      </span>
+                    </div>
+                  </a>
+                </div>
+                {/* what to buy end */}
+                {/* What to buy */}
+                <div className="row" style={{ marginLeft: 0, marginRight: 0, width: '100%', marginTop: 40, marginBottom: 30 }}>
+                  <a href="#" className='home-what-to-buy'> 
+                    <div
+                      style={{  
+                        backgroundImage: `url('/static/images/bag.jpg')`, 
+                        width: '100%', 
+                        height: 250, 
+                        backgroundSize: 'cover'
+                      }}>
+                    </div>
+                    <div className="what-to-buy-legend">
+                      <h4 className=''>Sac à main fashion</h4>
+                      <p className=''>
+                        La collection des meilleurs sacs à main afro
+                      </p>
+                      <span href="#" className="">
+                        Acheter maintenant
+                      </span>
+                    </div>
+                  </a>
+                </div>
+                {/* what to buy end */}
+                {/* What to buy */}
+                <div className="row" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
+                  <a href="#" className='home-what-to-buy'> 
+                    <div
+                      style={{  
+                        backgroundImage: `url('/static/images/banner1.jpg')`, 
+                        width: '100%', 
+                        height: 250, 
+                        backgroundSize: 'cover'
+                      }}>
+                    </div>
+                    <div className="what-to-buy-legend">
+                      <h4 className=''>Robes élégantes</h4>
+                      <p className=''>
+                        Les plus belles robes de notre collection
+                      </p>
+                      <span href="#" className="">
+                        Regorder le look
+                      </span>
+                    </div>
+                  </a>
+                </div>
+                {/* what to buy end */}
+              </div>
+            </div>
+
+            {/* Jewelery, accessories and beauty tools */}
+            <div className="row home-soft-category" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
+              <div className="col-sm-4" style={{ paddingLeft: 0, paddingRight: 10 }}>
+                <a href="#" className='home-latest-wrapper'> 
+                  <div
+                      style={{  
+                        backgroundImage: `url('/static/images/beauty.jpg')`, 
+                        width: '100%', 
+                        height: 300, 
+                        backgroundSize: 'cover'
+                      }}>
+                    </div>
+                    <div className="latest-legend display-4">
+                      <h4 className='display-4'>Produits de beauté</h4>
+                      <p className=''>
+                        Les plus belles robes de notre collection<br />
+                        <span className="">
+                          Acheter maintenant
+                        </span>
+                      </p>
+                    </div>
+                  </a>
+              </div>
+              <div className="col-sm-4" style={{ paddingLeft: 10, paddingRight: 10 }}>
+                <a href="#" className='home-latest-wrapper'> 
+                  <div
+                    style={{  
+                      backgroundImage: `url('/static/images/jewellery.jpg')`, 
+                      width: '100%', 
+                      height: 300, 
+                      backgroundSize: 'cover'
+                    }}>
+                  </div>
+                  <div className="latest-legend display-4">
+                    <h4 className='display-4'>Bijoux de l'été</h4>
+                    <p className=''>
+                      Les plus belles robes de notre collection<br />
+                      <span className="">
+                        Acheter maintenant
+                      </span>
+                    </p>
+                  </div>
+                </a>
+              </div>
+              <div className="col-sm-4" style={{ paddingLeft: 10, paddingRight: 0 }}>
+                <a href="#" className='home-latest-wrapper'> 
+                  <div
+                      style={{  
+                        backgroundImage: `url('/static/images/accessories.png')`, 
+                        width: '100%', 
+                        height: 300, 
+                        backgroundSize: 'cover'
+                      }}>
+                    </div>
+                    <div className="latest-legend display-4">
+                      <h4 className='display-4'>Accéssoires pour vous</h4>
+                      <p className=''>
+                        Les plus belles robes de notre collection<br />
+                        <span className="">
+                          Acheter maintenant
+                        </span>
+                      </p>
+                    </div>
+                  </a>
+              </div>
+            </div>
+            {/* End Jewelery, accessories and beauty tools */}
+            <div className="row selling-showcase" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}></div>
+
+          </div>
+        </section>
+
+        {/* <HomeCarousel />
         <section>
           <div className="container">
             <div className="row">
@@ -92,7 +337,7 @@ class Home extends React.Component {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         
         <Footer />
       </div>
