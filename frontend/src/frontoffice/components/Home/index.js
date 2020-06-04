@@ -5,10 +5,7 @@ import {Helmet} from "react-helmet";
 import { PulseLoader } from 'react-spinners';
 
 import Navbar from "app-js/frontoffice/components/Snippets/Navbar/index"
-import HomeCarousel from "app-js/frontoffice/components/Snippets/HomeCarousel/index"
-import CategoryLeftMenu from "app-js/frontoffice/components/Snippets/CategoryLeftMenu/index"
-import FeatureHome from "app-js/frontoffice/components/Snippets/FeatureHome/index"
-import RecommendedItem from "app-js/frontoffice/components/Snippets/RecommendedItem/index"
+import HorizontalScroll from "app-js/frontoffice/components/Snippets/HorizontalScroll/index"
 import Footer from "app-js/frontoffice/components/Snippets/Footer/index"
 
 import { homeCStoreActions } from './store'
@@ -321,7 +318,9 @@ class Home extends React.Component {
               </div>
             </div>
             {/* End Jewelery, accessories and beauty tools */}
-            <div className="row selling-showcase" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}></div>
+            <div className="row selling-showcase" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
+              <HorizontalScroll />
+            </div>
 
           </div>
         </section>
