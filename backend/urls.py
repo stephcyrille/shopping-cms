@@ -2,7 +2,7 @@ from django.urls import path
 from django.conf.urls import url
 
 from core_session.apis import CoreSessionAPIView, GetSessionCartAPIView
-from .apis.frontoffice import CategoryAPIView, ProductsAPIView, ProductSingleAPIView, CartAPIView
+from .apis.frontoffice import CategoryAPIView, ProductsAPIView, ProductSingleAPIView, CartAPIView, DeleteCartItemAPIView
 from .apis.frontoffice.forms import AddCartItemAPIView
 
 urlpatterns = [
@@ -17,6 +17,7 @@ urlpatterns = [
 
     # forms
     path('cart/add_item/', AddCartItemAPIView.as_view(), name='add_item_to_cart'),
+    path('cart/item/delete/', DeleteCartItemAPIView.as_view(), name='delete_cart_item'),
 
     # api
     path('cart/<int:cart_id>/', CartAPIView.as_view(), name='show_cart'),

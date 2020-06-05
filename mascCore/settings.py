@@ -29,7 +29,6 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,13 +36,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # For react frontend,
+    'django.contrib.sites',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # For react frontend,
     'webpack_loader',
     'backend',
     'frontend',
     'core_session',
 ]
+
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -144,11 +153,29 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-        #'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
-        #'rest_framework.authentication.BasicAuthentication',  # enables simple command line authentication
     )
 }
+
+
+# DJANGO REST FRAMEWORK AUTH CUSTOMS SERIALIZERS
+OLD_PASSWORD_FIELD_ENABLED = True
+LOGOUT_ON_PASSWORD_CHANGE = False
+
+# DJANGO REST FRAMEWORK AUTH CUSTOMS SERIALIZERS
+REST_AUTH_REGISTER_SERIALIZERS = {
+        'REGISTER_SERIALIZER': 'backend.apis.utils.auth.custom_registration.CustomRegistrationSerializer',
+}
+
+#REST_AUTH_SERIALIZERS = {
+#    'USER_DETAILS_SERIALIZER': 'backend.apis.utils.auth.CustomUserDetailsSerializer',
+#}
+
+# EMAIL CONFIGURATION, THIS FOR DEBUG ENVIRONMENT
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'emails_sent')
+
+# WEBSITE URL CONFIG 
+WEBSITE_NAME = "myhto.org"

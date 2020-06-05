@@ -1,9 +1,9 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import serializers
+from rest_framework import serializers, status
 
 from backend.apis.utils import get_upload_host
-from backend.models import Product, Variety, Cart, CartItem
+from backend.models import Cart, CartItem
 
 exclude_fields = ["is_archived", "created_by", "modified_by", "created_date", "modified_date", "is_published"]
 
@@ -12,6 +12,7 @@ class CartSerializer(serializers.ModelSerializer):
     cart_items = serializers.SerializerMethodField()
     cart_price = serializers.SerializerMethodField()
     cart_quantity = serializers.SerializerMethodField()
+    delivery_price = serializers.SerializerMethodField()
 
     class Meta:
         model = Cart
@@ -19,7 +20,7 @@ class CartSerializer(serializers.ModelSerializer):
 
     def get_cart_items(self, instance):
         items = []
-        cart_items = CartItem.objects.filter(cart=instance)
+        cart_items = CartItem.objects.filter(cart=instance, is_archived=False)
         for i in cart_items:
             item_product_pictures = []
             if i.variety.picture1:
@@ -34,7 +35,7 @@ class CartSerializer(serializers.ModelSerializer):
             item = {
                 "id": i.id,
                 "slug": i.variety.product.slug,
-                "title":  "%s - %s" % (i.variety.product.title, i.variety.color.name),
+                "title": "%s - %s" % (i.variety.product.title, i.variety.color.name),
                 "description": i.variety.product.description,
                 "price": i.variety.product.price,
                 "color": i.variety.color.name,
@@ -49,7 +50,10 @@ class CartSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_cart_price(instance):
         total_price = 0
-        cart_items = CartItem.objects.filter(cart=instance)
+        cart_items = CartItem.objects.filter(cart=instance, is_archived=False)
+        print("\n\n")
+        print(cart_items.count())
+        print("\n\n")
         for i in cart_items:
             quantity = i.quantity
             product_price = i.variety.product.price
@@ -62,11 +66,16 @@ class CartSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_cart_quantity(instance):
         total_quantity = 0
-        cart_items = CartItem.objects.filter(cart=instance)
+        cart_items = CartItem.objects.filter(cart=instance, is_archived=False)
         for i in cart_items:
             quantity = i.quantity
             total_quantity = total_quantity + quantity
         return total_quantity
+
+    @staticmethod
+    def get_delivery_price(instance):
+        price = 2000
+        return price
 
 
 class CartAPIView(APIView):
@@ -75,3 +84,35 @@ class CartAPIView(APIView):
     def get(self, request, cart_id):
         cart = Cart.objects.get(pk=cart_id)
         return Response(CartSerializer(cart, context={"request": request}).data)
+
+
+class DeleteCartItemAPIView(APIView):
+    # permission_classes = (AllowAny,)
+
+    def post(self, request):
+        data = request.data['body']
+
+        cart_id = data["cart_id"]
+        cart_item_id = data["cart_item_id"]
+
+        try:
+            cart_item = CartItem.objects.get(pk=cart_item_id)
+            cart_item.is_archived = True
+            try:
+                # Update cart total quantity
+                cart = Cart.objects.get(pk=cart_id)
+                new_total = cart.total - cart_item.line_total
+                cart.total = new_total
+                cart.save()
+                cart_item.save()
+                return Response(CartSerializer(cart, context={"request": request}).data)
+            except:
+                response = {
+                    "message": "Erreur, panier introuvable"
+                }
+                return Response(response, status=status.HTTP_404_NOT_FOUND)
+        except:
+            response = {
+                "message": "Erreur, ressource introuvable"
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)

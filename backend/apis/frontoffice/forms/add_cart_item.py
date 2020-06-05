@@ -26,10 +26,10 @@ class AddCartItemAPIView(APIView):
             cart = Cart.objects.get(id=data["cart"])
             variety = Variety.objects.get(id=data["variety"])
             # Check if variety chosen have already been add to a cart item
-            cart_items_by_variety = CartItem.objects.filter(variety=variety, cart=cart)
+            cart_items_by_variety = CartItem.objects.filter(variety=variety, cart=cart, is_archived=False)
             if not cart_items_by_variety:
                 cart_item = CartItem(cart=cart, variety=variety, quantity=data['quantity'],
-                                     line_total=data['line_total'])
+                                     line_total=data['line_total'], is_archived=False)
                 cart_item.save()
                 return Response(serializer.data)
             else:

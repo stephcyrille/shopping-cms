@@ -1,0 +1,18 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: [example.com] Please Confirm Your E-mail Address
+From: webmaster@localhost
+To: stephane.mebenga@gmail.com
+Date: Thu, 04 Jun 2020 17:40:44 -0000
+Message-ID: <159129244473.6543.14558689936144014418@ISYSSOL.ISYSSOL>
+
+Hello from example.com!
+
+You're receiving this e-mail because user stephane has given yours as an e-mail address to connect their account.
+
+To confirm this is correct, go to http://localhost:8000/auth/registration/account-confirm-email/NQ:1jgtrA:2cBmI8jBHqlhmTcyM-u6-mpkmRE/
+
+Thank you from example.com!
+example.com
+-------------------------------------------------------------------------------

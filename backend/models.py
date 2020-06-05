@@ -25,6 +25,7 @@ class UserProfile(models.Model):
     last_name = models.CharField(null=True, blank=True, max_length=100)
     city = models.CharField(null=True, blank=True, max_length=100)
     country = models.CharField(null=True, blank=True, max_length=100)
+    address = models.CharField(null=True, blank=True, max_length=250, default='')
     birth_date = models.DateField(null=True, blank=True)
     created_date = models.DateTimeField(blank=True, editable=False, default=timezone.now)
     modified_date = models.DateTimeField(null=True, editable=False, blank=True)

@@ -6,3 +6,4 @@ TODO
 frontend/node_modules/
 frontend/static/dist/
 media/
+emails_sent/

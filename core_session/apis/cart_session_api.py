@@ -18,7 +18,7 @@ class CartSessionSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_products(instance):
         products = []
-        cart_items = CartItem.objects.filter(cart=instance)
+        cart_items = CartItem.objects.filter(cart=instance, is_archived=False)
         for i in cart_items:
             product = {
                 "id": i.variety.product.id,
@@ -34,7 +34,7 @@ class CartSessionSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_cart_price(instance):
         total_price = 0
-        cart_items = CartItem.objects.filter(cart=instance)
+        cart_items = CartItem.objects.filter(cart=instance, is_archived=False)
         for i in cart_items:
             quantity = i.quantity
             product_price = i.variety.product.price
@@ -47,7 +47,7 @@ class CartSessionSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_cart_quantity(instance):
         total_quantity = 0
-        cart_items = CartItem.objects.filter(cart=instance)
+        cart_items = CartItem.objects.filter(cart=instance, is_archived=False)
         for i in cart_items:
             quantity = i.quantity
             total_quantity = total_quantity + quantity

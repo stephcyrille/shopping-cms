@@ -16,6 +16,9 @@ urlpatterns = [
     path('apis/', include('backend.urls')),
     path('dashboard/', include('frontend.urls_dashboard')),
     path('shop/', include('frontend.urls_client')),
+    path('shop/', include('frontend.urls_client')),
+    path('auth/', include('rest_auth.urls')),
+    path('auth/registration/', include('rest_auth.registration.urls')),
 ]
 
 if settings.DEBUG:
