@@ -14,6 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import urls from "../../../../routes/urls";
 
 
 
@@ -127,9 +128,9 @@ class LoginForm extends React.Component {
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="#" variant="body2">
+                    <a href={`${urls.REGISTRATION}`} variant="body2">
                       {"Don't have an account? Sign Up"}
-                    </Link>
+                    </a>
                   </Grid>
                 </Grid>
                 <Box mt={5}>

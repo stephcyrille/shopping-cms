@@ -15,6 +15,7 @@ import SingleProduct from "app-js/frontoffice/components/SingleProduct/index.js"
 import Cart from "app-js/frontoffice/components/Cart/index.js";
 import Checkout from "app-js/frontoffice/components/Checkout/index.js";
 import LoginPage from "app-js/frontoffice/components/Auth/Login/index.js";
+import RegistrationPage from "app-js/frontoffice/components/Auth/Login/Registration/index";
 import NotFound from "app-js/frontoffice/components/404/index"
 
 
@@ -28,7 +29,8 @@ class Routes extends Component {
         <Route exact path={urls.SINGLE_PRODUCT} component={SingleProduct} />
         <Route exact path={urls.CART} component={Cart} />
         <Route exact path={urls.CHECKOUT} component={Checkout} />
-        <Route exact path={urls.LoginPage} component={LoginPage} />
+        <Route exact path={urls.REGISTRATION} component={RegistrationPage} />
+        <Route exact path={urls.LOGIN} component={LoginPage} />
         <Route exact path={urls.NOTFOUND} component={NotFound} />
         <Redirect to={urls.NOTFOUND} />
       </Switch>
