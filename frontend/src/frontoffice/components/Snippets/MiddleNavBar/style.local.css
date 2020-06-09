@@ -94,6 +94,19 @@
     margin-right: 3px;
 }
 
+.navbar-dark .navbar-nav .nav-link{
+    color: white !important;
+    transition: ease-in;
+    transition-duration: 0.3s;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover{
+    color: rgb(251, 217, 23) !important;
+    transition: ease-out;
+    transition-duration: 0.4s;
+    /* font-weight: 500; */
+}
+
 .shop-menu ul li a:hover {
     color: #fe980f;
     background: #fff;

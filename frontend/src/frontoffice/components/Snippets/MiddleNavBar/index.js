@@ -49,7 +49,7 @@ class MiddleNavbar extends React.Component {
                 <a href={`${urls.HOME}`}><img src="/static/images/logo.png" alt="" /></a>
               </div>
               <div className="btn-group pull-right clearfix">
-                <div className="btn-group">
+                {/* <div className="btn-group">
                   <button type="button" className="btn btn-outline-secondary dropdown-toggle usa" data-toggle="dropdown">
                     USA
                     <span className="caret"></span>
@@ -58,9 +58,9 @@ class MiddleNavbar extends React.Component {
                     <li><a href="">Canada</a></li>
                     <li><a href="">UK</a></li>
                   </ul>
-                </div>
+                </div> */}
                 
-                <div className="btn-group">
+                {/* <div className="btn-group">
                   <button type="button" className="btn btn-outline-secondary dropdown-toggle usa" data-toggle="dropdown">
                     DOLLAR
                     <span className="caret"></span>
@@ -69,7 +69,7 @@ class MiddleNavbar extends React.Component {
                     <li><a href="">Canadian Dollar</a></li>
                     <li><a href="">Pound</a></li>
                   </ul>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="col-md-8 clearfix shop-menu-clear">

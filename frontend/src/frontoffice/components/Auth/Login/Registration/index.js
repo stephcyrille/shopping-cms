@@ -17,8 +17,13 @@ import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Radio from '@material-ui/core/Radio';
 import FormLabel from '@material-ui/core/FormLabel';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 import {Helmet} from "react-helmet";
+
 
 import Navbar from "app-js/frontoffice/components/Snippets/Navbar/index"
 import Footer from "app-js/frontoffice/components/Snippets/Footer/index"
@@ -61,6 +66,10 @@ const useStyles = theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: "100%",
   },
 });
 
@@ -174,32 +183,64 @@ class RegistrationPage extends React.Component {
 
                 <br /> 
                 <Grid item xs={12} sm={12}>
-                  <br /> 
-                  <RadioGroup aria-label="gender" name={gender} onChange={ this._handleCheckBoxChange.bind(this) }>
-                    <FormLabel component="legend">Sexe</FormLabel>
-                    <FormControlLabel value="female" control={<Radio />} label="Femme." />
-                    <FormControlLabel value="male" control={<Radio />} label="Homme." />
-                  </RadioGroup>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel id="gender">Votre sexe</InputLabel>
+                    <Select
+                      labelId="gender"
+                      id="gender"
+                      value="gender"
+                      // onChange={handleChange}
+                    >
+                      <MenuItem value={"female"}>Femme</MenuItem>
+                      <MenuItem value={"male"}>Homme</MenuItem>
+                    </Select>
+                  </FormControl>
                 </Grid>
+
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                      <FormControl className={classes.formControl}>
+                        <InputLabel id="country">Pays de residence</InputLabel>
+                        <Select
+                          labelId="country"
+                          id="country"
+                          value="country"
+                          // onChange={handleChange}
+                        >
+                          <MenuItem value={"cameroun"}>Cameroun</MenuItem>
+                          <MenuItem value={"nigeria"}>Nigeria</MenuItem>
+                          <MenuItem value={"angola"}>Angola</MenuItem>
+                          <MenuItem value={"kenya"}>Kenya</MenuItem>
+                        </Select>
+                      </FormControl>
+                  </Grid>
+               
+                  <Grid item xs={12} sm={6}>
+                      <FormControl className={classes.formControl}>
+                        <InputLabel id="city">Ville de résidence</InputLabel>
+                        <Select
+                          labelId="city"
+                          id="city"
+                          value="city"
+                          // onChange={handleChange}
+                        >
+                          <MenuItem value={"yaounde"}>Yaoundé</MenuItem>
+                          <MenuItem value={"douala"}>Douala</MenuItem>
+                          <MenuItem value={"buea"}>Buea</MenuItem>
+                          <MenuItem value={"mbankomo"}>Mbankomo</MenuItem>
+                        </Select>
+                      </FormControl>
+                  </Grid>
+                </Grid>
+
                     <TextField
                       variant="outlined"
                       margin="normal"
                       required
                       fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                    />
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
+                      id="phone_number"
+                      label="Numéro de téléphone"
+                      name="phone_number"
                     />
                   
                   <FormControlLabel
