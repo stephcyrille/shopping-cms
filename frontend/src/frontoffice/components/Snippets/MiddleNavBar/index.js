@@ -128,7 +128,7 @@ class MiddleNavbar extends React.Component {
                     </div> */}
                   </li>
                   {/* <li><a href="login.html"><i className="fa fa-lock"></i> Login</a></li> */}
-                  <li><a href=""><i className="fa fa-user"></i> Profile</a></li>
+                  <li><a href={`${urls.LOGIN}`}><i className="fa fa-user"></i> Profile</a></li>
                 </ul>
               </div>):null
               }

@@ -1,31 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
 import {Helmet} from "react-helmet";
-import { PulseLoader } from 'react-spinners';
+
+import { withStyles } from '@material-ui/core/styles';
 
 import Navbar from "app-js/frontoffice/components/Snippets/Navbar/index"
 import Footer from "app-js/frontoffice/components/Snippets/Footer/index"
-
-import config from "app-js/frontoffice/utils/config"
+import LoginForm from "./LoginForm/index"
 
 import './style.local.css'
+
+
 
 
 
 export default
 @connect((state, props) => ({}))
 class LoginPage extends React.Component {
-	componentWillMount(){
-    const title = `Login | ${config.app_name}`
-    document.title = title
-  }
+
 
   render(){
     const baseUrl = "https://google.com"
-    const pagetitle = "Home | Shop"
+    const pagetitle = "Login | Shop"
     const description = "Ma description du site"
     const siteImage = "/static/images/logo.png"
-
+    
 
   	return (
   		<div className="">
@@ -41,6 +40,10 @@ class LoginPage extends React.Component {
         </Helmet>
 
         <Navbar topNav={true} middleNav={true} megaNav={true} />
+
+        <section className="">
+          <LoginForm /> 
+        </section>
 
         <Footer /> 
   		</div>
