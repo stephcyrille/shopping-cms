@@ -48,10 +48,12 @@ function Copyright() {
 
 const useStyles = theme => ({
   body: {
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    paddingBottom: 50,
   },
   paper: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(8),
+    paddingTop: 10,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -70,7 +72,11 @@ const useStyles = theme => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: "100%",
+    padding: "0 10px 0 0",
   },
+  checkboxSouscription: {
+    paddingTop: 25,
+  }
 });
 
 
@@ -150,36 +156,36 @@ class RegistrationPage extends React.Component {
                   </Grid>
                 </Grid>
                     
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="email"
-                      label="Adresse mail"
-                      name="email"
-                      autoComplete="email"
-                    />
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      name="password1"
-                      label="Mot de passe"
-                      type="password"
-                      id="password1"
-                    />
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      name="password2"
-                      label="confirmation mot de passe"
-                      type="password"
-                      id="password2"
-                    />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Adresse mail"
+                  name="email"
+                  autoComplete="email"
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password1"
+                  label="Mot de passe"
+                  type="password"
+                  id="password1"
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password2"
+                  label="confirmation mot de passe"
+                  type="password"
+                  id="password2"
+                />
 
                 <br /> 
                 <Grid item xs={12} sm={12}>
@@ -199,66 +205,64 @@ class RegistrationPage extends React.Component {
 
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
-                      <FormControl className={classes.formControl}>
-                        <InputLabel id="country">Pays de residence</InputLabel>
-                        <Select
-                          labelId="country"
-                          id="country"
-                          value="country"
-                          // onChange={handleChange}
-                        >
-                          <MenuItem value={"cameroun"}>Cameroun</MenuItem>
-                          <MenuItem value={"nigeria"}>Nigeria</MenuItem>
-                          <MenuItem value={"angola"}>Angola</MenuItem>
-                          <MenuItem value={"kenya"}>Kenya</MenuItem>
-                        </Select>
-                      </FormControl>
+                    <FormControl className={classes.formControl}>
+                      <InputLabel id="country">Pays de residence</InputLabel>
+                      <Select
+                        labelId="country"
+                        id="country"
+                        value="country"
+                        // onChange={handleChange}
+                      >
+                        <MenuItem value={"cameroun"}>Cameroun</MenuItem>
+                        <MenuItem value={"nigeria"}>Nigeria</MenuItem>
+                        <MenuItem value={"angola"}>Angola</MenuItem>
+                        <MenuItem value={"kenya"}>Kenya</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
                
                   <Grid item xs={12} sm={6}>
-                      <FormControl className={classes.formControl}>
-                        <InputLabel id="city">Ville de résidence</InputLabel>
-                        <Select
-                          labelId="city"
-                          id="city"
-                          value="city"
-                          // onChange={handleChange}
-                        >
-                          <MenuItem value={"yaounde"}>Yaoundé</MenuItem>
-                          <MenuItem value={"douala"}>Douala</MenuItem>
-                          <MenuItem value={"buea"}>Buea</MenuItem>
-                          <MenuItem value={"mbankomo"}>Mbankomo</MenuItem>
-                        </Select>
-                      </FormControl>
+                    <FormControl className={classes.formControl}>
+                      <InputLabel id="city">Ville de résidence</InputLabel>
+                      <Select
+                        labelId="city"
+                        id="city"
+                        value="city"
+                        // onChange={handleChange}
+                      >
+                        <MenuItem value={"yaounde"}>Yaoundé</MenuItem>
+                        <MenuItem value={"douala"}>Douala</MenuItem>
+                        <MenuItem value={"buea"}>Buea</MenuItem>
+                        <MenuItem value={"mbankomo"}>Mbankomo</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
                 </Grid>
 
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="phone_number"
-                      label="Numéro de téléphone"
-                      name="phone_number"
-                    />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="phone_number"
+                  label="Numéro de téléphone"
+                  name="phone_number"
+                />
                   
-                  <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="I want to receive inspiration, marketing promotions and updates via email."
-                  />
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                  >
-                    Sign In
-                  </Button>
-                  <Box mt={5}>
-                    <Copyright />
-                  </Box>
+                <FormControlLabel
+                  className={classes.checkboxSouscription}
+                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  label="Je veux recevoir les annonces sur les campagnes et offres publicitaires que Afro Yaca Drum offre."
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  S'inscrire
+                </Button>
               </form>
             </div>
           </Container>

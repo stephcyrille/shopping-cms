@@ -43,10 +43,10 @@ class MiddleNavbar extends React.Component {
     return (
       <div className="header-middle">
         <div className="container">
-          <div className="row">
+          <div className="row" style={{ paddingTop: 0, paddingBottom: 0 }}>
             <div className="col-md-4 clearfix">
               <div className="logo pull-left">
-                <a href={`${urls.HOME}`}><img src="/static/images/logo.png" alt="" /></a>
+                <a href={`${urls.HOME}`}><img className="img-fluid" width="120px" src="/static/images/logo.jpg" alt="" /></a>
               </div>
               <div className="btn-group pull-right clearfix">
                 {/* <div className="btn-group">
@@ -72,16 +72,23 @@ class MiddleNavbar extends React.Component {
                 </div> */}
               </div>
             </div>
-            <div className="col-md-8 clearfix shop-menu-clear">
+            <div className="col-md-4">
+              <div className="open_day_wrapper">
+                <span className="open_day_title">Heures d'ouverture</span> <br />
+                <span className="open_day">Lundi à Vendredi: 8h - 20h</span> <br />
+                <span className="open_day">Samedi: 8h - 20h</span> <br />
+              </div>
+            </div>
+            <div className="col-md-4 clearfix shop-menu-clear">
             { !this.props.showNav ?
               (<div className="shop-menu clearfix pull-right">
                 <ul className="nav navbar-nav">
-                  <li><a href=""><i className="fa fa-heart"></i> Wishlist</a></li>
+                  <li><a href=""><i className="far fa-heart fa-2x"></i> <span className="heart-custom-badge badge badge-secondary">{0}</span></a></li>
                   {/* <li><a href="checkout.html"><i className="fa fa-crosshairs"></i> Checkout</a></li> */}
                   <li className="dropdown">
                     <a href={`${urls.CART}`} className="nav-link">
                     {/* <a href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" className="dropdown-toggle nav-link"> */}
-                      <i className="fa fa-shopping-cart"></i> <span className="badge badge-secondary">{item_quantity}</span> 
+                      <i className="fa fa-shopping-cart fa-2x"></i> <span className="custom-badge badge badge-secondary">{item_quantity}</span> 
                     </a>
                     {/* <div className="dropdown-menu cart-dropdown-wrapper" style={{ zIndex: "2000" }}>
                       <div class="table-responsive cart_info">
@@ -128,7 +135,7 @@ class MiddleNavbar extends React.Component {
                     </div> */}
                   </li>
                   {/* <li><a href="login.html"><i className="fa fa-lock"></i> Login</a></li> */}
-                  <li><a href={`${urls.LOGIN}`}><i className="fa fa-user"></i> Profile</a></li>
+                  <li><a href={`${urls.LOGIN}`}><i className="fa fa-user fa-2x"></i> </a></li>
                 </ul>
               </div>):null
               }

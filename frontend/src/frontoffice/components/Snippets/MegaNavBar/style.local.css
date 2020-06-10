@@ -1,16 +1,33 @@
-.top-auto{top:auto}
-
-.navbar-nav{
-    margin: 0 auto;
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+.dropdown:hover > .dropdown-menu {
+    display: block;
+}
+  
+.megamenu {
+    position: static;
+}
+.megamenu .dropdown-menu {
+    border: none;
+    width: 100%;
 }
 
-.navbar-nav ul li{
-    padding: 0 5px;
+.shop-menu.clearfix.pull-right{
+    bottom: 40%;
+    position: absolute;
+    right: 0px;
 }
 
-.navbar-nav li a{
-    text-transform: uppercase;
-    font-size: 13px;
+.custom-badge{
+    position: absolute;
+    left: 56%;
 }
-
-/* Jaune nav barr #efb616 !important */
+.heart-custom-badge{
+    position: absolute;
+    left: 22%;
+}
