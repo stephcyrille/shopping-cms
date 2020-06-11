@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withTranslation } from 'react-i18next';
+import Button from '@material-ui/core/Button';
 
 import urls from '../.././../routes/urls'
 import './style.local.css';
@@ -38,7 +39,7 @@ class MiddleNavbar extends React.Component {
 
   render() {
     const { item_quantity } = this.props.navBarCartCStore
-    
+    var new_item = false
 
     return (
       <div className="header-middle">
@@ -85,11 +86,33 @@ class MiddleNavbar extends React.Component {
                 <ul className="nav navbar-nav">
                   <li><a href=""><i className="far fa-heart fa-2x"></i> <span className="heart-custom-badge badge badge-secondary">{0}</span></a></li>
                   {/* <li><a href="checkout.html"><i className="fa fa-crosshairs"></i> Checkout</a></li> */}
-                  <li className="dropdown">
+                  <li className="dropdown cart-link">
                     <a href={`${urls.CART}`} className="nav-link">
                     {/* <a href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" className="dropdown-toggle nav-link"> */}
                       <i className="fa fa-shopping-cart fa-2x"></i> <span className="custom-badge badge badge-secondary">{item_quantity}</span> 
                     </a>
+
+                    
+                    <div className={`shopping-cart_item_add_wrapper ${ new_item ? 'active' : null }`}>
+                      <i className="fa fa-chevron-up fa-2x custom-fa"></i>
+                      <div className="shopping-cart_item_add">
+                        <div className="img-wrapper">
+                          <img src="/static/images/dress2.png"  className="cart_flash_add_image" alt="" />
+                        </div>
+                        <div className="btn-wrapper">
+                          <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            // className={classes.submit}
+                          >
+                            Retirer du panier
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                    
                     {/* <div className="dropdown-menu cart-dropdown-wrapper" style={{ zIndex: "2000" }}>
                       <div class="table-responsive cart_info">
                         <table class="table table-condensed">

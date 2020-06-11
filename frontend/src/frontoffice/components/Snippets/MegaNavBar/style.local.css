@@ -17,17 +17,3 @@
     width: 100%;
 }
 
-.shop-menu.clearfix.pull-right{
-    bottom: 40%;
-    position: absolute;
-    right: 0px;
-}
-
-.custom-badge{
-    position: absolute;
-    left: 56%;
-}
-.heart-custom-badge{
-    position: absolute;
-    left: 22%;
-}
