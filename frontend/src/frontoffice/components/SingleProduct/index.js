@@ -222,36 +222,43 @@ class SingleProduct extends React.Component {
         
         <div className="container">
           <div className="row">
-          <div className="col-xs-12 col-sm-10 offset-sm-2 padding-right">
+          <div className="col-xs-12 col-sm-12">
             {
               single_product ?
             (
             <div className="product-details">
               <div className="row">
-                <div className="col-sm-7">
-                  <div className="view-product">
-                    <div className="row">
-                    { pic_loading ? ( 
-                          <div className='spin'>
-                            <RotateLoader
-                              color={'#FE980F'} 
-                              loading={pic_loading} 
-                            />
-                          </div>)
-                      : ''
-                    }
-                    { !_.isEmpty(single_product.varieties) ? 
+                <div className="col-sm-2">
+                  { !_.isEmpty(single_product.varieties) ? 
                         single_product.varieties[variety_id] ? (single_product.varieties[variety_id].pictures)
                           .map((val, key) => {
                             return (
-                              <div className="col-sm-6 variety_images" key={key}>
-                                <div className="img-wrapper">
-                                  <img className="" src={val} alt="" />
+                              <div className="variety_thumnail" key={key}>
+                                <div className={`variety_thumnail_opak ${ key==0 ? 'active' : 0 }`} key={key}>
                                 </div>
+                                <img className="" src={val} alt="" />
                               </div>
                             )
                           }) : null : null
                       }
+                </div>
+                <div className="col-sm-5">
+                  <div className="view-product">
+                    <div className="row">
+                      { pic_loading ? ( 
+                            <div className='spin'>
+                              <RotateLoader
+                                color={'#FE980F'} 
+                                loading={pic_loading} 
+                              />
+                            </div>)
+                        : ''
+                      }
+
+                      {/* IMAGE PREVISUALISATION VIEWER */}
+                      <div className="single_product_img">
+                        <img className="" src={single_product.varieties ? single_product.varieties[variety_id].pictures[0] : null } alt="" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -385,6 +392,7 @@ class SingleProduct extends React.Component {
                         <Collapse
                           bordered={false}
                           showArrow={false}
+                          activeKey="1"
                           expandIconPosition="right"
                         >
                           <Panel header="Description" key="1">

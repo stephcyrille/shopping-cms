@@ -31,9 +31,41 @@
 
 .view-product img {
     border: 1px solid #F7F7F0;
-    height: 250px;
+    height: 530px;
     width: 100%;
     transition-duration: 0.3s;
+}
+
+.variety_thumnail{
+    width: 100%;
+    position: relative;
+    display: inline-table;
+}
+.variety_thumnail_opak.active{
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.variety_thumnail_opak:hover{
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    transition: ease-out;
+    transition-duration: 0.5s;
+}
+.variety_thumnail_opak{
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.544);
+    height: 120px;
+    width: 100px;
+    left: 60px;
+    transition: ease-in-out;
+    transition-duration: 0.7s;
+}
+
+.variety_thumnail img{
+    float: right;
+    width: 100px;
+    height: 120px;
+    margin-bottom: 10px;
 }
 
 .img_active {
