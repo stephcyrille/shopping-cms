@@ -25,7 +25,6 @@
 
 .view-product img:hover{
     cursor: pointer;
-    border: 1px solid #FE980F !important;
     transition-duration: 0.4s;
 }
 
@@ -116,7 +115,7 @@
 }
 
 .product-information {
-    padding: 0px;
+    padding: 0px 0 0 20px ;
     position: relative;
 }
 
@@ -129,7 +128,8 @@
 .product-information h2 {
     color: #363432;
     font-family: 'Roboto', sans-serif;
-    font-size: 20px;
+    font-size: 35px;
+    margin-bottom: 8px;
     margin-top: 0;
     text-transform: uppercase;
 }
@@ -138,6 +138,7 @@
     color: #696763;
     font-family: 'Roboto', sans-serif;
     margin-bottom: 5px;
+    font-size: large;
 }
 
 .product-information span {
@@ -202,6 +203,10 @@
     padding-right: 0;
 }
 
+.product-size p{
+    padding-top: 0px;
+}
+
 .product-size{
     padding-top: 30px;
 }
@@ -219,14 +224,14 @@
 }
 
 .price-row{
-    color: gray;
+    color: rgb(61, 61, 61);
     padding-top: 10px;
-    letter-spacing: 2px;
+    font-size: 25px;
 }
 
 
 .whishlist-and-cart{
-    padding-top: 80px;
+    padding-top: 30px;
 }
 
 .full-cart{

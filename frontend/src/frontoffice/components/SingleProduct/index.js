@@ -39,26 +39,25 @@ export default
 @reduxForm({ form: "addToCartForm", enableReinitialize: true })
 class SingleProduct extends React.Component {
 
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
     var slug = this.props.match.params.slug
 
+    this.props.dispatch(singleProductCStoreActions.setProductSlug(slug))
     this._fetchSingleProduct(slug)
-  }
-  
-  componentDidMount(){
     this.props.change('quantity', this.props.singleProductCStore.quantity);
-    
-    console.log("param url prop result!!!!!!!!!!!!", this.props.match.params)
   }
 
 
   _fetchSingleProduct(slug){
+    const { variety_id } = this.props.singleProductCStore
+
     window.axios
     .get(`/apis/products/${slug}/`)
     .then(response => {
       var product = response.data 
-      console.log("Product single fetched!!!!!!!!!!!!", product)
+      // console.log("Product single fetched!!!!!!!!!!!!", product)
       this.props.dispatch(singleProductCStoreActions.setSingleProduct(product))
+      this.props.dispatch(singleProductCStoreActions.setStockQuantity(product.varieties[variety_id].quantity))
     })
     .catch(
       error => {
@@ -74,7 +73,7 @@ class SingleProduct extends React.Component {
     // Call api to adding cart item on cart now
     this.props.dispatch(singleProductCStoreActions.setLoading(true))
 
-    const { stock_quantity } = this.props.singleProductCStore
+    const { stock_quantity, single_product, variety_id , product_slug } = this.props.singleProductCStore
     var result = stock_quantity - formValues.quantity
 
     this.props.dispatch(singleProductCStoreActions.setStockQuantity(result))
@@ -82,7 +81,6 @@ class SingleProduct extends React.Component {
     if (result < 0){
       this.props.change('quantity', 0);
     } else {
-      const { single_product, variety_id } = this.props.singleProductCStore
 
       var cart_item = {
         cart : getSession().cart_id,
@@ -104,18 +102,16 @@ class SingleProduct extends React.Component {
         // Toggle cart navbar dropdown
         setTimeout(()=> {
           this.props.dispatch(singleProductCStoreActions.setNavCartToggler(false))
-        }, 2000)
-
-        console.log('Post cart item response-------', response.data)
-        
+        }, 2000)      
       })
       .catch(err => {
         this.props.dispatch(singleProductCStoreActions.setLoading(false))
         console.error("Error when adding item to cart")
       })
 
-      console.log("Cart IIIIITEEEEMMMM", cart_item)
       this.props.change('quantity', 1);
+      // Updating product list because the quantity of product variety decrease
+      this._fetchSingleProduct(product_slug)
     }
   }
 
@@ -124,7 +120,7 @@ class SingleProduct extends React.Component {
     window.axios
     .get(`/apis/core/session/carts/update/${cart_id}/`)
       .then(response => {
-        console.log('Upadting session cart', response.data)
+        // console.log('Upadting session cart', response.data)
         var products = response.data.products
         var total_price = response.data.cart_price
         var total_items = response.data.cart_quantity
@@ -167,20 +163,29 @@ class SingleProduct extends React.Component {
     }
   }
 
-  _handleChangeVariety(id){
+  _handleChangeVariety(id, quantity){
+    this.props.dispatch(singleProductCStoreActions.setThumbnailPictureKey(0))
     this.props.dispatch(singleProductCStoreActions.setPicLoading(true))
     setTimeout(()=> {
       this.props.dispatch(singleProductCStoreActions.setPicLoading(false))
-      console.log("BBBBBBBBBAAAAAAAAAAMMMMMMMMMMMMMMMMMMMMMMMMM", id)
+      // console.log("BBBBBBBBBAAAAAAAAAAMMMMMMMMMMMMMMMMMMMMMMMMM", id)
       this.props.dispatch(singleProductCStoreActions.setVarietyID(id))
     }, 2000)
+    this.props.dispatch(singleProductCStoreActions.setStockQuantity(quantity))
+    this.props.change('quantity', 1);
+    this.props.dispatch(singleProductCStoreActions.setProductQuantity(1))
+    console.log("Stock quantity ",quantity)
+  }
 
+  _handleChangeVarietyImage(key){
+    console.log("Image changed! key is: ", key)
+    this.props.dispatch(singleProductCStoreActions.setThumbnailPictureKey(key))
   }
 
 
   render() {
     const { t, i18n } = this.props
-    const { quantity, stock_quantity, loading, single_product, variety_id, pic_loading } = this.props.singleProductCStore
+    const { quantity, stock_quantity, loading, single_product, variety_id, pic_loading, thumbnail_picture_key } = this.props.singleProductCStore
 
     const baseUrl = "https://google.com"
     const pagetitle = "Single Product | Shop"
@@ -233,8 +238,8 @@ class SingleProduct extends React.Component {
                         single_product.varieties[variety_id] ? (single_product.varieties[variety_id].pictures)
                           .map((val, key) => {
                             return (
-                              <div className="variety_thumnail" key={key}>
-                                <div className={`variety_thumnail_opak ${ key==0 ? 'active' : 0 }`} key={key}>
+                              <div className="variety_thumnail" key={key} onClick={ this._handleChangeVarietyImage.bind(this, key) }>
+                                <div className={`variety_thumnail_opak ${ key==thumbnail_picture_key ? 'active' : 0 }`} key={key}>
                                 </div>
                                 <img className="" src={val} alt="" />
                               </div>
@@ -257,7 +262,9 @@ class SingleProduct extends React.Component {
 
                       {/* IMAGE PREVISUALISATION VIEWER */}
                       <div className="single_product_img">
-                        <img className="" src={single_product.varieties ? single_product.varieties[variety_id].pictures[0] : null } alt="" />
+                        {/* Here the variety id must be set on picture */}
+                        {/* <img className="" src={single_product.varieties ? single_product.varieties[variety_id].pictures[0] : null } alt="" /> */}
+                        <img className="" src={single_product.varieties ? single_product.varieties[variety_id].pictures[thumbnail_picture_key] : null } alt="" />
                       </div>
                     </div>
                   </div>
@@ -265,7 +272,7 @@ class SingleProduct extends React.Component {
                 <div className="col-sm-5">
                   <div className="product-information">
                     <img src="images/product-details/new.jpg" className="newarrival" alt="" />
-                    <h2>{ single_product.title }</h2>
+                    <h2 className="display-4">{ single_product.title }</h2>
                     <p>{'Ref: ' + single_product.ref }</p>
 
                     <h5 className="price-row">{ single_product.price + ' FCFA' }</h5>
@@ -297,24 +304,25 @@ class SingleProduct extends React.Component {
                               (single_product.varieties)
                                 .map((val, key) => {
                                   return (
-                                    <a 
-                                      className="" 
-                                      onClick={this._handleChangeVariety.bind(this, key)}
-                                      style={{ 
-                                                width: "10px", 
-                                                height: "10px", 
-                                                backgroundColor: val.color.code, 
-                                                color: val.color.code, 
-                                                padding: "5px", 
-                                                marginRight: "5px",
-                                                border: `2px solid ${val.code}`,
-                                                borderRadius: "5px"
-                                      }}
-                                      data-toggle="tooltip" data-placement="bottom" title={val.color.name}
-                                      key={key}
-                                    >
-                                      00
-                                    </a>
+                                    <div key={key} style={{ display: "inline-block" }}>
+                                      <a 
+                                        className="" 
+                                        onClick={this._handleChangeVariety.bind(this, key, val.quantity)}
+                                        style={{ 
+                                                  width: "10px", 
+                                                  height: "10px", 
+                                                  backgroundColor: val.color.code, 
+                                                  color: val.color.code, 
+                                                  padding: "5px", 
+                                                  marginRight: "5px",
+                                                  border: `2px solid ${val.code}`,
+                                                  borderRadius: "5px"
+                                        }}
+                                        data-toggle="tooltip" data-placement="bottom" title={val.color.name}
+                                      >
+                                        00
+                                      </a>
+                                    </div>
                                   )
                                 }) : null
                             }

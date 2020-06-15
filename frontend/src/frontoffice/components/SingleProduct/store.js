@@ -4,12 +4,14 @@ const initialState = {
 	initial_values:{},
     quantity: 1,
     loading: false,
-    stock_quantity: 5,
+    stock_quantity: 0,
+    product_slug: null,
     single_product: {},
     active_variety: {},
     variety_id: 0,
     pic_loading: false,
     nav_cart_toggler: false,
+    thumbnail_picture_key: 0,
 };
 
 const actions = { name: "singleProductCStoreActions" };
@@ -50,6 +52,16 @@ store.on(actions.setActiveVariety, (state, value) => ({
 actions.setVarietyID = createAction("SINGLE_PRODUCT__SET_VARIETY_ID");
 store.on(actions.setVarietyID, (state, value) => ({
   ...state, variety_id: value
+}));
+
+actions.setThumbnailPictureKey = createAction("SINGLE_PRODUCT__SET_THUMBNAIL_PICTURE_KEY");
+store.on(actions.setThumbnailPictureKey, (state, value) => ({
+  ...state, thumbnail_picture_key: value
+}));
+
+actions.setProductSlug = createAction("SINGLE_PRODUCT__SET_PRODUCT_SLUG");
+store.on(actions.setProductSlug, (state, value) => ({
+  ...state, product_slug: value
 }));
 
 actions.setPicLoading = createAction("SINGLE_PRODUCT__SET_PIC_LOADING");

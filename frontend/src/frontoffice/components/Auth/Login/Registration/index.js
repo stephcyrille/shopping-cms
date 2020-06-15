@@ -139,6 +139,7 @@ class RegistrationPage extends React.Component {
                       name="first_name"
                       autoComplete="first_name"
                       autoFocus
+                      size='small'
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -152,6 +153,7 @@ class RegistrationPage extends React.Component {
                       type="text"
                       id="last_name"
                       autoComplete="last_name"
+                      size='small'
                     />
                   </Grid>
                 </Grid>
@@ -165,6 +167,7 @@ class RegistrationPage extends React.Component {
                   label="Adresse mail"
                   name="email"
                   autoComplete="email"
+                  size='small'
                 />
                 <TextField
                   variant="outlined"
@@ -175,6 +178,7 @@ class RegistrationPage extends React.Component {
                   label="Mot de passe"
                   type="password"
                   id="password1"
+                  size='small'
                 />
                 <TextField
                   variant="outlined"
@@ -185,6 +189,7 @@ class RegistrationPage extends React.Component {
                   label="confirmation mot de passe"
                   type="password"
                   id="password2"
+                  size='small'
                 />
 
                 <br /> 
@@ -247,6 +252,7 @@ class RegistrationPage extends React.Component {
                   id="phone_number"
                   label="Numéro de téléphone"
                   name="phone_number"
+                  size='small'
                 />
                   
                 <FormControlLabel

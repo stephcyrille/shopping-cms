@@ -42,6 +42,11 @@ class AddCartItemAPIView(APIView):
                     "quantity": c_item.quantity,
                     "line_total": c_item.line_total
                 }
+                # Change also variety item quantity because when cart_item save, the quantity of variety must decrease
+                previous_variety_quantity = variety.quantity
+                new_variety_quantity = previous_variety_quantity - data["quantity"]
+                variety.quantity = new_variety_quantity
+                variety.save()
                 return Response(response, status=status.HTTP_202_ACCEPTED)
         except Exception as e:
             response = {
