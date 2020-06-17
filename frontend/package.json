@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch": "./node_modules/.bin/webpack --config webpack.config.js --watch --devtools --progress",
-    "build": "webpack --mode production ./src/index.js --output ./static/frontoffice/main.js"
+    "build": "webpack --mode production ./src/frontoffice/index.js --output ./static/dist/production/main.js"
   },
   "keywords": [],
   "author": "",
