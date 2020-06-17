@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withTranslation } from 'react-i18next';
 
 import './style.local.css';
+import urls from "../../../routes/urls";
 
 
 
@@ -21,8 +22,13 @@ class MegaNavbar extends React.Component {
             </button>
             <div className="navbar-collapse collapse" id="main-nav-1">
               <ul className="navbar-nav">
-                <li className="nav-item dropdown position-static">
-                  <a title="A la une" href="#" className="nav-link">A la une</a>
+                <li className="nav-item">
+                  <a title="A la une" href={`${urls.HOME}`} className="nav-link">A la une</a>
+                </li>
+                <li className="nav-item">
+                  <a title="A la une" href={`${urls.ALL_PRODUCT}`} className="nav-link">Tous les produits</a>
+                </li>
+                <li className="nav-item dropdown position-static"><a href="#" title="Catalogues" className="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#">Catalogues</a>
                   <div className="dropdown-menu w-100 top-auto">
                     <div className="container">
                       <div className="row w-100">
@@ -44,27 +50,6 @@ class MegaNavbar extends React.Component {
                   </div>
                 </li>
                 <li className="nav-item dropdown position-static"><a href="#" title="Designers" className="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#">Designers</a>
-                  <div className="dropdown-menu w-100 top-auto">
-                    <div className="container">
-                      <div className="row w-100">
-                        <div className="col-sm-2">
-                          <h3 className="">Parcourir par</h3>
-                          <a title="Mois" href="#" className="dropdown-item">Mois</a>
-                          <a title="Weekend" href="#" className="dropdown-item">Weekend</a>
-                          <a title="Articles d'été" href="#" className="dropdown-item">Articles d'été</a>
-                          <a title="Meilleures ventes" href="#" className="dropdown-item">Meilleures ventes</a>
-                        </div>
-                        {/* <div className="text-center col-sm-10">
-                          <h3 className="">Autres actualités</h3>
-                          <a title="Conférence" href="#" className="dropdown-item">Conférence</a>
-                          <a title="Interviews" href="#" className="dropdown-item">Interviews</a>
-                          <a title="Evenements" href="#" className="dropdown-item">Evenements</a>
-                        </div> */}
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li className="nav-item dropdown position-static"><a href="#" title="Catalogues" className="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#">Catalogues</a>
                   <div className="dropdown-menu w-100 top-auto">
                     <div className="container">
                       <div className="row w-100">

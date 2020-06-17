@@ -11,6 +11,7 @@ import { reducer as formReducer } from "redux-form";
 import { singleProductCStore } from '../components/SingleProduct/store'
 import { navBarCartCStore } from '../components/Snippets/MiddleNavBar/store'
 import { homeCStore } from '../components/Home/store'
+import { allProductsCStore } from '../components/AllProducts/store'
 import { cartCStore } from '../components/Cart/store'
 import { checkoutCStore } from '../components/Checkout/store'
 import { stepperCStore } from '../components/Checkout/Stepper/store'
@@ -32,6 +33,7 @@ const cstore = history =>
     singleProductCStore: singleProductCStore,
     navBarCartCStore: navBarCartCStore,
     homeCStore: homeCStore,
+    allProductsCStore: allProductsCStore,
     cartCStore: cartCStore,
     checkoutCStore: checkoutCStore,
     stepperCStore: stepperCStore,

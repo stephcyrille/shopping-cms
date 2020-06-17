@@ -18,11 +18,11 @@ class HomeCarousel extends React.Component {
           <div className="row">
             <div className="col-sm-12">
               <div id="slider-carousel" className="carousel slide" data-ride="carousel">
-                <ol className="carousel-indicators">
+                {/* <ol className="carousel-indicators">
                   <li data-target="#slider-carousel" data-slide-to="0" className="active"></li>
                   <li data-target="#slider-carousel" data-slide-to="1"></li>
                   <li data-target="#slider-carousel" data-slide-to="2"></li>
-                </ol>
+                </ol> */}
                 
                 <div className="carousel-inner">
                   <div className="carousel-item active">
@@ -71,12 +71,12 @@ class HomeCarousel extends React.Component {
                   
                 </div>
                 
-                <a href="#slider-carousel" className="left control-carousel hidden-xs" data-slide="prev">
+                {/* <a href="#slider-carousel" className="left control-carousel hidden-xs" data-slide="prev">
                   <i className="fa fa-angle-left"></i>
                 </a>
                 <a href="#slider-carousel" className="right control-carousel hidden-xs" data-slide="next">
                   <i className="fa fa-angle-right"></i>
-                </a>
+                </a> */}
               </div>
               
             </div>

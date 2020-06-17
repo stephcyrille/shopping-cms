@@ -217,7 +217,8 @@ class Cart extends React.Component {
                           </div>
                         </div>
                       )
-                    }) : null
+                    }) : 
+                    <h5 className="text-center" style={{ padding: 20 }}>Votre panier est encore vide</h5>
                 }
 
               </div>

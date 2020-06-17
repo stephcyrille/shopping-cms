@@ -43,8 +43,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { t, i18n } = this.props
-    const { products, loading } = this.props.homeCStore
+    const { loading } = this.props.homeCStore
 
     const baseUrl = "https://google.com"
     const pagetitle = "Home | Shop"
