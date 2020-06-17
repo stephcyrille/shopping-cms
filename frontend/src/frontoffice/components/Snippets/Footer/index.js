@@ -85,7 +85,7 @@ class Footer extends React.Component {
                 <p>Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
               </div>
               <div className="col-sm-6">
-                <p className="design">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+                <p className="design">Designed by <span><a target="_blank" href="http://www.#.com">#</a></span></p>
               </div>
             </div>
           </div>

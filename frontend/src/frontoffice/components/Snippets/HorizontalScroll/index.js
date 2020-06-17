@@ -105,10 +105,11 @@ class HorizontalScroll extends React.Component {
               </a>
             </div>
             <div className='showcase-pic-legend'>
-              <h4>Robe tendance</h4>
+              <h4 style={{ marginBottom: 5 }}>Robe tendance</h4>
               <p>
-                <span>Ajouter au panier</span><br />
-                <span>Cameroun</span>
+                {/* The call list of products in the specific place */}
+                <a href="" className="horizontal_scroll_country">Cameroun</a><br />
+                <a href="" className="horizontal_scroll_add_to_cart">Ajouter au panier</a>
               </p>
             </div>
           </div>

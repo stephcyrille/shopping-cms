@@ -60,3 +60,25 @@
 .showcase-pic-legend{
   padding-top: 15px;
 }
+
+.horizontal_scroll_add_to_cart{
+  color: rgb(37, 37, 37);
+  display: inline-block;
+  margin-top: 0px;
+  padding-bottom: 1px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid black;
+  transition: ease-in-out;
+  transition-duration: 0.3s;
+  font-size: 0.8rem;
+}
+
+.horizontal_scroll_country{
+  color: rgb(37, 37, 37);
+  display: inline-block;
+  margin-top: 0px;
+  padding-bottom: 1px;
+  transition: ease-in-out;
+  transition-duration: 0.3s;
+  font-size: 0.8rem;
+}

@@ -107,7 +107,7 @@
 }
 
 .cart-link:hover>.shopping-cart_item_add_wrapper{
-    display: block;
+    /* display: block; */
 }
 
 .shopping-cart_item_add_wrapper.active{
