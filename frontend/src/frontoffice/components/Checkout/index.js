@@ -20,8 +20,7 @@ export default
 }))
 class Checkout extends React.Component {
 
-  componentDidMount(){
-    var cart_id = getSession().cart_id
+  UNSAFE_componentDidMount(){
   }
 
 
