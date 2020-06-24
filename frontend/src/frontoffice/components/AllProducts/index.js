@@ -77,15 +77,14 @@ class AllProducts extends React.Component {
 
         <Navbar topNav={true} middleNav={true} megaNav={true} /> 
         
-        <HomeCarousel />
+        {/* <HomeCarousel /> */}
 
-        <section>
+        <section style={{ paddingTop: 40 }}>
           <div className="container">
             <div className="row">
               <CategoryLeftMenu />
               <div className="col-sm-9 padding-right">
                 <FeatureHome products={ products } />
-                <RecommendedItem />
               </div>
             </div>
           </div>

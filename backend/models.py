@@ -87,6 +87,17 @@ class Collection(CoreTrackedModel):
         return reverse("single_collection", kwargs={"slug": self.slug})
 
 
+class Group(CoreTrackedModel):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("single_group", kwargs={"slug": self.slug})
+
+
 class Catalog(CoreTrackedModel):
     title = models.CharField(max_length=50)
     slug = models.SlugField(unique=True)
@@ -105,6 +116,7 @@ class Product(CoreTrackedModel):
     price = models.IntegerField()
     description = models.TextField(default='')
     category = models.ForeignKey(Category, blank=False, on_delete=models.CASCADE)
+    Group = models.ForeignKey(Group, blank=False, on_delete=models.CASCADE)
     collection = models.ForeignKey(Collection, blank=True, null=True, on_delete=models.CASCADE)
     catalog = models.ForeignKey(Catalog, blank=True, null=True, on_delete=models.CASCADE)
     material = models.CharField(max_length=150, null=True, blank=True)  # Material in which the product is made

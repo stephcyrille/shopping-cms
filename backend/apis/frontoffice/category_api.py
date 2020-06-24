@@ -23,8 +23,8 @@ class CategoryHomeSerializer(serializers.ModelSerializer):
 
 
 class CategoryAPIView(APIView):
-    #permission_classes = (AllowAny,)
+    # permission_classes = (AllowAny,)
 
     def get(self, request, format=None):
         categories = Category.objects.all()
-        return Response(CategoryHomeSerializer(categories, many=True, context={"request":request}).data)
+        return Response(CategoryHomeSerializer(categories, many=True, context={"request": request}).data)
