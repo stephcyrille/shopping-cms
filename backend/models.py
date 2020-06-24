@@ -116,7 +116,7 @@ class Product(CoreTrackedModel):
     price = models.IntegerField()
     description = models.TextField(default='')
     category = models.ForeignKey(Category, blank=False, on_delete=models.CASCADE)
-    Group = models.ForeignKey(Group, blank=False, on_delete=models.CASCADE)
+    Group = models.ForeignKey(Group, blank=False, null=True, on_delete=models.CASCADE)
     collection = models.ForeignKey(Collection, blank=True, null=True, on_delete=models.CASCADE)
     catalog = models.ForeignKey(Catalog, blank=True, null=True, on_delete=models.CASCADE)
     material = models.CharField(max_length=150, null=True, blank=True)  # Material in which the product is made
