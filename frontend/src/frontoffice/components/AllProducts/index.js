@@ -5,10 +5,9 @@ import { PulseLoader } from 'react-spinners';
 
 import Navbar from "app-js/frontoffice/components/Snippets/Navbar/index"
 import Footer from "app-js/frontoffice/components/Snippets/Footer/index"
-import HomeCarousel from "app-js/frontoffice/components/Snippets/HomeCarousel/index"
 import CategoryLeftMenu from "app-js/frontoffice/components/Snippets/CategoryLeftMenu/index"
 import FeatureHome from "app-js/frontoffice/components/Snippets/FeatureHome/index"
-import RecommendedItem from "app-js/frontoffice/components/Snippets/RecommendedItem/index"
+import PaginationButtons from "app-js/frontoffice/components/Snippets/Pagination/index"
 
 import { allProductsCStoreActions } from './store'
 
@@ -19,6 +18,11 @@ export default
 class AllProducts extends React.Component {
 
   componentDidMount(){
+    var url = this.props.match.url ? this.props.match.url : null
+    if(url){
+      var tab_values = url.split("/")
+      var group_slug = tab_values[(tab_values.length - 1)]
+    } 
     this._fetchProducts()
   }
 
@@ -82,9 +86,11 @@ class AllProducts extends React.Component {
         <section style={{ paddingTop: 40 }}>
           <div className="container">
             <div className="row">
+              {/* We will set categories of each group */}
               <CategoryLeftMenu />
               <div className="col-sm-9 padding-right">
                 <FeatureHome products={ products } />
+                <PaginationButtons />
               </div>
             </div>
           </div>

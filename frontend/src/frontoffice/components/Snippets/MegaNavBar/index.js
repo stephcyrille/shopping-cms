@@ -25,7 +25,9 @@ class MegaNavbar extends React.Component {
                 <li className="nav-item">
                   <a title="A la une" href={`${urls.HOME}`} className="nav-link">A la une</a>
                 </li>
-                <li className="nav-item dropdown position-static"><a href="#" title="Nouveautés" className="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#">Nouveautés</a>
+                <li className="nav-item dropdown position-static">
+                  <a href={`${urls.NEWS_PRODUCTS}`} title="Nouveautés" className="nav-link dropdown-toggle">Nouveautés
+                  </a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
                     <div className="container">
                       <div className="row w-100">
@@ -97,7 +99,7 @@ class MegaNavbar extends React.Component {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown position-static"><a href="#" title="Designers" className="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#">Designers</a>
+                <li className="nav-item dropdown position-static"><a href={`${urls.DESIGNER}`} title="Designers" className="nav-link dropdown-toggle">Designers</a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
                     <div className="container">
                       <div className="row w-100 designers">
@@ -206,7 +208,7 @@ class MegaNavbar extends React.Component {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown position-static"><a href="#" title="Vêtements" className="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#">Vêtements</a>
+                <li className="nav-item dropdown position-static"><a href={`${urls.CLOTHING}`} title="Vêtements" className="nav-link dropdown-toggle">Vêtements</a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
                     <div className="container">
                       <div className="row w-100 designers">
@@ -304,7 +306,7 @@ class MegaNavbar extends React.Component {
                   </div>
                 </li>
                 <li className="nav-item dropdown position-static">
-                  <a title="Chaussures" href="#" className="nav-link dropdown-toggle">Chaussures</a>
+                  <a title="Chaussures" href={`${urls.SHOE}`} className="nav-link dropdown-toggle">Chaussures</a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
                     <div className="container">
                       <div className="row w-100 designers">
@@ -381,7 +383,7 @@ class MegaNavbar extends React.Component {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown position-static"><a href="#" title="Sacs" className="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#">Sacs</a>
+                <li className="nav-item dropdown position-static"><a href={`${urls.BAG}`} title="Sacs" className="nav-link dropdown-toggle">Sacs</a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
                     <div className="container">
                       <div className="row w-100 designers">
@@ -454,7 +456,7 @@ class MegaNavbar extends React.Component {
                   </div>
                 </li>
                 <li className="nav-item dropdown position-static">
-                  <a title="Accessoires" href="#" className="nav-link dropdown-toggle">Accessoires</a>
+                  <a title="Accessoires" href={`${urls.ACCESSORIE}`} className="nav-link dropdown-toggle">Accessoires</a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
                     <div className="container">
                       <div className="row w-100 designers">
@@ -534,7 +536,7 @@ class MegaNavbar extends React.Component {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown position-static"><a title="Bijoux" href="#" className="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#">Bijoux</a>
+                <li className="nav-item dropdown position-static"><a title="Bijoux" href={`${urls.JEWELLRIE}`} className="nav-link dropdown-toggle">Bijoux</a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
                     <div className="container">
                       <div className="row w-100 designers">
@@ -602,7 +604,7 @@ class MegaNavbar extends React.Component {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown position-static"><a title="Lingerie" href="#" className="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#">Lingerie</a>
+                <li className="nav-item dropdown position-static"><a title="Lingerie" href={`${urls.LINGERIE}`} className="nav-link dropdown-toggle">Lingerie</a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
                     <div className="container">
                       <div className="row w-100 designers">
@@ -653,7 +655,7 @@ class MegaNavbar extends React.Component {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown position-static"><a title="Beauté" href="#" className="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#">Beauté</a>
+                <li className="nav-item dropdown position-static"><a title="Beauté" href={`${urls.BEAUTY}`} className="nav-link dropdown-toggle">Beauté</a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
                     <div className="container">
                       <div className="row w-100 designers">
@@ -730,7 +732,7 @@ class MegaNavbar extends React.Component {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown position-static"><a title="Editorial" href="#" className="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#">Editorial</a>
+                <li className="nav-item dropdown position-static"><a title="Editorial" href="#" className="nav-link dropdown-toggle">Editorial</a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
                     <div className="container">
                       <div className="row w-100">
@@ -797,7 +799,7 @@ class MegaNavbar extends React.Component {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown position-static"><a title="A porter" href="#" className="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#">A porter</a>
+                <li className="nav-item dropdown position-static"><a title="A porter" href={`${urls.TO_WARE}`} className="nav-link dropdown-toggle">A porter</a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
                     <div className="container">
                       <div className="row w-100">

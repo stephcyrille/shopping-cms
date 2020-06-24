@@ -27,13 +27,25 @@ class Routes extends Component {
     return (
       <Switch>
         <Route exact path={urls.HOME} component={Home} />
-        <Route exact path={urls.SINGLE_PRODUCT} component={SingleProduct} />
-        <Route exact path={urls.CART} component={Cart} />
-        <Route exact path={urls.CHECKOUT} component={Checkout} />
-        <Route exact path={urls.REGISTRATION} component={RegistrationPage} />
-        <Route exact path={urls.LOGIN} component={LoginPage} />
-        <Route exact path={urls.ALL_PRODUCT} component={AllProducts} />
-        <Route exact path={urls.NOTFOUND} component={NotFound} />
+        <Route path={urls.SINGLE_PRODUCT} component={SingleProduct} />
+        <Route path={urls.CART} component={Cart} />
+        <Route path={urls.CHECKOUT} component={Checkout} />
+        <Route path={urls.REGISTRATION} component={RegistrationPage} />
+        <Route path={urls.LOGIN} component={LoginPage} />
+
+        <Route path={urls.NEWS_PRODUCTS} component={AllProducts} />
+        <Route path={urls.DESIGNER} component={AllProducts} />
+        <Route path={urls.CLOTHING} component={AllProducts} />
+        <Route path={urls.SHOE} component={AllProducts} />
+        <Route path={urls.BAG} component={AllProducts} />
+        <Route path={urls.ACCESSORIE} component={AllProducts} />
+        <Route path={urls.JEWELLRIE} component={AllProducts} />
+        <Route path={urls.LINGERIE} component={AllProducts} />
+        <Route path={urls.BEAUTY} component={AllProducts} />
+        <Route path={urls.TO_WARE} component={AllProducts} />
+
+        <Route path={urls.ALL_PRODUCT} component={AllProducts} />
+        <Route path={urls.NOTFOUND} component={NotFound} />
         <Redirect to={urls.NOTFOUND} />
       </Switch>
     );
