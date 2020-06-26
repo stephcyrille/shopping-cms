@@ -174,3 +174,13 @@
 .today_post_text{
     font-size: 0.8em !important;
 }
+
+
+
+/* -----------Responsive------------- */
+/* XS */
+@media (max-width: 767px) {
+    .middle-nav{
+        display: none;
+    }
+}

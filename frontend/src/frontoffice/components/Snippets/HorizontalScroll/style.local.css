@@ -82,3 +82,12 @@
   transition-duration: 0.3s;
   font-size: 0.8rem;
 }
+
+.flash_sale{
+  margin-bottom: 0px;
+  padding-top: 15px;
+  text-transform: uppercase;
+  padding-bottom: 0;
+  line-height: 1.2;
+  font-weight: normal;
+}

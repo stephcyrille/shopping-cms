@@ -6,6 +6,7 @@ import { PulseLoader } from 'react-spinners';
 
 import Navbar from "app-js/frontoffice/components/Snippets/Navbar/index"
 import HorizontalScroll from "app-js/frontoffice/components/Snippets/HorizontalScroll/index"
+import Drawer from "app-js/frontoffice/components/Snippets/Drawer/index"
 import Footer from "app-js/frontoffice/components/Snippets/Footer/index"
 
 import { homeCStoreActions } from './store'
@@ -77,6 +78,8 @@ class Home extends React.Component {
 
         <Navbar topNav={true} middleNav={true} megaNav={true} /> 
         
+        <Drawer />
+        
         <section>
           <div className="container">
             <div className="row">
@@ -120,7 +123,8 @@ class Home extends React.Component {
                         backgroundImage: `url('/static/images/cover1.jpg')`, 
                         width: '100%', 
                         height: "100%", 
-                        backgroundSize: 'cover'
+                        backgroundSize: 'contain',
+                        backgroundRepeat: "no-repeat",
                       }}>
                     </div>
                   </a>
@@ -130,7 +134,7 @@ class Home extends React.Component {
                 {/* Next magazine cover row (two pics with legend) */}
                 <h5 className='latest-articles-title'>Les nouveautés</h5>
                 <div className="row latest-row" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
-                  <div className="col-sm-6" style={{ paddingLeft: 0, paddingRight: 10 }}>
+                  <div className=" col-6" style={{ paddingLeft: 0, paddingRight: 10 }}>
                     <a href="#" className='home-latest-wrapper'> 
                       <div
                           style={{  
@@ -151,7 +155,7 @@ class Home extends React.Component {
                         </div>
                       </a>
                   </div>
-                  <div className="col-sm-6" style={{ paddingLeft: 10, paddingRight: 0 }}>
+                  <div className=" col-6" style={{ paddingLeft: 10, paddingRight: 0 }}>
                     <a href="#" className='home-latest-wrapper'> 
                       <div
                         style={{  
@@ -252,7 +256,7 @@ class Home extends React.Component {
 
             {/* Jewelery, accessories and beauty tools */}
             <div className="row home-soft-category" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
-              <div className="col-sm-4" style={{ paddingLeft: 0, paddingRight: 10 }}>
+              <div className="col-sm-4 home_categorie" style={{ paddingLeft: 0, paddingRight: 10 }}>
                 <a href="#" className='home-latest-wrapper'> 
                   <div
                       style={{  
@@ -273,7 +277,7 @@ class Home extends React.Component {
                     </div>
                   </a>
               </div>
-              <div className="col-sm-4" style={{ paddingLeft: 10, paddingRight: 10 }}>
+              <div className="col-sm-4 home_categorie" style={{ paddingLeft: 10, paddingRight: 10 }}>
                 <a href="#" className='home-latest-wrapper'> 
                   <div
                     style={{  
@@ -294,7 +298,7 @@ class Home extends React.Component {
                   </div>
                 </a>
               </div>
-              <div className="col-sm-4" style={{ paddingLeft: 10, paddingRight: 0 }}>
+              <div className="col-sm-4 home_categorie" style={{ paddingLeft: 10, paddingRight: 0 }}>
                 <a href="#" className='home-latest-wrapper'> 
                   <div
                       style={{  

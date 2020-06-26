@@ -121,19 +121,24 @@ class HorizontalScroll extends React.Component {
   buildControls() {
     const { canScrollLeft, canScrollRight } = this.state
     return (
-      <div className="item-controls">
-        <i className="fa fa-chevron-left fa-2x chevron-lft"
-          onClick={() => {
-            this.scrollContainerBy(-200)
-          }}
-        ></i>
-      
+      <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
+        <div className="col-6">
+          <h4 className="flash_sale">Ventes flash</h4>
+        </div>
+        <div className="col-6 item-controls">
+          <i className="fa fa-chevron-left fa-2x chevron-lft"
+            onClick={() => {
+              this.scrollContainerBy(-200)
+            }}
+          ></i>
+        
 
-        <i className="fa fa-chevron-right fa-2x chevron-rgt"
-          onClick={() => {
-            this.scrollContainerBy(200)
-          }}
-        ></i>
+          <i className="fa fa-chevron-right fa-2x chevron-rgt"
+            onClick={() => {
+              this.scrollContainerBy(200)
+            }}
+          ></i>
+        </div>
       </div>
     )
   }

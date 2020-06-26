@@ -15,7 +15,7 @@ class MegaNavbar extends React.Component {
 
     return (
       <div>
-        <nav className="navbar navbar-expand-md shadow-sm navbar-dark bg-dark sticky-top">
+        <nav className="middle-nav navbar navbar-expand-md shadow-sm navbar-dark bg-dark sticky-top">
           <div className="container">
             <button className="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#main-nav-1" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
