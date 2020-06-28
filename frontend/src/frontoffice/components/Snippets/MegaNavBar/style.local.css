@@ -183,4 +183,7 @@
     .middle-nav{
         display: none;
     }
+    .home_top_banner{
+        margin-top: 0px !important;
+    }
 }

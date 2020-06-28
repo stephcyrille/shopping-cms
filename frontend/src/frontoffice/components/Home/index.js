@@ -78,7 +78,9 @@ class Home extends React.Component {
 
         <Navbar topNav={true} middleNav={true} megaNav={true} /> 
         
-        <Drawer />
+        <div className="drawer_menu">
+          <Drawer />
+        </div>
         
         <section>
           <div className="container">
