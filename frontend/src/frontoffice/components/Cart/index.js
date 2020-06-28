@@ -7,6 +7,7 @@ import _ from "underscore";
 
 import Navbar from "app-js/frontoffice/components/Snippets/Navbar/index"
 import Footer from "app-js/frontoffice/components/Snippets/Footer/index"
+import Drawer from "app-js/frontoffice/components/Snippets/Drawer/index"
 
 import { cartCStoreActions } from './store'
 import { navBarCartCStoreActions } from '../Snippets/MiddleNavBar/store'
@@ -147,14 +148,18 @@ class Cart extends React.Component {
         </Helmet>
 
         <Navbar topNav={true} middleNav={true} megaNav={true} />
+
+        <div className="drawer_menu">
+          <Drawer />
+        </div>
     
         <section className="cart-wrapper">
           <div className="container">
-            <div className="row">
+            <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
               {/* Cart product list */}
               <div className="col-sm-8">
                 <div className="row">
-                  <h3 className="" style={{ textTransform: 'uppercase', paddingBottom: '20px' }}>Panier</h3>
+                  <h3 className="cart_main_title">Panier</h3>
                 </div>
 
                 <div className="row cart-header">
@@ -182,28 +187,38 @@ class Cart extends React.Component {
                       return (
                         <div className="row" key={key}>
                           {/* product picture box */}
-                          <div className="col-sm-2 picture-box">
+                          <div className="col-4 col-sm-2 picture-box">
                             <div className="cart_item-img-wrapper">
                               <a href={`/shop/products/${val.slug}`} className="">
                                 <img className="img-fluid" src={ val.pictures ? val.pictures[0] : null } />
                               </a>
                             </div>
                           </div>
-                          <div className="col-sm-3 cart-description-text">
+                          <div className="col-8 col-sm-3 cart-description-text">
                             <h6 className="">
                               <a href={`/shop/products/${val.slug}`} className="">
                                 { val.title }
                               </a>
                             </h6>
                             <p className="">{ val.color }</p>
+                            <div className="cart-size-mobile">
+                              <h6 className="">{ val.size }</h6>
+                              <button
+                                type="button" 
+                                className="btn btn-outline-secondary btn-sm"
+                                onClick={this._handleRemoveItem.bind(this, val.id)}
+                              >
+                                Retirer le produit
+                              </button>
+                            </div>
                           </div>
-                          <div className="col-sm-2 cart-description-text">
+                          <div className="col-sm-2 cart-description-text-hide">
                             <h6 className="">{ val.size }</h6>
                           </div>
-                          <div className="col-sm-2 cart-description-text">
+                          <div className="col-sm-2 cart-description-text-hide">
                             <h6 className="">{ val.selected_quantity }</h6>
                           </div>
-                          <div className="col-sm-2 cart-description-text">
+                          <div className="col-sm-2 cart-description-text-hide">
                             <h6 className="">{ val.line_total } FCFA</h6>  
                           </div>
                           <div className="col-sm-1 delete-item">
@@ -243,17 +258,17 @@ class Cart extends React.Component {
                       <br />
                       <div className="total-group">
                         <div className="row">
-                          <div className="col-sm-6"><h6 className="">Sous total</h6></div>
-                          <div className="col-sm-6"><p className="">{ cart_sub_total } FCFA</p></div>
+                          <div className="col-6 col-sm-6"><h6 className="">Sous total</h6></div>
+                          <div className="col-6 col-sm-6"><p className="">{ cart_sub_total } FCFA</p></div>
                         </div>
                         <div className="row">
-                          <div className="col-sm-6"><h6 className="">Livraison</h6></div>
-                          <div className="col-sm-6"><p className="">{ cart_sub_total == 0 ? 0 : cart_delivery_price } FCFA</p></div>
+                          <div className="col-6 col-sm-6"><h6 className="">Livraison</h6></div>
+                          <div className="col-6 col-sm-6"><p className="">{ cart_sub_total == 0 ? 0 : cart_delivery_price } FCFA</p></div>
                         </div>
                       </div>
                       <div className="row line-total">
-                        <div className="col-sm-6"><h5 className="">Montant Total</h5></div>
-                        <div className="col-sm-6"><h5 className="price-total">{ cart_sub_total == 0 ? 0 : cart_total } FCFA</h5></div>
+                        <div className="col-6 col-sm-6"><h5 className="">Montant Total</h5></div>
+                        <div className="col-6 col-sm-6"><h5 className="price-total">{ cart_sub_total == 0 ? 0 : cart_total } FCFA</h5></div>
                       </div>
                     </div>
                   </div>
@@ -273,9 +288,9 @@ class Cart extends React.Component {
                 <br />
                 
                 <div className="row">
-                  <div className="checkout-button">
+                  <div className="checkout-button continue_shop">
                     <a 
-                      href="#"
+                      href={`${urls.HOME}`}
                       className="btn btn-outline-secondary"
                     >
                       Continuer vos achats

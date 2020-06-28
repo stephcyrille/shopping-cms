@@ -133,5 +133,8 @@
     }
     .footer-bottom p.design {
         text-align: center;
-    }    
+    }  
+    .footer_copyright{
+        text-align: center;
+    }  
 }

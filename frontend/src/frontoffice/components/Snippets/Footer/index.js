@@ -82,7 +82,7 @@ class Footer extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-sm-6">
-                <p>Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+                <p className="footer_copyright">Copyright © 2020 MASC Intelligence - Tous les droits reservés.</p>
               </div>
               <div className="col-sm-6">
                 <p className="design">Designed by <span><a target="_blank" href="http://www.#.com">#</a></span></p>
