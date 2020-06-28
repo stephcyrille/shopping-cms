@@ -18,6 +18,7 @@ import { reduxForm, Field, propTypes as reduxFormPropTypes } from "redux-form";
 
 import { getSession, saveCartSession } from '../../utils/session_utils'
 import Navbar from "app-js/frontoffice/components/Snippets/Navbar/index"
+import Drawer from "app-js/frontoffice/components/Snippets/Drawer/index"
 import Footer from "app-js/frontoffice/components/Snippets/Footer/index"
 
 import './style.local.css';
@@ -196,7 +197,7 @@ class SingleProduct extends React.Component {
 
     return (
       //<!-- Document Wrapper -->
-      <div className="single-product">
+      <div className="">
 
         { loading ? ( 
             <div className='sweet-loading'>
@@ -224,28 +225,34 @@ class SingleProduct extends React.Component {
 
 
         <Navbar topNav={true} middleNav={true} megaNav={true} />
+
+        <div className="drawer_menu">
+          <Drawer />
+        </div>
         
-        <div className="container">
+        <div className="container single-product">
           <div className="row">
           <div className="col-xs-12 col-sm-12">
             {
               single_product ?
             (
             <div className="product-details">
-              <div className="row">
-                <div className="col-sm-2">
-                  { !_.isEmpty(single_product.varieties) ? 
-                        single_product.varieties[variety_id] ? (single_product.varieties[variety_id].pictures)
-                          .map((val, key) => {
-                            return (
-                              <div className="variety_thumnail" key={key} onClick={ this._handleChangeVarietyImage.bind(this, key) }>
-                                <div className={`variety_thumnail_opak ${ key==thumbnail_picture_key ? 'active' : 0 }`} key={key}>
-                                </div>
-                                <img className="" src={val} alt="" />
+              <div className="row" style={{ marginRight: 0, marginLeft: 0 }}>
+                <div className="col-sm-2 thumbnail_master_body">
+                  <div className="row thumnail_center">
+                    { !_.isEmpty(single_product.varieties) ? 
+                      single_product.varieties[variety_id] ? (single_product.varieties[variety_id].pictures)
+                        .map((val, key) => {
+                          return (
+                            <div className="col-4 variety_thumnail" key={key} onClick={ this._handleChangeVarietyImage.bind(this, key) }>
+                              <div className={`variety_thumnail_opak ${ key==thumbnail_picture_key ? 'active' : 0 }`} key={key}>
                               </div>
-                            )
-                          }) : null : null
-                      }
+                              <img className="" src={val} alt="" />
+                            </div>
+                          )
+                        }) : null : null
+                    }
+                  </div>
                 </div>
                 <div className="col-sm-5">
                   <div className="view-product">
@@ -269,7 +276,7 @@ class SingleProduct extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-sm-5">
+                <div className="col-sm-5 product_info_wrapper">
                   <div className="product-information">
                     <img src="images/product-details/new.jpg" className="newarrival" alt="" />
                     <h2 className="display-4">{ single_product.title }</h2>

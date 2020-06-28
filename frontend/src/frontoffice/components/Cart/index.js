@@ -202,7 +202,8 @@ class Cart extends React.Component {
                             </h6>
                             <p className="">{ val.color }</p>
                             <div className="cart-size-mobile">
-                              <h6 className="">{ val.size }</h6>
+                              <h6 className="">Taille: { val.size }</h6>
+                              <h6 className="">Quantité: { val.selected_quantity }</h6>
                               <button
                                 type="button" 
                                 className="btn btn-outline-secondary btn-sm"
