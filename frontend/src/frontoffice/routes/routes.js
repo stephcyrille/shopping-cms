@@ -18,6 +18,7 @@ import LoginPage from "app-js/frontoffice/components/Auth/Login/index.js";
 import RegistrationPage from "app-js/frontoffice/components/Auth/Login/Registration/index";
 import NotFound from "app-js/frontoffice/components/404/index"
 import AllProducts from "app-js/frontoffice/components/AllProducts/index"
+import Editorial from "app-js/frontoffice/components/Editorial/index"
 
 
 @withRouter
@@ -28,6 +29,8 @@ class Routes extends Component {
       <Switch>
         <Route exact path={urls.HOME} component={Home} />
         <Route path={urls.SINGLE_PRODUCT} component={SingleProduct} />
+        <Route path={urls.EDITORIAL} component={Editorial} />
+        
         <Route path={urls.CART} component={Cart} />
         <Route path={urls.CHECKOUT} component={Checkout} />
         <Route path={urls.REGISTRATION} component={RegistrationPage} />

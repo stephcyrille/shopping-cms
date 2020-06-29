@@ -732,7 +732,7 @@ class MegaNavbar extends React.Component {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown position-static"><a title="Editorial" href="#" className="nav-link dropdown-toggle">Editorial</a>
+                <li className="nav-item dropdown position-static"><a title="Editorial" href={`${urls.EDITORIAL}`} className="nav-link dropdown-toggle">Editorial</a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
                     <div className="container">
                       <div className="row w-100">

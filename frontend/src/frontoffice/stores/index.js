@@ -13,6 +13,7 @@ import { navBarCartCStore } from '../components/Snippets/MiddleNavBar/store'
 import { homeCStore } from '../components/Home/store'
 import { allProductsCStore } from '../components/AllProducts/store'
 import { cartCStore } from '../components/Cart/store'
+import { editorialCStore } from '../components/Editorial/store'
 import { checkoutCStore } from '../components/Checkout/store'
 import { stepperCStore } from '../components/Checkout/Stepper/store'
 import { step3CStore } from '../components/Checkout/Stepper/Snippeds/Step3/store'
@@ -34,6 +35,7 @@ const cstore = history =>
     navBarCartCStore: navBarCartCStore,
     homeCStore: homeCStore,
     allProductsCStore: allProductsCStore,
+    editorialCStore: editorialCStore,
     cartCStore: cartCStore,
     checkoutCStore: checkoutCStore,
     stepperCStore: stepperCStore,
