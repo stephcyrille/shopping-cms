@@ -119,12 +119,16 @@ class HorizontalScroll extends React.Component {
   }
 
   buildControls() {
-    const { canScrollLeft, canScrollRight } = this.state
     return (
       <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
-        <div className="col-6">
-          <h4 className="flash_sale">Ventes flash</h4>
-        </div>
+        
+          <div className="col-6">
+            { this.props.title && (
+              <h4 className="flash_sale">Ventes flash</h4>)
+            }
+          </div>
+        
+        
         <div className="col-6 item-controls">
           <i className="fa fa-chevron-left fa-2x chevron-lft"
             onClick={() => {

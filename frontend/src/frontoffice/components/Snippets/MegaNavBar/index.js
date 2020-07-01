@@ -15,7 +15,7 @@ class MegaNavbar extends React.Component {
 
     return (
       <div>
-        <nav className="middle-nav navbar navbar-expand-md shadow-sm navbar-dark bg-dark sticky-top">
+        <nav className="middle-nav navbar navbar-expand-md shadow-sm navbar-dark sticky-top">
           <div className="container">
             <button className="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#main-nav-1" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
@@ -90,115 +90,6 @@ class MegaNavbar extends React.Component {
                                     <span className="text_legend">
                                       Robe tailleur Afrik
                                     </span>
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li className="nav-item dropdown position-static"><a href={`${urls.DESIGNER}`} title="Designers" className="nav-link dropdown-toggle">Designers</a>
-                  <div className="dropdown-menu w-100 top-auto catalogue_menu">
-                    <div className="container">
-                      <div className="row w-100 designers">
-                        <div className="col-sm-4">
-                          <h4 className="">Designers vedettes</h4>
-                          <ul className="feature_designer">
-                              <li>
-                                <a href="">
-                                  Afro YACA Drum 1
-                                </a>
-                              </li>
-                              <li>
-                                <a href="">
-                                  Afro YACA Drum 1
-                                </a>
-                              </li>
-                              <li>
-                                <a href="">
-                                  Afro YACA Drum 1
-                                </a>
-                              </li>
-                              <li>
-                                <a href="">
-                                  Afro YACA Drum 1
-                                </a>
-                              </li>
-                              <li>
-                                <a href="">
-                                  Afro YACA Drum 1
-                                </a>
-                              </li>
-                              <li>
-                                <a href="">
-                                  Afro YACA Drum 1
-                                </a>
-                              </li>
-                              <li>
-                                <a href="">
-                                  Afro YACA Drum 1
-                                </a>
-                              </li>
-                              <li>
-                                <a href="">
-                                  Afro YACA Drum 1
-                                </a>
-                              </li>
-                              <li>
-                                <a href="">
-                                  Afro YACA Drum 1
-                                </a>
-                              </li>
-                              <li>
-                                <a href="">
-                                  Afro YACA Drum 1
-                                </a>
-                              </li>
-                              <li>
-                                <a href="">
-                                  Afro YACA Drum 1
-                                </a>
-                              </li>
-                              <li>
-                                <a href="">
-                                  Afro YACA Drum 1
-                                </a>
-                              </li>
-                              <li>
-                                <a href="">
-                                  Afro YACA Drum 1
-                                </a>
-                              </li>
-                          </ul>
-                        </div>
-                        <div className="col-sm-8">
-                          <div className="row">
-                            <div className="col-sm-6">
-                              <h4 className="">Découvrez</h4>
-                              <ul className="new_designer">
-                                <li>
-                                  <a href="">
-                                    Designer 1
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Designer 2
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Nouveaux designers AYD
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div className="col-sm-6">
-                              <a href="" className="">
-                                <div className="designer_img_wrapper">
-                                  <img src="/static/images/jewellery.jpg" className="designer_picture" />
                                 </div>
                               </a>
                             </div>

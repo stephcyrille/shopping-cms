@@ -324,7 +324,7 @@ class Home extends React.Component {
             </div>
             {/* End Jewelery, accessories and beauty tools */}
             <div className="row selling-showcase" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
-              <HorizontalScroll />
+              <HorizontalScroll title={true} />
             </div>
 
           </div>
