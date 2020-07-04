@@ -96,3 +96,7 @@ a#scrollUp i {
 	-webkit-animation: spinBack 1s linear infinite;
 	animation: spinBack 1s linear infinite;
 }
+
+.title-mb-30 {
+    padding-bottom: 30px;
+}

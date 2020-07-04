@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {Helmet} from "react-helmet";
 import { PulseLoader } from 'react-spinners';
 import { withStyles } from '@material-ui/core/styles';
+import CSSModules from "react-css-modules";
 
 import Navbar from "app-js/frontoffice/components/Snippets/Navbar/index"
 import Drawer from "app-js/frontoffice/components/Snippets/Drawer/index"
@@ -11,15 +12,22 @@ import Footer from "app-js/frontoffice/components/Snippets/Footer/index"
 
 import { editorialCStoreActions } from './store'
 
-import './style.local.css';
+import styles from './style.local.scss';
+import transitions from "@material-ui/core/styles/transitions";
 
 
 const useStyles = () => ({
   root: {
     backgroundColor: "#fff",
   },
+  // GENERIC
+  h4_article_title: {
+    textTransform: "uppercase",
+    fontWeight: 200,
+    marginBottom: 10,
+  },
   section: {
-    marginBottom: 20,
+    marginBottom: 0,
   },
   editorial: {
     backgroundColor: "#fff",
@@ -85,6 +93,7 @@ const useStyles = () => ({
     color: "#fff",
     fontSize: "2.5rem",
     margin: 0,
+    textTransform: "uppercase",
   }, 
   colored_subtitle: {
     color: "#fff",
@@ -104,28 +113,87 @@ const useStyles = () => ({
     padding: "40px 10px 0 10px"
   },
   bloc_col_wrapper_3: {
-    padding: "0px 10px 0 10px"
+    padding: "80px 10px 0 10px"
   },
   img_container: {
     height: 400,
     width: "100%",
-    backgroundImage: "url('/static/images/dress2.png')",
+    backgroundImage: "url('/static/images/dress.jpg')",
     backgroundSize: "cover",
   },
   img_legend: {
     paddingTop: 20,
   },
+  
   col_article_title: {
     textTransform: "uppercase",
     fontWeight: 200,
     marginBottom: 10,
   },
+  
   col_article_description: {
     color: "black",
   },
   col_article_date: {
     color: "gray",
-  }
+  },
+  styled_left: {
+    padding: 0,
+    height: 450,
+    width: "100%",
+    backgroundImage: "url('/static/images/styled.jpeg')",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+  },
+  styled_right: {
+    height: 350,
+    marginTop: 50,
+    marginLeft: -50,
+    backgroundColor: "#fff",
+    width: "100%",
+    paddingTop: 20,
+  },
+  styled_shop_now: {
+    position: "absolute",
+    bottom: 0,
+  },
+  styled_button_shop_now: {
+    "&:hover" : {
+      borderBottom: "1px solid rgba(0,0,0,1)",
+      transition: "ease-in",
+      transitionDuration: "0.4s"
+    },
+    fontWeight: 400,
+    paddingBottom: 5,
+    color: "black",
+    borderBottom: "1px solid rgba(0,0,0,0)",
+    transition: "ease-in",
+    transitionDuration: "0.4s"
+  },
+  dont_miss_color: {
+    backgroundColor: "black",
+    paddingTop: 40,
+    paddingBottom: 40,
+    marginTop: 40,
+  },
+  dont_miss_article_title: {
+    textTransform: "uppercase",
+    fontWeight: 200,
+    marginBottom: 10,
+    color: "white !important"
+  },
+  dont_miss_article_description: {
+    color: "white",
+  },
+  dont_miss_article_date: {
+    color: "white",
+  },
+  dont_miss_img_container: {
+    height: 300,
+    width: "100%",
+    backgroundImage: "url('/static/images/styled.jpeg')",
+    backgroundSize: "cover",
+  },
 });
 
 
@@ -134,6 +202,7 @@ export default
     editorialCStore: state.editorialCStore
 }))
 @withStyles(useStyles)
+@CSSModules(styles, { allowMultiple: true })
 class Editorial extends React.Component {
 
   componentDidMount(){
@@ -209,7 +278,7 @@ class Editorial extends React.Component {
               </div>
               <div className={ `col-sm-4 ${classes.editorial}` } >
                 <h1 className={`display-4 ${classes.edito_title}`}>A la une</h1>
-                <p class={`lead ${classes.paraf_edito}`}>
+                <p className={`lead ${classes.paraf_edito}`}>
                 <i className="fas fa-quote-left"></i>&nbsp; Parce que chez Afro YACA Drum, on a toujours adoré les livres, découvrez régulièrement toutes nos sélections thématisées. Promis : tous les livres ont été lus et approuvés !&nbsp;<i className="fas fa-quote-right"></i></p> 
               </div>
             </div>
@@ -219,7 +288,7 @@ class Editorial extends React.Component {
           <div className="container">
             <div className={ `row ${classes.guess}` } style={{ margin: 0 }}>
               <div className={ `col-sm-6 ${classes.guess_left}` } >
-                <div class={`lead ${classes.guess_words}`}>
+                <div className={`lead ${classes.guess_words}`}>
                   <h2 className={`display-4`}>Icone</h2>
                   Parce que chez Afro YACA Drum, on a toujours adoré les livres, découvrez régulièrement toutes nos sélections thématisées. Promis : tous les livres.<br/>Adoré les livres, découvrez régulièrement toutes nos sélections thématisées. Parce que chez Afro YACA Drum, on a toujours adoré les livres !
                 </div> 
@@ -292,6 +361,177 @@ class Editorial extends React.Component {
                   </a>
                 </div>
 
+              </div>
+            </div>
+          </div>
+
+          {/* BLOCK WITH STYLED TEXT */}
+          <div className="container">
+            <div className={ `row ${classes.style_article}` } style={{ margin: 0 }}>
+              <a href="#" className={ `col-sm-8 ${classes.styled_left}` } >
+                
+              </a>
+              <a href="#" className={ `col-sm-4 ${classes.styled_right}` } >
+                <h4 className={`${classes.h4_article_title}`}>Art du style</h4>
+                <h4 className={`${classes.h3_styled}`}>6 façons de s'habiller de manière stylé cet été</h4>
+                <div className={`${classes.styled_shop_now}`}>
+                  <span className={`${classes.styled_button_shop_now}`}>
+                    Aller à la boutique
+                  </span>
+                  <br />
+                  <br />
+                  <span className={`${classes.col_article_date}`}>21 JUL 20</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          {/* SECOND ROW OF ARTICLES */}
+          <div className={classes.col_article}>
+            <div className={`container`}>
+              <div className={`row`} style={{ margin: 0 }}>
+                {/* FIRST */}
+                <div className="col-6 col-sm-4">
+                  <a href="#">
+                    <div className={`${classes.bloc_col_wrapper_1}`}>
+                      <div className={classes.img_container}>
+                      </div>
+                      <div className={classes.img_legend}>
+                        <h4 className={` ${classes.col_article_title}`}>Art du style</h4>
+                        <p className={`${classes.col_article_description}`}>Toutes les façons de porter une robe</p>
+                        <span className={`${classes.col_article_date}`}>21 JUL 20</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                {/* SECOND */}
+                <div className="col-6 col-sm-4">
+                  <a href="#">
+                    <div className={`${classes.bloc_col_wrapper_2}`}>
+                      <div className={classes.img_container}>
+                      </div>
+                      <div className={classes.img_legend}>
+                        <h4 className={` ${classes.col_article_title}`}>Art du style</h4>
+                        <p className={`${classes.col_article_description}`}>Toutes les façons de porter une robe</p>
+                        <span className={`${classes.col_article_date}`}>21 JUL 20</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                {/* THIRTH */}
+                <div className="col-6 col-sm-4">
+                  <a href="#">
+                    <div className={`${classes.bloc_col_wrapper_3}`}>
+                      <div className={classes.img_container}>
+                      </div>
+                      <div className={classes.img_legend}>
+                        <h4 className={` ${classes.col_article_title}`}>Art du style</h4>
+                        <p className={`${classes.col_article_description}`}>Toutes les façons de porter une robe</p>
+                        <span className={`${classes.col_article_date}`}>21 JUL 20</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          
+          
+          <div className={classes.dont_miss_color}>
+            <div className={`container`}>
+              <h2 className={`display-4 text-center ${classes.colored_title} title-mb-30`}>Articles manqués</h2>
+              {/* FIRST ROW */}
+              <div className={`row`} style={{ margin: 0 }}>
+                {/* FIRST */}
+                <div className="col-6 col-sm-4">
+                  <a href="#">
+                    <div className={`${classes.bloc_col_wrapper_1}`}>
+                      <div className={classes.dont_miss_img_container}>
+                      </div>
+                      <div className={classes.img_legend}>
+                        <h4 className={` ${classes.dont_miss_article_title}`}>Art du style</h4>
+                        <p className={`${classes.dont_miss_article_description}`}>Toutes les façons de porter une robe</p>
+                        <span className={`${classes.dont_miss_article_date}`}>21 JUL 20</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                {/* SECOND */}
+                <div className="col-6 col-sm-4">
+                  <a href="#">
+                    <div className={`${classes.bloc_col_wrapper_1}`}>
+                      <div className={classes.dont_miss_img_container}>
+                      </div>
+                      <div className={classes.img_legend}>
+                        <h4 className={` ${classes.dont_miss_article_title}`}>Art du style</h4>
+                        <p className={`${classes.dont_miss_article_description}`}>Toutes les façons de porter une robe</p>
+                        <span className={`${classes.dont_miss_article_date}`}>21 JUL 20</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                {/* THIRT */}
+                <div className="col-6 col-sm-4">
+                  <a href="#">
+                    <div className={`${classes.bloc_col_wrapper_1}`}>
+                      <div className={classes.dont_miss_img_container}>
+                      </div>
+                      <div className={classes.img_legend}>
+                        <h4 className={` ${classes.dont_miss_article_title}`}>Art du style</h4>
+                        <p className={`${classes.dont_miss_article_description}`}>Toutes les façons de porter une robe</p>
+                        <span className={`${classes.dont_miss_article_date}`}>21 JUL 20</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              {/* SECOND ROW */}
+              <div className={`row`} style={{ margin: "40px 0 0 0" }}>
+                {/* FIRST */}
+                <div className="col-6 col-sm-4">
+                  <a href="#">
+                    <div className={`${classes.bloc_col_wrapper_1}`}>
+                      <div className={classes.dont_miss_img_container}>
+                      </div>
+                      <div className={classes.img_legend}>
+                        <h4 className={` ${classes.dont_miss_article_title}`}>Art du style</h4>
+                        <p className={`${classes.dont_miss_article_description}`}>Toutes les façons de porter une robe</p>
+                        <span className={`${classes.dont_miss_article_date}`}>21 JUL 20</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                {/* SECOND */}
+                <div className="col-6 col-sm-4">
+                  <a href="#">
+                    <div className={`${classes.bloc_col_wrapper_1}`}>
+                      <div className={classes.dont_miss_img_container}>
+                      </div>
+                      <div className={classes.img_legend}>
+                        <h4 className={` ${classes.dont_miss_article_title}`}>Art du style</h4>
+                        <p className={`${classes.dont_miss_article_description}`}>Toutes les façons de porter une robe</p>
+                        <span className={`${classes.dont_miss_article_date}`}>21 JUL 20</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                {/* THIRT */}
+                <div className="col-6 col-sm-4">
+                  <a href="#">
+                    <div className={`${classes.bloc_col_wrapper_1}`}>
+                      <div className={classes.dont_miss_img_container}>
+                      </div>
+                      <div className={classes.img_legend}>
+                        <h4 className={` ${classes.dont_miss_article_title}`}>Art du style</h4>
+                        <p className={`${classes.dont_miss_article_description}`}>Toutes les façons de porter une robe</p>
+                        <span className={`${classes.dont_miss_article_date}`}>21 JUL 20</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
