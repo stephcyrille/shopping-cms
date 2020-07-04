@@ -762,6 +762,26 @@ class MegaNavbar extends React.Component {
                     </div>
                   </div>
                 </li>
+
+                <li className="nav-item dropdown position-static"><a title="Editorial" href={`${urls.SERVICE}`} className="nav-link dropdown-toggle">Services</a>
+                  <div className="dropdown-menu w-100 top-auto catalogue_menu">
+                    <div className="container">
+                      <div className="row w-100">
+                        <div className="col-sm-2">
+                          <h3 className="">Nos services</h3>
+                          <a title="Mois" href="#" className="dropdown-item">OH! My Box</a>
+                          <a title="Tendance" href="#" className="dropdown-item">Service</a>
+                        </div>
+                        <div className="col-sm-3 nav_cover">
+                        </div>
+                        <div className="col-sm-4 nav_cover">
+                        </div>
+                        <div className="col-sm-4">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>

@@ -48,6 +48,7 @@ class Routes extends Component {
         <Route path={urls.TO_WARE} component={AllProducts} />
 
         <Route path={urls.ALL_PRODUCT} component={AllProducts} />
+        <Route path={urls.SERVICE} component={NotFound} />
         <Route path={urls.NOTFOUND} component={NotFound} />
         <Redirect to={urls.NOTFOUND} />
       </Switch>

@@ -7,7 +7,6 @@ const urls = {
   
   // EACH CATALOG GROUO CORRESPOND OF BACKEND GROUP
   NEWS_PRODUCTS: "/shop/catalog/news-products",
-  DESIGNER: "/shop/catalog/designer",
   CLOTHING: "/shop/catalog/clothing",
   SHOE: "/shop/catalog/shoe",
   BAG: "/shop/catalog/bag",
@@ -21,6 +20,7 @@ const urls = {
   CART: "/shop/sopping-cart",
   CHECKOUT: "/shop/checkout",
   EDITORIAL: "/shop/editorial",
+  SERVICE: "/shop/ayd/services",
 
   ALL_PRODUCT: "/shop/all_products",
 };

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%"
   },
   appBar: {
-    backgroundColor: "#565656",
+    backgroundColor: "#fdca23 !important",
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: "#565656",
+    backgroundColor: "#fdca23 !important",
     color: "#fff",
   },
   drawerHeader: {
@@ -411,6 +411,30 @@ export default function PersistentDrawerLeft() {
                 <List component="div" disablePadding>
                   <ListItem button className={classes.nested}>
                     <ListItemText primary="Meilleures ventes" />
+                  </ListItem>
+                </List>
+              </Collapse>
+              ) :
+              null
+            }
+            <ListItem 
+              button 
+              className={ `${ selectedIndex == 12 ? classes.li_active : null } ${classes.divider_end}` }
+              selected={selectedIndex === 12}
+              onClick={(event) => handleListItemClick(event, 12)}
+            >
+              <ListItemText primary="Nos services" />
+              {selectedIndex==12 ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            {
+              selectedIndex == 12 ?
+              (<Collapse in={true} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText primary="Oh! My Box" />
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText primary="Services" />
                   </ListItem>
                 </List>
               </Collapse>
