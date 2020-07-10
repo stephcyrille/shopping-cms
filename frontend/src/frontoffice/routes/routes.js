@@ -15,7 +15,7 @@ import SingleProduct from "app-js/frontoffice/components/SingleProduct/index.js"
 import Cart from "app-js/frontoffice/components/Cart/index.js";
 import Checkout from "app-js/frontoffice/components/Checkout/index.js";
 import LoginPage from "app-js/frontoffice/components/Auth/Login/index.js";
-import RegistrationPage from "app-js/frontoffice/components/Auth/Login/Registration/index";
+import RegistrationPage from "app-js/frontoffice/components/Auth/Registration/index";
 import NotFound from "app-js/frontoffice/components/404/index"
 import AllProducts from "app-js/frontoffice/components/AllProducts/index"
 import Editorial from "app-js/frontoffice/components/Editorial/index"

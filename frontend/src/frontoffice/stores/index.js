@@ -17,7 +17,7 @@ import { editorialCStore } from '../components/Editorial/store'
 import { checkoutCStore } from '../components/Checkout/store'
 import { stepperCStore } from '../components/Checkout/Stepper/store'
 import { step3CStore } from '../components/Checkout/Stepper/Snippeds/Step3/store'
-import { registrationCStore } from '../components/Auth/Login/Registration/store'
+import { registrationCStore } from '../components/Auth/Registration/store'
 
 
 // import { authGuardCStore } from "../components/Authentication/store";

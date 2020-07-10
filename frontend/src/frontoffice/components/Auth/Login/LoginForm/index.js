@@ -67,7 +67,34 @@ export default
 @connect((state, props) => ({}))
 @withStyles(useStyles)
 class LoginForm extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      email: "test",
+      password: "test",
+    }
+  }
 
+  handleSubmit(event){
+    console.log(`
+      Email: ${this.state.email}
+      Password: ${this.state.password}
+    `);
+
+    event.preventDefault();
+  }
+
+  _handleEmailChange(e){
+    this.setState({
+      email : e.target.value
+    })
+  }
+  
+  _handlePasswordChange(e){
+    this.setState({
+      password: e.target.value
+    })
+  }
 
   render(){
     
@@ -85,7 +112,7 @@ class LoginForm extends React.Component {
               <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
-              <form className={classes.form} noValidate>
+              <form className={classes.form} onSubmit={ this.handleSubmit.bind(this) }>
                 <TextField
                   variant="outlined"
                   margin="normal"
@@ -96,6 +123,8 @@ class LoginForm extends React.Component {
                   name="email"
                   autoComplete="email"
                   autoFocus
+                  value={this.state.email}
+                  onChange={ this._handleEmailChange.bind(this) }
                 />
                 <TextField
                   variant="outlined"
@@ -107,6 +136,8 @@ class LoginForm extends React.Component {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  value={this.state.password}
+                  onChange={ this._handlePasswordChange.bind(this) }
                 />
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}

@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-
-//import libraries
 import { connect } from "react-redux";
 
 import { initAxios } from "./utils/auth_utils";
+import Routes from "./routes/routes";
 
 
 initAxios()
@@ -14,9 +13,9 @@ export default
 class App extends Component {
   render() {
     return (
-        <div>
-          <h4>Dashboard home</h4>
-        </div>
+      <div>
+        <Routes />
+      </div>
 
     );
   }
