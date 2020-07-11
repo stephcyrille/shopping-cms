@@ -20,6 +20,7 @@ class Routes extends Component {
     return (
       <Switch>
         <Route exact path={urls.DASHBOARD} component={PersistentDrawer} />
+        <Redirect to={urls.DASHBOARD} />
       </Switch>
     );
   }

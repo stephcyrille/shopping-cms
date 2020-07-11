@@ -8,6 +8,10 @@ export default
 @connect((state, props) => ({
 }))
 class AllProduct extends React.Component {
+  constructor(props){
+    super(props)
+    document.title = 'Produits | Afro Yaca Drum'
+  }
 
 
   render() {

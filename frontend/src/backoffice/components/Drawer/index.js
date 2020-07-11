@@ -18,6 +18,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
+// Router
+import { Router, Route, Link, Switch, Redirect } from "react-router-dom";
+import { createBrowserHistory } from "history";
+
+import urls from './router/urls'
+
 // Components importation
 import AllCatalog from "app-js/backoffice/components/Catalog/All/index.js";
 import AllCategory from "app-js/backoffice/components/Category/All/index.js";
@@ -27,6 +33,7 @@ import AllColor from "app-js/backoffice/components/Color/All/index.js";
 import AllProduct from "app-js/backoffice/components/Product/All/index.js";
 
 
+const history = createBrowserHistory();
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -91,7 +98,7 @@ export default function PersistentDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedIndex, setSelectedIndex] = React.useState(-1);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -136,97 +143,114 @@ export default function PersistentDrawer(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <ListItem 
-            button
-            selected={selectedIndex === 0}
-            onClick={(event) => handleListItemClick(event, 0)}
-          >
-            <ListItemIcon></ListItemIcon>
-            <ListItemText primary="Catalogue" />
-          </ListItem>
 
-          <ListItem 
-            button
-            selected={selectedIndex === 1}
-            onClick={(event) => handleListItemClick(event, 1)}
-          >
-            <ListItemIcon></ListItemIcon>
-            <ListItemText primary="Categorie" />
-          </ListItem>
-          
-          <ListItem 
-            button
-            selected={selectedIndex === 2}
-            onClick={(event) => handleListItemClick(event, 2)}
-          >
-            <ListItemIcon></ListItemIcon>
-            <ListItemText primary="Groupe" />
-          </ListItem>
-
-          <ListItem button
-            selected={selectedIndex === 3}
-            onClick={(event) => handleListItemClick(event, 3)}
-          >
-            <ListItemIcon></ListItemIcon>
-            <ListItemText primary="Taille" />
-          </ListItem>
-          
-          <ListItem button
-            selected={selectedIndex === 4}
-            onClick={(event) => handleListItemClick(event, 4)}  
-          >
-            <ListItemIcon></ListItemIcon>
-            <ListItemText primary="Couleur" />
-          </ListItem>
-
-          <ListItem button
-            selected={selectedIndex === 5}
-            onClick={(event) => handleListItemClick(event, 5)}
-          >
-            <ListItemIcon></ListItemIcon>
-            <ListItemText primary="Produit" />
-          </ListItem>
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+      <Router history={history}>
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <ListItem 
+              button
+              selected={selectedIndex === 0}
+              component={Link}
+              to={`${urls.CATALOG}`}
+              onClick={(event) => handleListItemClick(event, 0)}
+            >
+              <ListItemIcon></ListItemIcon>
+              <ListItemText primary="Catalogue" />
             </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-        
-        { selectedIndex == 0 && <AllCatalog /> }
-        { selectedIndex == 1 && <AllCategory /> }
-        { selectedIndex == 2 && <AllGroup /> }
-        { selectedIndex == 3 && <AllSize /> }
-        { selectedIndex == 4 && <AllColor /> }
-        { selectedIndex == 5 && <AllProduct /> }
 
-      </main>
+            <ListItem 
+              button
+              selected={selectedIndex === 1}
+              component={Link}
+              to={`${urls.CATEGORY}`}
+              onClick={(event) => handleListItemClick(event, 1)}
+            >
+              <ListItemIcon></ListItemIcon>
+              <ListItemText primary="Categorie" />
+            </ListItem>
+            
+            <ListItem 
+              button
+              selected={selectedIndex === 2}
+              component={Link}
+              to={`${urls.GROUP}`}
+              onClick={(event) => handleListItemClick(event, 2)}
+            >
+              <ListItemIcon></ListItemIcon>
+              <ListItemText primary="Groupe" />
+            </ListItem>
+
+            <ListItem button
+              selected={selectedIndex === 3}
+              component={Link}
+              to={`${urls.SIZE}`}
+              onClick={(event) => handleListItemClick(event, 3)}
+            >
+              <ListItemIcon></ListItemIcon>
+              <ListItemText primary="Taille" />
+            </ListItem>
+            
+            <ListItem button
+              selected={selectedIndex === 4}
+              component={Link}
+              to={`${urls.COLOR}`}
+              onClick={(event) => handleListItemClick(event, 4)}  
+            >
+              <ListItemIcon></ListItemIcon>
+              <ListItemText primary="Couleur" />
+            </ListItem>
+
+            <ListItem button
+              selected={selectedIndex === 5}
+              component={Link}
+              to={`${urls.PRODUCT}`}
+              onClick={(event) => handleListItemClick(event, 5)}
+            >
+              <ListItemIcon></ListItemIcon>
+              <ListItemText primary="Produit" />
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+      
+        <main
+          className={clsx(classes.content, {
+            [classes.contentShift]: open,
+          })}
+        >
+          <Switch>
+            <Route path={`${urls.CATALOG}`} component={AllCatalog} />
+            <Route path={`${urls.CATEGORY}`} component={AllCategory} />
+            <Route path={`${urls.GROUP}`} component={AllGroup} />
+            <Route path={`${urls.SIZE}`} component={AllSize} />
+            <Route path={`${urls.COLOR}`} component={AllColor} />
+            <Route path={`${urls.PRODUCT}`} component={AllProduct} />
+          </Switch>
+          
+        </main>
+      </Router>
     </div>
   );
 }
