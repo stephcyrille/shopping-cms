@@ -168,7 +168,9 @@ export default function PersistentDrawer(props) {
               to={`${urls.CATALOG}`}
               onClick={(event) => handleListItemClick(event, 0)}
             >
-              <ListItemIcon></ListItemIcon>
+              <ListItemIcon>
+                <img src="/static/images/icons/icon1.png" style={{width: 25}} />
+              </ListItemIcon>
               <ListItemText primary="Catalogue" />
             </ListItem>
 
@@ -179,7 +181,9 @@ export default function PersistentDrawer(props) {
               to={`${urls.CATEGORY}`}
               onClick={(event) => handleListItemClick(event, 1)}
             >
-              <ListItemIcon></ListItemIcon>
+              <ListItemIcon>
+                <img src="/static/images/icons/icon2.png" style={{width: 25}} />
+              </ListItemIcon>
               <ListItemText primary="Categorie" />
             </ListItem>
             
@@ -190,7 +194,9 @@ export default function PersistentDrawer(props) {
               to={`${urls.GROUP}`}
               onClick={(event) => handleListItemClick(event, 2)}
             >
-              <ListItemIcon></ListItemIcon>
+              <ListItemIcon>
+                <img src="/static/images/icons/icon3.png" style={{width: 25}} />
+              </ListItemIcon>
               <ListItemText primary="Groupe" />
             </ListItem>
 
@@ -200,7 +206,9 @@ export default function PersistentDrawer(props) {
               to={`${urls.SIZE}`}
               onClick={(event) => handleListItemClick(event, 3)}
             >
-              <ListItemIcon></ListItemIcon>
+              <ListItemIcon>
+                <img src="/static/images/icons/icon4.png" style={{width: 25}} />
+              </ListItemIcon>
               <ListItemText primary="Taille" />
             </ListItem>
             
@@ -210,7 +218,9 @@ export default function PersistentDrawer(props) {
               to={`${urls.COLOR}`}
               onClick={(event) => handleListItemClick(event, 4)}  
             >
-              <ListItemIcon></ListItemIcon>
+              <ListItemIcon>
+                <img src="/static/images/icons/icon5.png" style={{width: 25}} />
+              </ListItemIcon>
               <ListItemText primary="Couleur" />
             </ListItem>
 
@@ -220,7 +230,9 @@ export default function PersistentDrawer(props) {
               to={`${urls.PRODUCT}`}
               onClick={(event) => handleListItemClick(event, 5)}
             >
-              <ListItemIcon></ListItemIcon>
+              <ListItemIcon>
+                <img src="/static/images/icons/icon6.png" style={{width: 25}} />
+              </ListItemIcon>
               <ListItemText primary="Produit" />
             </ListItem>
           </List>
