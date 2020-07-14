@@ -8,6 +8,7 @@ const urls = {
   SIZE: "/dashboard/size",
   COLOR: "/dashboard/color",
   PRODUCT: "/dashboard/product",
+  ADDPRODUCT: "/dashboard/product-add",
 };
 
 
