@@ -4,7 +4,6 @@ import { Paper } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -13,10 +12,15 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
+import Modal from '@material-ui/core/Modal';
+import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
 
 import MoneyField from '../../Snippets/Form/PrefixedInput'
+import appConfig from '../../../config/index'
 
-import { validate } from './validator'
+import Table from '../../Snippets/EditableTable/index'
+import VarietyForm from '../../Variety/Add/index'
+
 
 
 const useStyles = theme => ({
@@ -48,7 +52,21 @@ const useStyles = theme => ({
   },
   switch: {
     paddingTop: 20
-  }
+  },
+  button: {
+    margin: theme.spacing(1),
+    marginLeft: 20
+  },
+  modalPaper: {
+    position: 'absolute',
+    width: 1000,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    top: `5%`,
+    left: `20%`,
+  },
 });
 
 
@@ -62,7 +80,6 @@ class AddProduct extends React.Component {
     document.title = 'Ajouter un produit | Afro Yaca Drum'
 
     this.state = {
-      errors: {},
       ref : {
         textmask: 'REF-2020',
         value: 'REF-2020',
@@ -126,6 +143,10 @@ class AddProduct extends React.Component {
         error: false,
         errorMessage: null
       },
+
+      varieties: [],
+
+      openModal : false,
     }
   }
 
@@ -298,23 +319,119 @@ class AddProduct extends React.Component {
       is_discount: this.state.discount.checked,
     }
     console.log("Form Values", values)
-    
-    // Call validator here, then return erros
-    const errors = validate(values)
-    console.log("Form errors", errors)
-    this.setState({
-      errors: errors
-    }) 
+    if( !values.ref ){
+      this.setState({
+        ref: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !values.name ){
+      this.setState({
+        name: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !values.description ){
+      this.setState({
+        description: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !values.price ){
+      this.setState({
+        price: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !values.material ){
+      this.setState({
+        material: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !values.catalog ){
+      this.setState({
+        catalog: {
+          error: true,
+          errorMessage: "Veuillez selectionner un élement"
+        },
+      })
+    }
+    if( !values.category ){
+      this.setState({
+        category: {
+          error: true,
+          errorMessage: "Veuillez selectionner un élement"
+        },
+      })
+    }
+    if( !values.group ){
+      this.setState({
+        group: {
+          error: true,
+          errorMessage: "Veuillez selectionner un élement"
+        },
+      })
+    }
 
+    // Call validator here, then return erros
+    // const validator = validator(valuer) 
 
   }
   
+
+  renderVarieties(){
+    const title = "Variétés"
+    const columns = [
+      { title: 'Couleur', field: 'color' },
+      { title: 'Taille', field: 'size' },
+      { title: 'Quantité', field: 'quantity' }
+    ];
+    const datas = [
+      { color: 'Bleu nuit', size: 'M' , quantity: 10  },
+      { color: 'Bleu nuit', size: 'M' , quantity: 10  },
+      { color: 'Bleu nuit', size: 'M' , quantity: 10  },
+    ]
+
+    return (
+      <div style={{ width: "100%", padding: "0 20px 20px 20px", }}>
+          <Table 
+            table_title={title} 
+            table_columns={columns} 
+            table_datas={datas} 
+            product={true} 
+            // addProduct={this._goToProduct.bind(this)} 
+          />
+      </div>
+    )
+  }
+
+  handleOpenModal(){
+    this.setState({
+      openModal: true 
+    })
+  }
+
+  handleCloseModal(){
+    this.setState({
+      openModal: false 
+    })
+  }
   
 
   render() {
     const { classes } = this.props
-    console.log("State errors", this.state.errors)
-
+    
     return (
       <div>
         <section className="container">
@@ -326,13 +443,13 @@ class AddProduct extends React.Component {
                   <TextField
                     id="product-reference"
                     label="Reférence"
-                    error={ this.state.errors ?  this.state.errors.ref ? this.state.errors.ref.error && this.state.errors.ref.error : null : null }
+                    error={ this.state.ref.error && this.state.ref.error }
                     name="name"
                     onChange={ this.handleChangeRef.bind(this) }
                     placeholder={"Reférence"}
                     value={this.state.ref.value}
                     type="text"
-                    helperText={ this.state.errors ? (this.state.errors.ref ? (this.state.errors.ref.error ? this.state.errors.ref.errorMessage : null) : null) : null }
+                    helperText={ this.state.ref.error ? this.state.ref.errorMessage : null }
                     required
                     fullWidth
                   />
@@ -517,6 +634,27 @@ class AddProduct extends React.Component {
                 <div className={`col-3`}>
                 </div>
               </div>
+
+              <div className={`${classes.row} row`}>
+                <Button
+                  variant="contained"
+                  color="default"
+                  className={classes.button}
+                  endIcon={<AddCircleOutlineRoundedIcon/>}
+                  onClick={this.handleOpenModal.bind(this)}
+                >
+                  Ajouter Variété
+                </Button>
+              </div>
+
+              {
+                this.state.varieties.length !== 0 && (
+                  <div className={`${classes.row} row`} style={{ width: "100%" }}>
+                    { this.renderVarieties() }
+                  </div>
+                )
+              }
+
               <div className={`${classes.row} row`}>
                 <div className={`${classes.button_box} mr-auto mx-auto`}>
                   <Button 
@@ -535,6 +673,18 @@ class AddProduct extends React.Component {
             </form>
           </Paper>
         </section>
+
+        {/* Modal variety add */}
+        <Modal
+          open={this.state.openModal}
+          onClose={this.handleCloseModal.bind(this)}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <div className={classes.modalPaper}>  
+            <VarietyForm handleClose={this.handleCloseModal.bind(this)} />
+          </div>
+        </Modal>
       </div>
     );
   }

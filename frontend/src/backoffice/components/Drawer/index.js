@@ -35,6 +35,7 @@ import AllSize from "app-js/backoffice/components/Size/All/index.js";
 import AllColor from "app-js/backoffice/components/Color/All/index.js";
 import AllProduct from "app-js/backoffice/components/Product/All/index.js";
 import AddProduct from "app-js/backoffice/components/Product/Add/index.js";
+import AddVariety from "app-js/backoffice/components/Variety/Add/index.js";
 
 
 const history = createBrowserHistory();
@@ -286,6 +287,18 @@ export default function PersistentDrawer(props) {
               ) :
               null
             }
+
+            <ListItem button
+              selected={selectedIndex === 100}
+              component={Link}
+              to={`${urls.VARIETY}`}
+              onClick={(event) => handleListItemClick(event, 100)}
+            >
+              <ListItemIcon>
+                <img src="/static/images/icons/icon6.png" style={{width: 25}} />
+              </ListItemIcon>
+              <ListItemText primary="Ajouter Variété" />
+            </ListItem>
             
           </List>
           <Divider />
@@ -313,6 +326,7 @@ export default function PersistentDrawer(props) {
             <Route path={`${urls.COLOR}`} component={AllColor} />
             <Route path={`${urls.PRODUCT}`} component={AllProduct} />
             <Route path={`${urls.ADDPRODUCT}`} component={AddProduct} />
+            <Route path={`${urls.VARIETY}`} component={AddVariety} />
           </Switch>
           
         </main>
