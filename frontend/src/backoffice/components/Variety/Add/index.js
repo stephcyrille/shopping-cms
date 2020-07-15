@@ -100,11 +100,6 @@ class AddVariety extends React.Component {
     document.title = 'Variété | Afro Yaca Drum'
 
     this.state = {
-      product : {
-        value: '',
-        error: false,
-        errorMessage: null
-      },
       color : {
         value: '',
         error: false,
@@ -164,27 +159,6 @@ class AddVariety extends React.Component {
   }
 
 
-  handleChangeProduct = (event) => {
-    // Because the autocomplete element don't trigger the change action on the form component
-    // To preserve system resource, we will check if the formSubmitDisabled state is already false 
-    if(this.state.formSubmitDisabled==false){
-      this.setState({
-        product: {
-          value: this.state.top100Films[event.target.value],
-          error: false
-        },
-      })
-    } else {
-      this.setState({
-        product: {
-          value: this.state.top100Films[event.target.value],
-          error: false
-        },
-        formSubmitDisabled: false
-      })
-    }
-  }
-
   handleChangeColor = (event) => {
     // Because the autocomplete element don't trigger the change action on the form component
     // To preserve system resource, we will check if the formSubmitDisabled state is already false 
@@ -243,10 +217,8 @@ class AddVariety extends React.Component {
     event.preventDefault();
     // console.log("Form Values", event.target)
     // Make the validation process here
-    console.log("Form picture1", this.state.picture1.fileInput)
 
     var values = {
-      // product: this.state.product.value,
       color: this.state.color.value,
       size: this.state.size.value,
       quantity: this.state.quantity.value,
@@ -257,14 +229,6 @@ class AddVariety extends React.Component {
     }
 
     console.log("Form Values", values)
-    // if( !values.product ){
-    //   this.setState({
-    //     product: {
-    //       error: true,
-    //       errorMessage: "Selectionner une valeur"
-    //     },
-    //   })
-    // }
     if( !values.color ){
       this.setState({
         color: {
@@ -414,29 +378,6 @@ class AddVariety extends React.Component {
               noValidate 
             >
               <div className={`${classes.row} row`}>
-                {/* <div className="col-4">
-                  <Autocomplete
-                    id="size-small-standard"
-                    size="small"
-                    options={this.state.top100Films}
-                    getOptionLabel={(option) => option.title}
-                    onChange={this.handleChangeProduct.bind(this)}
-                    value={this.state.top100Films[this.state.product.value]}
-                    renderInput={(params) => (
-                      <TextField 
-                        {...params} 
-                        variant="standard" 
-                        label="Selectionner le produit" 
-                        name="product" 
-                        placeholder="Produit" 
-                        error={ this.state.product.error && this.state.product.error }
-                        helperText={ this.state.product.error ? this.state.product.errorMessage : null }
-                        required
-                        fullWidth
-                      />
-                    )}
-                  />
-                </div> */}
                 <div className="col-3">
                   <Autocomplete
                     id="size-small-standard"
