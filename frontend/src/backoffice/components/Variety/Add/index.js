@@ -154,7 +154,8 @@ class AddVariety extends React.Component {
         { title: 'Fight Club', year: 1999 }
       ],
 
-      formSubmitDisabled: true
+      formSubmitDisabled: true,
+      formValid: false,
     }
   }
 
@@ -253,7 +254,55 @@ class AddVariety extends React.Component {
         },
       })
     }
-
+    if( !(values.picture1 instanceof File) == true ){
+      this.setState({
+        picture1: {
+          error: true,
+          errorMessage: "L'ajout d'image est obligatoire"
+        },
+      })
+    }
+    if( !(values.picture2 instanceof File) == true  ){
+      this.setState({
+        picture2: {
+          error: true,
+          errorMessage: "L'ajout d'image est obligatoire"
+        },
+      })
+    }
+    if( !(values.picture3 instanceof File) == true  ){
+      this.setState({
+        picture3: {
+          error: true,
+          errorMessage: "L'ajout d'image est obligatoire"
+        },
+      })
+    }
+    if( !(values.picture4 instanceof File) == true  ){
+      this.setState({
+        picture4: {
+          error: true,
+          errorMessage: "L'ajout d'image est obligatoire"
+        },
+      })
+    }
+    
+    // Form s valid here
+    if(
+      (values.color) !== "" &&
+      (values.size) !== "" &&
+      (values.error) !== "" &&
+      (values.quantity) !== "" &&
+      (values.picture1 instanceof File) === true &&
+      (values.picture2 instanceof File) === true &&
+      (values.picture3 instanceof File) === true &&
+      (values.picture4 instanceof File) === true
+    ){
+      console.log("Data Posted! Greatttt", values)
+      // Post form data on server
+      this.props.handlePostFormData(values)
+    }
+    
     // Call validator here, then return erros
     // const validator = validator(valuer) 
 
@@ -365,6 +414,7 @@ class AddVariety extends React.Component {
     const { classes } = this.props
 
 
+
     return (
       <div>
         <section className="container">
@@ -459,25 +509,39 @@ class AddVariety extends React.Component {
                       )
                       :
                       <div>
-                        <Button 
-                          variant="raised" 
-                          className=""
-                          fullWidth
+                        <FormControl 
+                          className={classes.formControl}
+                          error={ this.state.picture1.error && this.state.picture1.error }
                         >
-                          <label for="raised-input-file-1" style={{ marginBottom: 0 }}>
-                            <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
-                            Photo 1 (PNG, JPG)*
-                          </label>
-                          <input
-                            accept=".png, .jpg, .jpeg"
-                            id="raised-input-file-1"
-                            name="picture1"
-                            type="file"
-                            onChange={ event => this.handlePictureChange(event, 1)}
-                            ref={this.state.picture1.fileInput}
-                            style={{ display: "none" }}
-                          />
-                        </Button>
+                          <Button 
+                            variant="raised" 
+                            className=""
+                            fullWidth
+                          >
+                            <label for="raised-input-file-1" style={{ marginBottom: 0 }}>
+                              <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
+                              Photo 1 (PNG, JPG)*
+                            </label>
+                            <input
+                              accept=".png, .jpg, .jpeg"
+                              id="raised-input-file-1"
+                              name="picture1"
+                              type="file"
+                              onChange={ event => this.handlePictureChange(event, 1)}
+                              ref={this.state.picture1.fileInput}
+                              style={{ display: "none" }}
+                            />
+                          </Button>
+                          { this.state.picture1.error ? 
+                            <FormHelperText 
+                              style={{ textAlign: "center", fontWeight: 400 }}
+                            >
+                              {this.state.picture1.errorMessage}
+                            </FormHelperText> 
+                            : 
+                            null 
+                          }
+                        </FormControl>
                       </div>
                   }
                 </div>
@@ -496,25 +560,39 @@ class AddVariety extends React.Component {
                       )
                       :
                       <div>
-                        <Button 
-                          variant="raised" 
-                          className=""
-                          fullWidth
+                        <FormControl 
+                          className={classes.formControl}
+                          error={ this.state.picture2.error && this.state.picture2.error }
                         >
-                          <label for="raised-input-file-2" style={{ marginBottom: 0 }}>
-                            <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
-                            Photo 2 (PNG, JPG)*
-                          </label>
-                          <input
-                            accept=".png, .jpg, .jpeg"
-                            id="raised-input-file-2"
-                            name="picture2"
-                            type="file"
-                            onChange={ event => this.handlePictureChange(event, 2)}
-                            ref={this.state.picture2.fileInput}
-                            style={{ display: "none" }}
-                          />
-                        </Button>
+                          <Button 
+                            variant="raised" 
+                            className=""
+                            fullWidth
+                          >
+                            <label for="raised-input-file-2" style={{ marginBottom: 0 }}>
+                              <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
+                              Photo 2 (PNG, JPG)*
+                            </label>
+                            <input
+                              accept=".png, .jpg, .jpeg"
+                              id="raised-input-file-2"
+                              name="picture2"
+                              type="file"
+                              onChange={ event => this.handlePictureChange(event, 2)}
+                              ref={this.state.picture2.fileInput}
+                              style={{ display: "none" }}
+                            />
+                          </Button>
+                          { this.state.picture2.error ? 
+                            <FormHelperText 
+                              style={{ textAlign: "center", fontWeight: 400 }}
+                            >
+                              {this.state.picture2.errorMessage}
+                            </FormHelperText> 
+                            : 
+                            null 
+                          }
+                        </FormControl>
                       </div>
                   }
                 </div>
@@ -533,25 +611,39 @@ class AddVariety extends React.Component {
                       )
                       :
                       <div>
-                        <Button 
-                          variant="raised" 
-                          className=""
-                          fullWidth
+                        <FormControl 
+                          className={classes.formControl}
+                          error={ this.state.picture3.error && this.state.picture3.error }
                         >
-                          <label for="raised-input-file-3" style={{ marginBottom: 0 }}>
-                            <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
-                            Photo 3 (PNG, JPG)*
-                          </label>
-                          <input
-                            accept=".png, .jpg, .jpeg"
-                            id="raised-input-file-3"
-                            name="picture3"
-                            type="file"
-                            onChange={ event => this.handlePictureChange(event, 3)}
-                            ref={this.state.picture3.fileInput}
-                            style={{ display: "none" }}
-                          />
-                        </Button>
+                          <Button 
+                            variant="raised" 
+                            className=""
+                            fullWidth
+                          >
+                            <label for="raised-input-file-3" style={{ marginBottom: 0 }}>
+                              <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
+                              Photo 3 (PNG, JPG)*
+                            </label>
+                            <input
+                              accept=".png, .jpg, .jpeg"
+                              id="raised-input-file-3"
+                              name="picture3"
+                              type="file"
+                              onChange={ event => this.handlePictureChange(event, 3)}
+                              ref={this.state.picture3.fileInput}
+                              style={{ display: "none" }}
+                            />
+                          </Button>
+                          { this.state.picture3.error ? 
+                            <FormHelperText 
+                              style={{ textAlign: "center", fontWeight: 400 }}
+                            >
+                              {this.state.picture3.errorMessage}
+                            </FormHelperText> 
+                            : 
+                            null 
+                          }
+                        </FormControl>
                       </div>
                   }
                 </div>
@@ -570,25 +662,39 @@ class AddVariety extends React.Component {
                       )
                       :
                       <div>
-                        <Button 
-                          variant="raised" 
-                          className=""
-                          fullWidth
+                        <FormControl 
+                          className={classes.formControl}
+                          error={ this.state.picture4.error && this.state.picture4.error }
                         >
-                          <label for="raised-input-file-4" style={{ marginBottom: 0 }}>
-                            <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
-                            Photo 4 (PNG, JPG)*
-                          </label>
-                          <input
-                            accept=".png, .jpg, .jpeg"
-                            id="raised-input-file-4"
-                            name="picture4"
-                            type="file"
-                            onChange={ event => this.handlePictureChange(event, 4)}
-                            ref={this.state.picture4.fileInput}
-                            style={{ display: "none" }}
-                          />
-                        </Button>
+                          <Button 
+                            variant="raised" 
+                            className=""
+                            fullWidth
+                          >
+                            <label for="raised-input-file-4" style={{ marginBottom: 0 }}>
+                              <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
+                              Photo 4 (PNG, JPG)*
+                            </label>
+                            <input
+                              accept=".png, .jpg, .jpeg"
+                              id="raised-input-file-4"
+                              name="picture4"
+                              type="file"
+                              onChange={ event => this.handlePictureChange(event, 4)}
+                              ref={this.state.picture4.fileInput}
+                              style={{ display: "none" }}
+                            />
+                          </Button>
+                          { this.state.picture4.error ? 
+                            <FormHelperText 
+                              style={{ textAlign: "center", fontWeight: 400 }}
+                            >
+                              {this.state.picture4.errorMessage}
+                            </FormHelperText> 
+                            : 
+                            null 
+                          }
+                        </FormControl>
                       </div>
                   } 
                 </div>

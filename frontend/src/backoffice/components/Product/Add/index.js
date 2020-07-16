@@ -422,6 +422,13 @@ class AddProduct extends React.Component {
     })
   }
 
+  
+  _handlePostVarietyData(varietyData){
+    console.log("Form valid", varietyData)
+  }
+
+
+
   handleCloseModal(){
     this.setState({
       openModal: false 
@@ -682,7 +689,10 @@ class AddProduct extends React.Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modalPaper}>  
-            <VarietyForm handleClose={this.handleCloseModal.bind(this)} />
+            <VarietyForm 
+              handleClose={this.handleCloseModal.bind(this)}
+              handlePostFormData={this._handlePostVarietyData.bind(this)} 
+            />
           </div>
         </Modal>
       </div>
