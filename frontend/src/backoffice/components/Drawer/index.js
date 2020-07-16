@@ -17,9 +17,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
 
 // Router
-import { Router, Route, Link, Switch, Redirect } from "react-router-dom";
+import { Router, Route, Link, Switch, BrowserRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import urls from './router/urls'
@@ -31,10 +34,23 @@ import AllGroup from "app-js/backoffice/components/Group/All/index.js";
 import AllSize from "app-js/backoffice/components/Size/All/index.js";
 import AllColor from "app-js/backoffice/components/Color/All/index.js";
 import AllProduct from "app-js/backoffice/components/Product/All/index.js";
+import AddProduct from "app-js/backoffice/components/Product/Add/index.js";
+import AddVariety from "app-js/backoffice/components/Variety/Add/index.js";
 
 
 const history = createBrowserHistory();
 const drawerWidth = 240;
+
+
+
+function Dashboard(props) {
+  return (
+    <div>
+      <h2>Welcome to the Dashboard</h2>
+    </div>
+  );
+}
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,6 +108,14 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  nested: {
+    paddingLeft: theme.spacing(4),
+    backgroundColor: "#d2d2d2",
+  },
+  collapse: {
+    paddingLeft: theme.spacing(2),
+    backgroundColor: "#fbfbfb",
+  },
 }));
 
 export default function PersistentDrawer(props) {
@@ -144,7 +168,7 @@ export default function PersistentDrawer(props) {
         </Toolbar>
       </AppBar>
 
-      <Router history={history}>
+      <BrowserRouter>
         <Drawer
           className={classes.drawer}
           variant="persistent"
@@ -226,15 +250,56 @@ export default function PersistentDrawer(props) {
 
             <ListItem button
               selected={selectedIndex === 5}
-              component={Link}
-              to={`${urls.PRODUCT}`}
               onClick={(event) => handleListItemClick(event, 5)}
             >
               <ListItemIcon>
                 <img src="/static/images/icons/icon6.png" style={{width: 25}} />
               </ListItemIcon>
               <ListItemText primary="Produit" />
+              {selectedIndex==5 || selectedIndex==51 || selectedIndex==52 ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
+            {
+              selectedIndex == 5 || selectedIndex==51 || selectedIndex==52  ?
+              (<Collapse in={true} timeout="auto" unmountOnExit className={classes.collapse}>
+                <List component="div" disablePadding>
+                  <ListItem 
+                    button 
+                    selected={selectedIndex === 51}
+                    className={`${ selectedIndex==51 ? `${classes.nested}` : null}`}
+                    component={Link}
+                    to={`${urls.PRODUCT}`}
+                    onClick={(event) => handleListItemClick(event, 51)}
+                  >
+                    <ListItemText primary="Tous" />
+                  </ListItem>
+                  <ListItem 
+                    button 
+                    selected={selectedIndex === 52}
+                    className={`${ selectedIndex==52 ? `${classes.nested}` : null}`}
+                    component={Link}
+                    to={`${urls.ADDPRODUCT}`}
+                    onClick={(event) => handleListItemClick(event, 52)}
+                  >
+                    <ListItemText primary="Ajouter" />
+                  </ListItem>
+                </List>
+              </Collapse>
+              ) :
+              null
+            }
+
+            <ListItem button
+              selected={selectedIndex === 100}
+              component={Link}
+              to={`${urls.VARIETY}`}
+              onClick={(event) => handleListItemClick(event, 100)}
+            >
+              <ListItemIcon>
+                <img src="/static/images/icons/icon6.png" style={{width: 25}} />
+              </ListItemIcon>
+              <ListItemText primary="Ajouter Variété" />
+            </ListItem>
+            
           </List>
           <Divider />
           <List>
@@ -253,16 +318,19 @@ export default function PersistentDrawer(props) {
           })}
         >
           <Switch>
+            <Route exact path={`${urls.DASHBOARD}`} component={Dashboard} />
             <Route path={`${urls.CATALOG}`} component={AllCatalog} />
             <Route path={`${urls.CATEGORY}`} component={AllCategory} />
             <Route path={`${urls.GROUP}`} component={AllGroup} />
             <Route path={`${urls.SIZE}`} component={AllSize} />
             <Route path={`${urls.COLOR}`} component={AllColor} />
             <Route path={`${urls.PRODUCT}`} component={AllProduct} />
+            <Route path={`${urls.ADDPRODUCT}`} component={AddProduct} />
+            <Route path={`${urls.VARIETY}`} component={AddVariety} />
           </Switch>
           
         </main>
-      </Router>
+      </BrowserRouter>
     </div>
   );
 }
