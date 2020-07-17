@@ -5,11 +5,15 @@ import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 
+
+import { addVarietyActions } from '../../Product/Add/store'
 
 
 
@@ -92,6 +96,7 @@ const useStyles = theme => ({
 
 export default
 @connect((state, props) => ({
+  addVarietyStore: state.addVarietyStore
 }))
 @withStyles(useStyles)
 class AddVariety extends React.Component {
@@ -160,47 +165,66 @@ class AddVariety extends React.Component {
   }
 
 
+  // handleChangeColor = (event) => {
+  //   // Because the autocomplete element don't trigger the change action on the form component
+  //   // To preserve system resource, we will check if the formSubmitDisabled state is already false 
+  //   if(this.state.formSubmitDisabled==false){
+  //     this.setState({
+  //       color: {
+  //         value: this.state.top100Films[event.target.value],
+  //         error: false
+  //       },
+  //     })
+  //   } else {
+  //     this.setState({
+  //       color: {
+  //         value: this.state.top100Films[event.target.value],
+  //         error: false
+  //       },
+  //       formSubmitDisabled: false
+  //     })
+  //   }
+  // }
+
   handleChangeColor = (event) => {
-    // Because the autocomplete element don't trigger the change action on the form component
-    // To preserve system resource, we will check if the formSubmitDisabled state is already false 
-    if(this.state.formSubmitDisabled==false){
-      this.setState({
-        color: {
-          value: this.state.top100Films[event.target.value],
-          error: false
-        },
-      })
-    } else {
-      this.setState({
-        color: {
-          value: this.state.top100Films[event.target.value],
-          error: false
-        },
-        formSubmitDisabled: false
-      })
-    }
+    this.setState({
+      color: {
+        value: event.target.value,
+        error: false
+      }
+    })
   }
 
+
   handleChangeSize = (event) => {
-    // Because the autocomplete element don't trigger the change action on the form component
-    // To preserve system resource, we will check if the formSubmitDisabled state is already false 
-    if(this.state.formSubmitDisabled==false){
-      this.setState({
-        size: {
-          value: this.state.top100Films[event.target.value],
-          error: false
-        },
-      })
-    } else {
-      this.setState({
-        size: {
-          value: this.state.top100Films[event.target.value],
-          error: false
-        },
-        formSubmitDisabled: false
-      })
-    }
+    this.setState({
+      size: {
+        value: event.target.value,
+        error: false
+      }
+    })
   }
+
+  // handleChangeSize = (event) => {
+  //   // Because the autocomplete element don't trigger the change action on the form component
+  //   // To preserve system resource, we will check if the formSubmitDisabled state is already false 
+  //   if(this.state.formSubmitDisabled==false){
+  //     this.setState({
+  //       size: {
+  //         value: this.state.top100Films[event.target.value],
+  //         error: false
+  //       },
+  //     })
+  //   } else {
+  //     this.setState({
+  //       size: {
+  //         value: this.state.top100Films[event.target.value],
+  //         error: false
+  //       },
+  //       formSubmitDisabled: false
+  //     })
+  //   }
+  // }
 
   handleChangeQuantity = (event) => {
     event.preventDefault();
@@ -300,7 +324,23 @@ class AddVariety extends React.Component {
     ){
       console.log("Data Posted! Greatttt", values)
       // Post form data on server
-      this.props.handlePostFormData(values)
+      // We will use redux for updating the varieties table values
+
+      const variety = {
+        color: values.color,
+        size: values.size,
+        quantity: parseInt(values.quantity),
+      }
+
+      console.log("Handle Varietiy=================", variety)
+
+      var varieties = this.props.addVarietyStore.varieties
+      varieties.push(variety)
+
+
+      this.props.dispatch(addVarietyActions.addVariety(varieties))
+      // Close modal when everything is ok
+      this.props.handleClose()
     }
     
     // Call validator here, then return erros
@@ -429,7 +469,7 @@ class AddVariety extends React.Component {
             >
               <div className={`${classes.row} row`}>
                 <div className="col-3">
-                  <Autocomplete
+                  {/* <Autocomplete
                     id="size-small-standard"
                     size="small"
                     options={this.state.top100Films}
@@ -449,10 +489,28 @@ class AddVariety extends React.Component {
                         fullWidth
                       />
                     )}
-                  />
+                  /> */}
+                  <FormControl 
+                    className={classes.formControl}
+                    error={ this.state.color.error && this.state.color.error }
+                  >
+                    <InputLabel id="product-color-select">Couleur</InputLabel>
+                    <Select
+                      labelId="product-color-select"
+                      id="variety-color"
+                      value={this.state.color.value}
+                      onChange={this.handleChangeColor.bind(this)}
+                      fullWidth
+                    >
+                      <MenuItem value={"rouge"}>Rouge</MenuItem>
+                      <MenuItem value={'bleu'}>Bleu</MenuItem>
+                      <MenuItem value={"vert"}>Vert</MenuItem>
+                    </Select>
+                    { this.state.color.error ? <FormHelperText>{this.state.color.errorMessage}</FormHelperText> : null }
+                  </FormControl>
                 </div>
                 <div className="col-3">
-                  <Autocomplete
+                  {/* <Autocomplete
                     id="size-small-standard"
                     size="small"
                     options={this.state.top100Films}
@@ -472,7 +530,25 @@ class AddVariety extends React.Component {
                         fullWidth
                       />
                     )}
-                  />
+                  /> */}
+                   <FormControl 
+                    className={classes.formControl}
+                    error={ this.state.size.error && this.state.size.error }
+                  >
+                    <InputLabel id="variety-size-select">Taille</InputLabel>
+                    <Select
+                      labelId="variety-size-select"
+                      id="product-collection"
+                      value={this.state.size.value}
+                      onChange={this.handleChangeSize.bind(this)}
+                      fullWidth
+                    >
+                      <MenuItem value={"M"}>M</MenuItem>
+                      <MenuItem value={'S'}>S</MenuItem>
+                      <MenuItem value={"XS"}>Xs</MenuItem>
+                    </Select>
+                    { this.state.size.error ? <FormHelperText>{this.state.size.errorMessage}</FormHelperText> : null }
+                  </FormControl>
                 </div>
                 <div className="col-3">
                   <TextField

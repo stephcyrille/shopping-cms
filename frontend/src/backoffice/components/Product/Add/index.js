@@ -72,6 +72,7 @@ const useStyles = theme => ({
 
 export default
 @connect((state, props) => ({
+  addVarietyStore: state.addVarietyStore
 }))
 @withStyles(useStyles)
 class AddProduct extends React.Component {
@@ -384,37 +385,14 @@ class AddProduct extends React.Component {
       })
     }
 
+    values.varieties = this.props.addVarietyStore.varieties
+    console.log("Produc add Form values ", values)
+
     // Call validator here, then return erros
     // const validator = validator(valuer) 
 
   }
-  
 
-  renderVarieties(){
-    const title = "Variétés"
-    const columns = [
-      { title: 'Couleur', field: 'color' },
-      { title: 'Taille', field: 'size' },
-      { title: 'Quantité', field: 'quantity' }
-    ];
-    const datas = [
-      { color: 'Bleu nuit', size: 'M' , quantity: 10  },
-      { color: 'Bleu nuit', size: 'M' , quantity: 10  },
-      { color: 'Bleu nuit', size: 'M' , quantity: 10  },
-    ]
-
-    return (
-      <div style={{ width: "100%", padding: "0 20px 20px 20px", }}>
-          <Table 
-            table_title={title} 
-            table_columns={columns} 
-            table_datas={datas} 
-            product={true} 
-            // addProduct={this._goToProduct.bind(this)} 
-          />
-      </div>
-    )
-  }
 
   handleOpenModal(){
     this.setState({
@@ -424,7 +402,14 @@ class AddProduct extends React.Component {
 
   
   _handlePostVarietyData(varietyData){
-    console.log("Form valid", varietyData)
+    
+
+    
+    // this.setState(
+    //   (state) => ({
+    //     varieties: state.varieties.concat(variety)
+    //   })
+    // );
   }
 
 
@@ -438,6 +423,16 @@ class AddProduct extends React.Component {
 
   render() {
     const { classes } = this.props
+    
+    const title = "Variétés"
+    const columns = [
+      { title: 'Couleur', field: 'color' },
+      { title: 'Taille', field: 'size' },
+      { title: 'Quantité', field: 'quantity' }
+    ]
+    const { varieties} = this.props.addVarietyStore
+
+
     
     return (
       <div>
@@ -649,17 +644,42 @@ class AddProduct extends React.Component {
                   className={classes.button}
                   endIcon={<AddCircleOutlineRoundedIcon/>}
                   onClick={this.handleOpenModal.bind(this)}
+                  disabled={varieties.length === appConfig.VARIETIES_MAX_NUMBER && true}
                 >
                   Ajouter Variété
                 </Button>
               </div>
 
               {
-                this.state.varieties.length !== 0 && (
+                varieties.length !== 0 ? (
                   <div className={`${classes.row} row`} style={{ width: "100%" }}>
-                    { this.renderVarieties() }
+                    <div style={{ width: "100%", padding: "0 20px 20px 20px", }}>
+                      <table className="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">N°</th>
+                            <th scope="col">Couleur</th>
+                            <th scope="col">Taille</th>
+                            <th scope="col">Quantité</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            varieties.map((val,key) => 
+                            <tr key={key}>
+                              <th scope="row">{key+1}</th>
+                              <th scope="row">{val.color}</th>
+                              <td>{val.size}</td>
+                              <td>{val.quantity}</td>
+                              <td></td>
+                            </tr>)
+                          }
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                )
+                ) : null
               }
 
               <div className={`${classes.row} row`}>
@@ -691,7 +711,6 @@ class AddProduct extends React.Component {
           <div className={classes.modalPaper}>  
             <VarietyForm 
               handleClose={this.handleCloseModal.bind(this)}
-              handlePostFormData={this._handlePostVarietyData.bind(this)} 
             />
           </div>
         </Modal>
