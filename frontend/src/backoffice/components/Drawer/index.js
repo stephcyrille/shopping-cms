@@ -287,7 +287,7 @@ export default function PersistentDrawer(props) {
               ) :
               null
             }
-
+{/* 
             <ListItem button
               selected={selectedIndex === 100}
               component={Link}
@@ -298,7 +298,7 @@ export default function PersistentDrawer(props) {
                 <img src="/static/images/icons/icon6.png" style={{width: 25}} />
               </ListItemIcon>
               <ListItemText primary="Ajouter Variété" />
-            </ListItem>
+            </ListItem> */}
             
           </List>
           <Divider />

@@ -9,11 +9,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+// import Autocomplete from '@material-ui/lab/Autocomplete';
 import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 
 
-import { addVarietyActions } from '../../Product/Add/store'
+import { addProductStoreActions } from '../../Product/Add/store'
 
 
 
@@ -96,7 +96,7 @@ const useStyles = theme => ({
 
 export default
 @connect((state, props) => ({
-  addVarietyStore: state.addVarietyStore
+  addProductStore: state.addProductStore
 }))
 @withStyles(useStyles)
 class AddVariety extends React.Component {
@@ -145,53 +145,130 @@ class AddVariety extends React.Component {
         errorMessage: null,
         fileInput: React.createRef()
       },
-
-      top100Films : [
-        { title: 'The Shawshank Redemption', year: 1994 },
-        { title: 'The Godfather', year: 1972 },
-        { title: 'The Godfather: Part II', year: 1974 },
-        { title: 'The Dark Knight', year: 2008 },
-        { title: '12 Angry Men', year: 1957 },
-        { title: "Schindler's List", year: 1993 },
-        { title: 'Pulp Fiction', year: 1994 },
-        { title: 'The Lord of the Rings: The Return of the King', year: 2003 },
-        { title: 'The Good, the Bad and the Ugly', year: 1966 },
-        { title: 'Fight Club', year: 1999 }
-      ],
-
       formSubmitDisabled: true,
       formValid: false,
+      editMode: this.props.editMode,
+      initial: this.props.initialsValues,
     }
   }
 
+  componentDidMount(){
+    console.log("Value ofs props inititals",  this.props.initialsValues);
+    
+    if(this.state.editMode){
 
-  // handleChangeColor = (event) => {
-  //   // Because the autocomplete element don't trigger the change action on the form component
-  //   // To preserve system resource, we will check if the formSubmitDisabled state is already false 
-  //   if(this.state.formSubmitDisabled==false){
-  //     this.setState({
-  //       color: {
-  //         value: this.state.top100Films[event.target.value],
-  //         error: false
-  //       },
-  //     })
-  //   } else {
-  //     this.setState({
-  //       color: {
-  //         value: this.state.top100Films[event.target.value],
-  //         error: false
-  //       },
-  //       formSubmitDisabled: false
-  //     })
-  //   }
-  // }
+      if(this.props.initialsValues.picture1){
+        this.fileToDataURL(this.props.initialsValues.picture1)
+        .then(dataUrl => {
+          var file = this.dataURLtoFile(dataUrl, 'picture1.jpg');
+          this.setState({
+            picture1: {
+              value: this.props.initialsValues.picture1,
+              fileInput: file
+            }
+          })
+        })
+      }
+      if(this.props.initialsValues.picture2){
+        this.fileToDataURL(this.props.initialsValues.picture2)
+        .then(dataUrl => {
+          var file = this.dataURLtoFile(dataUrl, 'picture2.jpg');
+          this.setState({
+            picture2: {
+              value: this.props.initialsValues.picture2,
+              fileInput: file
+            }
+          })
+        })
+      }
+      if(this.props.initialsValues.picture3){
+        this.fileToDataURL(this.props.initialsValues.picture3)
+        .then(dataUrl => {
+          var file = this.dataURLtoFile(dataUrl, 'picture3.jpg');
+          this.setState({
+            picture3: {
+              value: this.props.initialsValues.picture3,
+              fileInput: file
+            }
+          })
+        })
+      }
+      if(this.props.initialsValues.picture4){
+        this.fileToDataURL(this.props.initialsValues.picture4)
+        .then(dataUrl => {
+          var file = this.dataURLtoFile(dataUrl, 'Picture4.jpg');
+          this.setState({
+            picture4: {
+              value: this.props.initialsValues.picture4,
+              fileInput: file
+            }
+          })
+        })
+      }
+
+      this.setState({
+        color: {
+          value: this.props.initialsValues.color},
+        size: {
+          value: this.props.initialsValues.size},
+        quantity: {
+          value: this.props.initialsValues.quantity},
+      })
+    }
+    else{
+      this.setState({
+        color: {
+          value: ''
+        },
+        size: {
+          value: ''
+        },
+        quantity: {
+          value: ''
+        },
+        picture1: {
+          value: ''        
+        },
+        picture2: {
+          value: null
+        },
+        picture3: {
+          value: null
+        },
+        picture4: {
+          value: null
+        },
+      })
+    }
+  }
+
+  fileToDataURL = url => fetch(url)
+    .then(response => response.blob())
+    .then(blob => new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result)
+      reader.onerror = reject
+      reader.readAsDataURL(blob)
+  }))
+
+
+  dataURLtoFile = (dataurl, filename) => {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type:mime});
+  }
+
 
   handleChangeColor = (event) => {
     this.setState({
       color: {
         value: event.target.value,
-        error: false
-      }
+        error: false,
+      },
+      formSubmitDisabled: false
     })
   }
 
@@ -201,30 +278,11 @@ class AddVariety extends React.Component {
       size: {
         value: event.target.value,
         error: false
-      }
+      }, 
+      formSubmitDisabled: false
     })
   }
 
-  // handleChangeSize = (event) => {
-  //   // Because the autocomplete element don't trigger the change action on the form component
-  //   // To preserve system resource, we will check if the formSubmitDisabled state is already false 
-  //   if(this.state.formSubmitDisabled==false){
-  //     this.setState({
-  //       size: {
-  //         value: this.state.top100Films[event.target.value],
-  //         error: false
-  //       },
-  //     })
-  //   } else {
-  //     this.setState({
-  //       size: {
-  //         value: this.state.top100Films[event.target.value],
-  //         error: false
-  //       },
-  //       formSubmitDisabled: false
-  //     })
-  //   }
-  // }
 
   handleChangeQuantity = (event) => {
     event.preventDefault();
@@ -236,118 +294,6 @@ class AddVariety extends React.Component {
       }
     })
   }
-
-
-  _handleOnSubmit(event){
-    event.preventDefault();
-    // console.log("Form Values", event.target)
-    // Make the validation process here
-
-    var values = {
-      color: this.state.color.value,
-      size: this.state.size.value,
-      quantity: this.state.quantity.value,
-      picture1: this.state.picture1.fileInput,
-      picture2: this.state.picture2.fileInput,
-      picture3: this.state.picture3.fileInput,
-      picture4: this.state.picture4.fileInput,
-    }
-
-    console.log("Form Values", values)
-    if( !values.color ){
-      this.setState({
-        color: {
-          error: true,
-          errorMessage: "Selectionner une valeur"
-        },
-      })
-    }
-    if( !values.size ){
-      this.setState({
-        size: {
-          error: true,
-          errorMessage: "Selectionner une valeur"
-        },
-      })
-    }
-    if( !values.quantity ){
-      this.setState({
-        quantity: {
-          error: true,
-          errorMessage: "La valeur du champ ne doit pas être vide"
-        },
-      })
-    }
-    if( !(values.picture1 instanceof File) == true ){
-      this.setState({
-        picture1: {
-          error: true,
-          errorMessage: "L'ajout d'image est obligatoire"
-        },
-      })
-    }
-    if( !(values.picture2 instanceof File) == true  ){
-      this.setState({
-        picture2: {
-          error: true,
-          errorMessage: "L'ajout d'image est obligatoire"
-        },
-      })
-    }
-    if( !(values.picture3 instanceof File) == true  ){
-      this.setState({
-        picture3: {
-          error: true,
-          errorMessage: "L'ajout d'image est obligatoire"
-        },
-      })
-    }
-    if( !(values.picture4 instanceof File) == true  ){
-      this.setState({
-        picture4: {
-          error: true,
-          errorMessage: "L'ajout d'image est obligatoire"
-        },
-      })
-    }
-    
-    // Form s valid here
-    if(
-      (values.color) !== "" &&
-      (values.size) !== "" &&
-      (values.error) !== "" &&
-      (values.quantity) !== "" &&
-      (values.picture1 instanceof File) === true &&
-      (values.picture2 instanceof File) === true &&
-      (values.picture3 instanceof File) === true &&
-      (values.picture4 instanceof File) === true
-    ){
-      console.log("Data Posted! Greatttt", values)
-      // Post form data on server
-      // We will use redux for updating the varieties table values
-
-      const variety = {
-        color: values.color,
-        size: values.size,
-        quantity: parseInt(values.quantity),
-      }
-
-      console.log("Handle Varietiy=================", variety)
-
-      var varieties = this.props.addVarietyStore.varieties
-      varieties.push(variety)
-
-
-      this.props.dispatch(addVarietyActions.addVariety(varieties))
-      // Close modal when everything is ok
-      this.props.handleClose()
-    }
-    
-    // Call validator here, then return erros
-    // const validator = validator(valuer) 
-
-  }
-
   
   _handleFormOnChange(event){
     event.preventDefault();
@@ -370,6 +316,7 @@ class AddVariety extends React.Component {
         URL.revokeObjectURL(imageFile);
       };
       imageObject.src = localImageUrl;
+      
       if(picNber==1){
         this.setState({
           picture1: {
@@ -448,10 +395,222 @@ class AddVariety extends React.Component {
     }
   }
   
+
+
+  _handleOnSubmit(event){
+    event.preventDefault();
+    // console.log("Form Values", event.target)
+    // Make the validation process here
+
+    console.log("EDIT MODEEEEEEEE", this.state.editMode);
+    
+
+    if(!this.state.editMode){
+      var values = {
+        color: this.state.color.value,
+        size: this.state.size.value,
+        quantity: this.state.quantity.value,
+        picture1: this.state.picture1.fileInput,
+        picture2: this.state.picture2.fileInput,
+        picture3: this.state.picture3.fileInput,
+        picture4: this.state.picture4.fileInput,
+      }
+
+      console.log("Form Values", values)
+      if( !values.color ){
+        this.setState({
+          color: {
+            error: true,
+            errorMessage: "Selectionner une valeur"
+          },
+        })
+      }
+      if( !values.size ){
+        this.setState({
+          size: {
+            error: true,
+            errorMessage: "Selectionner une valeur"
+          },
+        })
+      }
+      if( !values.quantity ){
+        this.setState({
+          quantity: {
+            error: true,
+            errorMessage: "La valeur du champ ne doit pas être vide"
+          },
+        })
+      }
+      if( !(values.picture1 instanceof File) == true ){
+        this.setState({
+          picture1: {
+            error: true,
+            errorMessage: "L'ajout d'image est obligatoire"
+          },
+        })
+      }
+      if( !(values.picture2 instanceof File) == true  ){
+        this.setState({
+          picture2: {
+            error: true,
+            errorMessage: "L'ajout d'image est obligatoire"
+          },
+        })
+      }
+      if( !(values.picture3 instanceof File) == true  ){
+        this.setState({
+          picture3: {
+            error: true,
+            errorMessage: "L'ajout d'image est obligatoire"
+          },
+        })
+      }
+      if( !(values.picture4 instanceof File) == true  ){
+        this.setState({
+          picture4: {
+            error: true,
+            errorMessage: "L'ajout d'image est obligatoire"
+          },
+        })
+      }
+      
+      // Form s valid here
+      if(
+        (values.color) !== "" &&
+        (values.size) !== "" &&
+        (values.quantity) !== "" &&
+        (values.picture1 instanceof File) === true &&
+        (values.picture2 instanceof File) === true &&
+        (values.picture3 instanceof File) === true &&
+        (values.picture4 instanceof File) === true
+      ){
+        console.log("Data Posted! Greatttt=== Verif new pics====", values)
+        // Post form data on server
+        // We will use redux for updating the varieties table values
+
+        const { id_initial } = this.props.addProductStore
+        const variety = {
+          id : id_initial,
+          color: values.color,
+          size: values.size,
+          quantity: parseInt(values.quantity),
+          picture1: values.picture1,
+          picture2: values.picture2,
+          picture3: values.picture3,
+          picture4: values.picture4,
+        }
+
+        var varieties = this.props.addProductStore.varieties
+        varieties.push(variety)
+
+        this.props.dispatch(addProductStoreActions.addVariety(varieties))
+        this.props.dispatch(addProductStoreActions.increaseId(id_initial + 1))
+
+        // Close modal when everything is ok
+        this.props.handleClose()
+      } 
+    }
+    else {
+      var values = {
+        color: this.state.color.value,
+        size: this.state.size.value,
+        quantity: this.state.quantity.value,
+        picture1: this.state.picture1.fileInput,
+        picture2: this.state.picture2.fileInput,
+        picture3: this.state.picture3.fileInput,
+        picture4: this.state.picture4.fileInput,
+      }
+
+      console.log("Form Values state", this.state)
+      if( !values.color ){
+        this.setState({
+          color: {
+            error: true,
+            errorMessage: "Selectionner une valeur"
+          },
+        })
+      }
+      if( !values.size ){
+        this.setState({
+          size: {
+            error: true,
+            errorMessage: "Selectionner une valeur"
+          },
+        })
+      }
+      if( !values.quantity ){
+        this.setState({
+          quantity: {
+            error: true,
+            errorMessage: "La valeur du champ ne doit pas être vide"
+          },
+        })
+      }
+      if( !(values.picture1 instanceof File) == true ){
+        this.setState({
+          picture1: {
+            error: true,
+            errorMessage: "L'ajout d'image est obligatoire"
+          },
+        })
+      }
+      if( !(values.picture2 instanceof File) == true  ){
+        this.setState({
+          picture2: {
+            error: true,
+            errorMessage: "L'ajout d'image est obligatoire"
+          },
+        })
+      }
+      if( !(values.picture3 instanceof File) == true  ){
+        this.setState({
+          picture3: {
+            error: true,
+            errorMessage: "L'ajout d'image est obligatoire"
+          },
+        })
+      }
+      if( !(values.picture4 instanceof File) == true  ){
+        this.setState({
+          picture4: {
+            error: true,
+            errorMessage: "L'ajout d'image est obligatoire"
+          },
+        })
+      }
+
+      
+      const variety = {
+        id : this.state.initial.id,
+        color: values.color,
+        size: values.size,
+        quantity: parseInt(values.quantity),
+        picture1: values.picture1,
+        picture2: values.picture2,
+        picture3: values.picture3,
+        picture4: values.picture4,
+      }
+      const varieties = this.props.addProductStore.varieties
+
+      // replacing without caring about position
+      // const newArray = [...varieties.slice(0, this.state.initial.id), variety, ...varieties.slice(this.state.initial.id + 1)]
+      
+      const newArray = [...varieties.filter(item => item.id !== variety.id), variety]
+      this.props.dispatch(addProductStoreActions.addVariety(newArray))
+
+      console.log("new array ======", newArray)
+      this.props.handleClose()
+    }
+
+  }
+
+
   
 
   render() {
     const { classes } = this.props
+
+    console.log("Update mode initials values =========", this.state.initial)
 
 
 
@@ -498,13 +657,14 @@ class AddVariety extends React.Component {
                     <Select
                       labelId="product-color-select"
                       id="variety-color"
-                      value={this.state.color.value}
+                      value={ this.state.color.value }
                       onChange={this.handleChangeColor.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"rouge"}>Rouge</MenuItem>
-                      <MenuItem value={'bleu'}>Bleu</MenuItem>
-                      <MenuItem value={"vert"}>Vert</MenuItem>
+                      <MenuItem value={"Rouge"}>Rouge</MenuItem>
+                      <MenuItem value={'Bleu'}>Bleu</MenuItem>
+                      <MenuItem value={"Vert"}>Vert</MenuItem>
+                      <MenuItem value={"Noir"}>Noir</MenuItem>
                     </Select>
                     { this.state.color.error ? <FormHelperText>{this.state.color.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -539,32 +699,37 @@ class AddVariety extends React.Component {
                     <Select
                       labelId="variety-size-select"
                       id="product-collection"
-                      value={this.state.size.value}
+                      value={ this.state.size.value}
                       onChange={this.handleChangeSize.bind(this)}
                       fullWidth
                     >
                       <MenuItem value={"M"}>M</MenuItem>
                       <MenuItem value={'S'}>S</MenuItem>
-                      <MenuItem value={"XS"}>Xs</MenuItem>
+                      <MenuItem value={"XS"}>XS</MenuItem>
+                      <MenuItem value={"XXL"}>XXL</MenuItem>
                     </Select>
                     { this.state.size.error ? <FormHelperText>{this.state.size.errorMessage}</FormHelperText> : null }
                   </FormControl>
                 </div>
                 <div className="col-3">
-                  <TextField
-                    id="variety-quantity"
-                    label="Quantité"
-                    name="name"
-                    type="number"
-                    onChange={ this.handleChangeQuantity.bind(this) }
-                    placeholder={"Quantité"}
-                    value={this.state.quantity.value}
-                    type="text"
-                    error={ this.state.quantity.error && this.state.quantity.error }
-                    helperText={ this.state.quantity.error ? this.state.quantity.errorMessage : null }
-                    required
-                    fullWidth
-                  />
+                  <FormControl 
+                      className={classes.formControl}
+                  >
+                    <TextField
+                      id="variety-quantity"
+                      label="Quantité"
+                      name="name"
+                      type="number"
+                      onChange={ this.handleChangeQuantity.bind(this) }
+                      placeholder={"Quantité"}
+                      value={ this.state.quantity.value }
+                      type="text"
+                      error={ this.state.quantity.error && this.state.quantity.error }
+                      helperText={ this.state.quantity.error ? this.state.quantity.errorMessage : null }
+                      required
+                      fullWidth
+                    />
+                  </FormControl>
                 </div>
               </div>
 
@@ -576,7 +741,7 @@ class AddVariety extends React.Component {
                       (
                       <div>
                         <div className={classes.img}>
-                          <img src={this.state.picture1.value} width="100%" height="250px"/>
+                          <img src={ this.state.picture1.value } width="100%" height="250px"/>
                         </div>
                         <div className={classes.imgHover}>
                           <i className={`${classes.deleteIco} deleteIco fa fa-times fa-2x`} onClick={this._handleRemovePicture.bind(this, 1)} />
@@ -590,7 +755,7 @@ class AddVariety extends React.Component {
                           error={ this.state.picture1.error && this.state.picture1.error }
                         >
                           <Button 
-                            variant="raised" 
+                            variant="contained" 
                             className=""
                             fullWidth
                           >
@@ -641,7 +806,7 @@ class AddVariety extends React.Component {
                           error={ this.state.picture2.error && this.state.picture2.error }
                         >
                           <Button 
-                            variant="raised" 
+                            variant="contained" 
                             className=""
                             fullWidth
                           >
@@ -692,7 +857,7 @@ class AddVariety extends React.Component {
                           error={ this.state.picture3.error && this.state.picture3.error }
                         >
                           <Button 
-                            variant="raised" 
+                            variant="contained" 
                             className=""
                             fullWidth
                           >
@@ -743,7 +908,7 @@ class AddVariety extends React.Component {
                           error={ this.state.picture4.error && this.state.picture4.error }
                         >
                           <Button 
-                            variant="raised" 
+                            variant="contained" 
                             className=""
                             fullWidth
                           >

@@ -8,7 +8,7 @@ import { createBrowserHistory } from "history";
 import { routerMiddleware } from "connected-react-router";
 // import { reducer as formReducer } from "redux-form";
 
-import { addVarietyStore } from "../components/Product/Add/store";
+import { addProductStore } from "../components/Product/Add/store";
 
 // import { loginCStore } from "../components/Authentication/Login/store";
 
@@ -20,7 +20,7 @@ const cstore = history =>
   combineReducers({
     router: connectRouter(history),
     // form: formReducer,
-    addVarietyStore: addVarietyStore
+    addProductStore: addProductStore
   });
 
 export default function configureStore(preloadedState) {
