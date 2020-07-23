@@ -14,13 +14,21 @@ import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
 import Modal from '@material-ui/core/Modal';
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
+// Dialog Modal importations
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle'
 
 import MoneyField from '../../Snippets/Form/PrefixedInput'
 import appConfig from '../../../config/index'
 
-import Table from '../../Snippets/EditableTable/index'
 import VarietyForm from '../../Variety/Add/index'
 
+import { addProductStoreActions } from './store'
 
 
 const useStyles = theme => ({
@@ -72,6 +80,7 @@ const useStyles = theme => ({
 
 export default
 @connect((state, props) => ({
+  addProductStore: state.addProductStore
 }))
 @withStyles(useStyles)
 class AddProduct extends React.Component {
@@ -147,6 +156,12 @@ class AddProduct extends React.Component {
       varieties: [],
 
       openModal : false,
+      openConfirmModal : false,
+
+      delectedItemID: null,
+
+      editMode: false,
+      initialsValues: null,
     }
   }
 
@@ -384,53 +399,98 @@ class AddProduct extends React.Component {
       })
     }
 
+    values.varieties = this.props.addProductStore.varieties
+    console.log("Produc add Form values ", values)
+
     // Call validator here, then return erros
     // const validator = validator(valuer) 
 
   }
   
-
-  renderVarieties(){
-    const title = "Variétés"
-    const columns = [
-      { title: 'Couleur', field: 'color' },
-      { title: 'Taille', field: 'size' },
-      { title: 'Quantité', field: 'quantity' }
-    ];
-    const datas = [
-      { color: 'Bleu nuit', size: 'M' , quantity: 10  },
-      { color: 'Bleu nuit', size: 'M' , quantity: 10  },
-      { color: 'Bleu nuit', size: 'M' , quantity: 10  },
-    ]
-
-    return (
-      <div style={{ width: "100%", padding: "0 20px 20px 20px", }}>
-          <Table 
-            table_title={title} 
-            table_columns={columns} 
-            table_datas={datas} 
-            product={true} 
-            // addProduct={this._goToProduct.bind(this)} 
-          />
-      </div>
-    )
-  }
-
   handleOpenModal(){
     this.setState({
       openModal: true 
     })
   }
 
+
   handleCloseModal(){
     this.setState({
-      openModal: false 
+      openModal: false ,
+      openConfirmModal : false,
+      editMode: false
     })
   }
+  
+  _handleEditVariety(id){
+    // Get variety with ID
+    // Initial values on variety add form store
+    // Set Modal to open
+    // Inside the value component, retrieve defaults values inside the component will mount or constructor
+    const { varieties} = this.props.addProductStore
+    var array = varieties
+    const variety = array.filter(item => item.id === id);
+
+    // Set each pictures from file to url
+    console.log("Edt item²²²²²²²²²²²²²² vatriety", variety)
+
+    const initialsValues = {
+      id : variety[0].id,
+      color: variety[0].color,
+      size: variety[0].size,
+      quantity: variety[0].quantity,
+      picture1: URL.createObjectURL(variety[0].picture1),
+      picture2: URL.createObjectURL(variety[0].picture2),
+      picture3: URL.createObjectURL(variety[0].picture3),
+      picture4: URL.createObjectURL(variety[0].picture4),
+    }
+    
+    this.setState({
+      openModal: true,
+      editMode: true,
+      initialsValues: initialsValues
+    })
+    
+    // console.log("Edt item²²²²²²²²²²²²²² vatriety", variety, this.state)
+  }
+  
+  _handleDeleteVariety(id){
+    // e.preventDefault()
+    
+  console.log("Delete item²²²²²²²²²²²²²²")
+  
+   this.setState({
+    openConfirmModal : true,
+    delectedItemID: id
+   })
+  }
+  
+  _handleDeleteVarietyConfirm(){
+    // e.preventDefault()
+    const { varieties} = this.props.addProductStore
+    const id = this.state.delectedItemID
+
+    console.log("Delete item²²²²²²²²²²²²²²Confirmed")
+
+    var array = varieties
+
+    const newArray = array.filter(item => item.id !== id);
+
+    this.props.dispatch(addProductStoreActions.addVariety(newArray))
+
+    this.setState({
+      openConfirmModal : false,
+     })
+    
+  }
+
   
 
   render() {
     const { classes } = this.props
+    const { varieties} = this.props.addProductStore
+
+
     
     return (
       <div>
@@ -642,17 +702,56 @@ class AddProduct extends React.Component {
                   className={classes.button}
                   endIcon={<AddCircleOutlineRoundedIcon/>}
                   onClick={this.handleOpenModal.bind(this)}
+                  disabled={varieties.length === appConfig.VARIETIES_MAX_NUMBER && true}
                 >
                   Ajouter Variété
                 </Button>
               </div>
 
               {
-                this.state.varieties.length !== 0 && (
+                varieties.length !== 0 ? (
                   <div className={`${classes.row} row`} style={{ width: "100%" }}>
-                    { this.renderVarieties() }
+                    <div style={{ width: "100%", padding: "0 20px 20px 20px", }}>
+                      <table className="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">N°</th>
+                            <th scope="col">Couleur</th>
+                            <th scope="col">Taille</th>
+                            <th scope="col">Quantité</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            varieties.map((val,key) => 
+                            <tr key={key}>
+                              <th scope="row">{val.id}</th>
+                              <th scope="row">{val.color}</th>
+                              <td>{val.size}</td>
+                              <td>{val.quantity}</td>
+                              <td style={{ paddingLeft: 0, paddingTop: 0 }}>
+                                <Button 
+                                  className='btn btn-link'
+                                  onClick={ (e) =>  e.preventDefault(), this._handleEditVariety.bind(this, val.id) }
+                                >
+                                  <EditIcon />
+                                </Button>
+                                &nbsp;&nbsp;&nbsp;
+                                <Button 
+                                  className='btn btn-link'
+                                  onClick={ (e) =>  e.preventDefault(), this._handleDeleteVariety.bind(this, val.id) }
+                                >
+                                  <DeleteIcon />
+                                </Button>
+                              </td>
+                            </tr>)
+                          }
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                )
+                ) : null
               }
 
               <div className={`${classes.row} row`}>
@@ -682,9 +781,35 @@ class AddProduct extends React.Component {
           aria-describedby="simple-modal-description"
         >
           <div className={classes.modalPaper}>  
-            <VarietyForm handleClose={this.handleCloseModal.bind(this)} />
+            <VarietyForm 
+              handleClose={this.handleCloseModal.bind(this)}
+              initialsValues={this.state.initialsValues}
+              editMode={this.state.editMode}
+            />
           </div>
         </Modal>
+
+        <Dialog
+          open={this.state.openConfirmModal}
+          onClose={this.handleCloseModal.bind(this)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Confirmer la suppression"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Êtes-vous sur de vouloir supprimer la variété { this.state.delectedItemID } ?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseModal.bind(this)} color="primary">
+              Annuller
+            </Button>
+            <Button onClick={this._handleDeleteVarietyConfirm.bind(this)} color="primary">
+              Supprimer
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%"
   },
   appBar: {
-    backgroundColor: "#fdca23 !important",
+    backgroundColor: "#ddaa44 !important",
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: "#fdca23 !important",
+    backgroundColor: "#ddaa44 !important",
     color: "#fff",
   },
   drawerHeader: {

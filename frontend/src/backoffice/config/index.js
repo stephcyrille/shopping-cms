@@ -1,5 +1,5 @@
 const appConfig = {
-  VARIETIES_MAX_NUMBER: 4
+  VARIETIES_MAX_NUMBER: 3
 }
 
 export default appConfig
