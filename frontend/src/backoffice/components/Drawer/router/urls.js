@@ -10,6 +10,8 @@ const urls = {
   PRODUCT: "/dashboard/product",
   ADDPRODUCT: "/dashboard/product-add",
   VARIETY: "/dashboard/variety-add",
+  ARTICLE: "/dashboard/article",
+  ADDARTICLE: "/dashboard/article-add",
 };
 
 

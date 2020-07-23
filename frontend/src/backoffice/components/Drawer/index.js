@@ -35,7 +35,8 @@ import AllSize from "app-js/backoffice/components/Size/All/index.js";
 import AllColor from "app-js/backoffice/components/Color/All/index.js";
 import AllProduct from "app-js/backoffice/components/Product/All/index.js";
 import AddProduct from "app-js/backoffice/components/Product/Add/index.js";
-import AddVariety from "app-js/backoffice/components/Variety/Add/index.js";
+import AddArticle from "app-js/backoffice/components/Article/Add/index.js";
+import AllArticle from "app-js/backoffice/components/Article/All/index.js";
 
 
 const history = createBrowserHistory();
@@ -302,6 +303,45 @@ export default function PersistentDrawer(props) {
             
           </List>
           <Divider />
+          <ListItem button
+              selected={selectedIndex === 6}
+              onClick={(event) => handleListItemClick(event, 6)}
+            >
+              <ListItemIcon>
+                <img src="/static/images/icons/icon1.png" style={{width: 25}} />
+              </ListItemIcon>
+              <ListItemText primary="Articles" />
+              {selectedIndex==6 || selectedIndex==61 || selectedIndex==62 ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            {
+              selectedIndex == 6 || selectedIndex==61 || selectedIndex==62  ?
+              (<Collapse in={true} timeout="auto" unmountOnExit className={classes.collapse}>
+                <List component="div" disablePadding>
+                  <ListItem 
+                    button 
+                    selected={selectedIndex === 61}
+                    className={`${ selectedIndex==61 ? `${classes.nested}` : null}`}
+                    component={Link}
+                    to={`${urls.ARTICLE}`}
+                    onClick={(event) => handleListItemClick(event, 61)}
+                  >
+                    <ListItemText primary="Tous" />
+                  </ListItem>
+                  <ListItem 
+                    button 
+                    selected={selectedIndex === 62}
+                    className={`${ selectedIndex==62 ? `${classes.nested}` : null}`}
+                    component={Link}
+                    to={`${urls.ADDARTICLE}`}
+                    onClick={(event) => handleListItemClick(event, 62)}
+                  >
+                    <ListItemText primary="Ajouter" />
+                  </ListItem>
+                </List>
+              </Collapse>
+              ) :
+              null
+            }
           <List>
             {['All mail', 'Trash', 'Spam'].map((text, index) => (
               <ListItem button key={text}>
@@ -326,7 +366,8 @@ export default function PersistentDrawer(props) {
             <Route path={`${urls.COLOR}`} component={AllColor} />
             <Route path={`${urls.PRODUCT}`} component={AllProduct} />
             <Route path={`${urls.ADDPRODUCT}`} component={AddProduct} />
-            <Route path={`${urls.VARIETY}`} component={AddVariety} />
+            <Route path={`${urls.ARTICLE}`} component={AllArticle} />
+            <Route path={`${urls.ADDARTICLE}`} component={AddArticle} />
           </Switch>
           
         </main>
