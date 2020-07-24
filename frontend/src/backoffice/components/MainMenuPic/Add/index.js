@@ -532,11 +532,11 @@ class AddMenuPic extends React.Component {
         (values.picture6 instanceof File) === true &&
         (values.picture7 instanceof File) === true 
       ){
-        console.log("Data Posted! Greatttt=== Verif new pics====", values)
+        
         // Post form data on server
         // We will use redux for updating the varieties table values
 
-        const values = {
+        const Newvalues = {
           picture1: values.picture1,
           picture2: values.picture2,
           picture3: values.picture3,
@@ -549,6 +549,7 @@ class AddMenuPic extends React.Component {
         // SUBLMIT TO API THERE
         // ======================================================= 
         // ======================================================= 
+        console.log("Data Posted! Greatttt=== Verif new pics====", Newvalues)
       } 
     }
     else {
@@ -878,13 +879,13 @@ class AddMenuPic extends React.Component {
                             className=""
                             fullWidth
                           >
-                            <label for="raised-input-file-4" style={{ marginBottom: 0 }}>
+                            <label for="raised-input-file-5" style={{ marginBottom: 0 }}>
                               <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
-                              Photo 4 (PNG, JPG)*
+                              Photo 5 (PNG, JPG)*
                             </label>
                             <input
                               accept=".png, .jpg, .jpeg"
-                              id="raised-input-file-4"
+                              id="raised-input-file-5"
                               name="picture5"
                               type="file"
                               onChange={ event => this.handlePictureChange(event, 5)}
@@ -930,13 +931,13 @@ class AddMenuPic extends React.Component {
                             className=""
                             fullWidth
                           >
-                            <label for="raised-input-file-4" style={{ marginBottom: 0 }}>
+                            <label for="raised-input-file-6" style={{ marginBottom: 0 }}>
                               <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
-                              Photo 4 (PNG, JPG)*
+                              Photo 6 (PNG, JPG)*
                             </label>
                             <input
                               accept=".png, .jpg, .jpeg"
-                              id="raised-input-file-4"
+                              id="raised-input-file-6"
                               name="picture6"
                               type="file"
                               onChange={ event => this.handlePictureChange(event, 6)}
@@ -982,13 +983,13 @@ class AddMenuPic extends React.Component {
                             className=""
                             fullWidth
                           >
-                            <label for="raised-input-file-4" style={{ marginBottom: 0 }}>
+                            <label for="raised-input-file-7" style={{ marginBottom: 0 }}>
                               <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
-                              Photo 4 (PNG, JPG)*
+                              Photo 7 (PNG, JPG)*
                             </label>
                             <input
                               accept=".png, .jpg, .jpeg"
-                              id="raised-input-file-4"
+                              id="raised-input-file-7"
                               name="picture7"
                               type="file"
                               onChange={ event => this.handlePictureChange(event, 7)}
