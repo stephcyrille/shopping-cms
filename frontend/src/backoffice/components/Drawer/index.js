@@ -37,6 +37,8 @@ import AllProduct from "app-js/backoffice/components/Product/All/index.js";
 import AddProduct from "app-js/backoffice/components/Product/Add/index.js";
 import AddArticle from "app-js/backoffice/components/Article/Add/index.js";
 import AllArticle from "app-js/backoffice/components/Article/All/index.js";
+import AllMenuPicture from "app-js/backoffice/components/MainMenuPic/All";
+import AddMenuPicture from "app-js/backoffice/components/MainMenuPic/Add";
 
 
 const history = createBrowserHistory();
@@ -342,14 +344,47 @@ export default function PersistentDrawer(props) {
               ) :
               null
             }
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
+
+          <Divider />
+          <ListItem button
+            selected={selectedIndex === 7}
+            onClick={(event) => handleListItemClick(event, 7)}
+          >
+            <ListItemIcon>
+              <i className="fa fa-file-image fa-2x" style={{width: 25}} />
+            </ListItemIcon>
+            <ListItemText primary="Photo menu principal" />
+            {selectedIndex==7 || selectedIndex==71 || selectedIndex==72 ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          {
+            selectedIndex == 7 || selectedIndex==71 || selectedIndex==72  ?
+            (<Collapse in={true} timeout="auto" unmountOnExit className={classes.collapse}>
+              <List component="div" disablePadding>
+                <ListItem 
+                  button 
+                  selected={selectedIndex === 71}
+                  className={`${ selectedIndex==71 ? `${classes.nested}` : null}`}
+                  component={Link}
+                  to={`${urls.MAINMENUPIC}`}
+                  onClick={(event) => handleListItemClick(event, 71)}
+                >
+                  <ListItemText primary="Tous" />
+                </ListItem>
+                <ListItem 
+                  button 
+                  selected={selectedIndex === 72}
+                  className={`${ selectedIndex==72 ? `${classes.nested}` : null}`}
+                  component={Link}
+                  to={`${urls.ADDMAINMENUPIC}`}
+                  onClick={(event) => handleListItemClick(event, 72)}
+                >
+                  <ListItemText primary="Ajouter" />
+                </ListItem>
+              </List>
+            </Collapse>
+            ) :
+            null
+          }
         </Drawer>
       
         <main
@@ -368,6 +403,8 @@ export default function PersistentDrawer(props) {
             <Route path={`${urls.ADDPRODUCT}`} component={AddProduct} />
             <Route path={`${urls.ARTICLE}`} component={AllArticle} />
             <Route path={`${urls.ADDARTICLE}`} component={AddArticle} />
+            <Route path={`${urls.MAINMENUPIC}`} component={AllMenuPicture} />
+            <Route path={`${urls.ADDMAINMENUPIC}`} component={AddMenuPicture} />
           </Switch>
           
         </main>

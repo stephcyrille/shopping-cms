@@ -12,6 +12,8 @@ const urls = {
   VARIETY: "/dashboard/variety-add",
   ARTICLE: "/dashboard/article",
   ADDARTICLE: "/dashboard/article-add",
+  MAINMENUPIC: "/dashboard/main-menu-picture",
+  ADDMAINMENUPIC: "/dashboard/main-menu-picture-add",
 };
 
 

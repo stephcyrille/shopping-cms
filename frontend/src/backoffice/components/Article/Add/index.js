@@ -86,15 +86,10 @@ export default
 class AddArticle extends React.Component {
   constructor(props){
     super(props)
-    document.title = 'Ajouter un produit | Afro Yaca Drum'
-    this.refEditor = React.createRef(null);
+    document.title = 'Ajouter un article | Afro Yaca Drum'
+    this.refResumeEditor = React.createRef(null);
+    this.refArticleEditor = React.createRef(null);
     this.state = {
-      ref : {
-        textmask: 'REF-2020',
-        value: 'REF-2020',
-        error: false,
-        errorMessage: null
-      },
       title : {
         value: '',
         error: false,
@@ -110,56 +105,62 @@ class AddArticle extends React.Component {
         error: false,
         errorMessage: null
       },
-      description : {
+      date : {
+        value: '2020-07-22T10:30',
+        error: false,
+        errorMessage: null
+      },
+      author : {
         value: '',
         error: false,
         errorMessage: null
       },
-      category : {
+      photograph : {
         value: '',
         error: false,
         errorMessage: null
       },
-      catalog : {
+      featureOne : {
         value: '',
         error: false,
         errorMessage: null
       },
-      group : {
+      featureTwo : {
         value: '',
         error: false,
         errorMessage: null
       },
-      collection : {
+      featureThree : {
         value: '',
         error: false,
         errorMessage: null
       },
-      material : {
+      featureFour : {
         value: '',
         error: false,
         errorMessage: null
       },
-      feature : {
+      facebookUrl : {
         value: '',
-        checked: false,
         error: false,
         errorMessage: null
       },
-      discount : {
+      twitterUrl : {
         value: '',
-        checked: false,
         error: false,
         errorMessage: null
       },
-
-      varieties: [],
-
-      openModal : false,
-      openConfirmModal : false,
-
-      delectedItemID: null,
-
+      whatsappUrl : {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      mailUrl : {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      
       editMode: false,
       initialsValues: null,
 
@@ -223,45 +224,100 @@ class AddArticle extends React.Component {
   }
 
 
-  handleChangeDescription = (event) => {
+  handleChangeAuthor = (event) => {
     this.setState({
-      description: {
+      author: {
         value: event.target.value,
         error: false
       }
     })
   }
 
-  handleChangeCategory = (event) => {
+  handleChangePhotograph = (event) => {
     this.setState({
-      category: {
+      photograph: {
         value: event.target.value,
         error: false
       }
     })
   }
 
-  handleChangeCatalog = (event) => {
+  handleChangeFeatureOne = (event) => {
     this.setState({
-      catalog: {
+      featureOne: {
         value: event.target.value,
         error: false
       }
     })
   }
 
-  handleChangeGroup = (event) => {
+  handleChangefeatureTwo = (event) => {
     this.setState({
-      group: {
+      featureTwo: {
         value: event.target.value,
         error: false
       }
     })
   }
 
-  handleChangeCollection = (event) => {
+  handleChangefeatureThree = (event) => {
     this.setState({
-      collection: {
+      featureThree: {
+        value: event.target.value,
+        error: false
+      }
+    })
+  }
+
+  handleChangefeatureFour = (event) => {
+    this.setState({
+      featureFour: {
+        value: event.target.value,
+        error: false
+      }
+    })
+  }
+
+  
+  handleChangeDate = (event) => {
+    this.setState({
+      date: {
+        value: event.target.value,
+        error: false
+      }
+    })
+  }
+  
+  handleChangeFacebookUrl = (event) => {
+    this.setState({
+      facebookUrl: {
+        value: event.target.value,
+        error: false
+      }
+    })
+  }
+  
+  handleChangeTwitterUrl = (event) => {
+    this.setState({
+      twitterUrl: {
+        value: event.target.value,
+        error: false
+      }
+    })
+  }
+  
+  handleChangeWhatsappUrl = (event) => {
+    this.setState({
+      whatsappUrl: {
+        value: event.target.value,
+        error: false
+      }
+    })
+  }
+  
+  handleChangemailUrl = (event) => {
+    this.setState({
+      mailUrl: {
         value: event.target.value,
         error: false
       }
@@ -269,73 +325,35 @@ class AddArticle extends React.Component {
   }
 
 
-  handleChangeMaterial = (event) => {
-    event.preventDefault();
-
-    if(event.target.value.length < 5){
-      this.setState({
-        material: {
-          value : event.target.value,
-          error: true,
-          errorMessage: "Le champ doit être contenir au moins 4 caractères"
-        }
-      })
-    } else {
-      this.setState({
-        material: {
-          value: event.target.value,
-          error: false
-        }
-      })
-    }
-
-    console.log("Event", event.target.value, this.state.material.value)
-  }
-
-
-  handleChangeIsFeature(event){
-    console.log("checked", event.target.name, event.target.checked)
-    this.setState({
-      feature: {
-        checked : event.target.checked,
-        error: true,
-        errorMessage: "Le champ doit être contenir au moins 4 caractères"
-      }
-    })
-  }
-
-  handleChangeIsDiscount(event){
-    console.log("checked", event.target.name, event.target.checked)
-    this.setState({
-      discount: {
-        checked : event.target.checked,
-        error: true,
-        errorMessage: "Le champ doit être contenir au moins 4 caractères"
-      }
-    })
-  }
 
   _handleOnSubmit(event){
     event.preventDefault();
-    // console.log("Form Values", event.target)
-    // Make the validation process here
-    // var values = {
-    //   ref: this.state.ref.value,
-    //   name: this.state.name.value,
-    //   slug: this.state.slug.value,
-    //   price: this.state.price.value,
-    //   description: this.state.description.value,
-    //   catalog: this.state.catalog.value,
-    //   category: this.state.category.value,
-    //   group: this.state.group.value,
-    //   collection: this.state.collection.value,
-    //   material: this.state.material.value,
-    //   is_feature: this.state.feature.checked,
-    //   is_discount: this.state.discount.checked,
-    // }
-    var refvalue = this.refEditor.current.value
 
-    console.log("Form Values", refvalue)
+    var refvalue1 = this.refResumeEditor.current.value
+    var refvalue2 = this.refArticleEditor.current.value
+
+    // Make the validation process here
+    var values = {
+      title: this.state.title.value,
+      slug: this.state.slug.value,
+      guess: this.state.guess.value,
+      date: this.state.date.value,
+      author: this.state.author.value,
+      photograph: this.state.photograph.value,
+      featureOne: this.state.featureOne.value,
+      featureTwo: this.state.featureTwo.value,
+      featureThree: this.state.featureThree.value,
+      featureFour: this.state.featureFour.value,
+      facebookUrl: this.state.facebookUrl.value,
+      twitterUrl: this.state.twitterUrl.value,
+      whatsappUrl: this.state.whatsappUrl.value,
+      mailUrl: this.state.mailUrl.value,
+      resume: refvalue1,
+      content: refvalue2,
+    }
+
+    console.log("Article posting form values ", values)
+
     // if( !values.ref ){
     //   this.setState({
     //     ref: {
@@ -362,7 +380,6 @@ class AddArticle extends React.Component {
     // }
 
 
-    // console.log("Produc add Form values ", values)
 
     // Call validator here, then return erros
     // const validator = validator(valuer) 
@@ -370,9 +387,15 @@ class AddArticle extends React.Component {
   }
 
 
+  updateResumeContent(value) {
+    console.log("Rich text value============", value, this.refEditor)
+    // this.setState({content: this.refEditor.current.value})
+  }
+
+
   updateContent(value) {
     console.log("Rich text value============", value, this.refEditor)
-    this.setState({content: this.refEditor.current.value})
+    // this.setState({content: this.refEditor.current.value})
   }
   
 
@@ -471,52 +494,40 @@ class AddArticle extends React.Component {
                     label="Date de parution"
                     type="datetime-local"
                     defaultValue="2020-07-22T10:30"
+                    onChange={ this.handleChangeDate.bind(this) }
                     InputLabelProps={{
                       shrink: true,
                     }}
                     required
                     fullWidth
                   />
-                  {/* <TextField
-                    id="title_date-error-helper-text"
-                    label="Date de parution"
-                    error={ this.state.title.error && this.state.title.error }
-                    name="title"
-                    onChange={ this.handleChangeTitle.bind(this) }
-                    placeholder={"Date de parution"}
-                    value={this.state.title.value}
-                    type="text"
-                    helperText={ this.state.title.error ? this.state.title.errorMessage : null }
-                    required
-                    fullWidth
-                  /> */}
                 </div>
                 <div className="col-4">
                   <TextField
-                    id="title_date-error-helper-text"
+                    id="author-error-helper-text"
                     label="Auteur"
-                    error={ this.state.title.error && this.state.title.error }
-                    name="title"
-                    onChange={ this.handleChangeTitle.bind(this) }
+                    error={ this.state.author.error && this.state.author.error }
+                    name="author"
+                    onChange={ this.handleChangeAuthor.bind(this) }
                     placeholder={"Auteur de l'article"}
-                    value={this.state.title.value}
+                    value={this.state.author.value}
                     type="text"
-                    helperText={ this.state.title.error ? this.state.title.errorMessage : null }
+                    helperText={ this.state.author.error ? this.state.author.errorMessage : null }
                     required
                     fullWidth
                   />
                 </div>
                 <div className="col-4">
                   <TextField
-                    id="guess"
+                    id="potograph"
                     label="Crédit photos"
-                    error={ this.state.guess.error && this.state.guess.error }
-                    name="guess"
+                    error={ this.state.photograph.error && this.state.photograph.error }
+                    name="photograph"
                     placeholder={"Photographies"}
-                    onChange={ this.handleChangeGuess.bind(this) }
-                    value={this.state.guess.value}
+                    onChange={ this.handleChangePhotograph.bind(this) }
+                    value={this.state.photograph.value}
                     type="text"
-                    helperText={ this.state.guess.error ? this.state.guess.errorMessage : null }
+                    helperText={ this.state.photograph.error ? this.state.photograph.errorMessage : null }
                     required
                     fullWidth
                   />
@@ -527,10 +538,10 @@ class AddArticle extends React.Component {
                 <div className="col-12">
                   <label>Résumé de l'article</label>
                   <JoditEditor
-                    ref={this.refEditor}
+                    ref={this.refResumeEditor}
                     // value={this.state.content}
                     tabIndex={2} // tabIndex of textarea
-                    // onChange={ this.updateContent.bind(this) }
+                    onChange={ this.updateResumeContent.bind(this) }
                     config={config}
                     // onChange={newContent => {}}
                   />
@@ -541,10 +552,10 @@ class AddArticle extends React.Component {
                 <div className="col-12">
                   <label>Contenu de l'article</label>
                   <JoditEditor
-                    ref={this.refEditor}
+                    ref={this.refArticleEditor}
                     // value={this.state.content}
                     tabIndex={2} // tabIndex of textarea
-                    // onChange={ this.updateContent.bind(this) }
+                    onChange={ this.updateContent.bind(this) }
                     config={config}
                     // onChange={newContent => {}}
                   />
@@ -556,141 +567,141 @@ class AddArticle extends React.Component {
                 <div className="col-3">
                   <FormControl 
                     className={classes.formControl}
-                    error={ this.state.catalog.error && this.state.catalog.error }
+                    error={ this.state.featureOne.error && this.state.featureOne.error }
                   >
-                    <InputLabel id="product-catalog-select">Produit en vedette 1</InputLabel>
+                    <InputLabel id="product-feature-select-1">Produit en vedette 1</InputLabel>
                     <Select
-                      labelId="product-catalog-select"
-                      id="product-catalog"
-                      value={this.state.catalog.value}
-                      onChange={this.handleChangeCatalog.bind(this)}
+                      labelId="product-feature-select-1"
+                      id="product-feature-1"
+                      value={this.state.featureOne.value}
+                      onChange={this.handleChangeFeatureOne.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"homme"}>Homme</MenuItem>
-                      <MenuItem value={'femme'}>Femme</MenuItem>
-                      <MenuItem value={"enfant"}>Enfant</MenuItem>
+                      <MenuItem value={"Product 1"}>Produit 1</MenuItem>
+                      <MenuItem value={'Product 2'}>Produit 2</MenuItem>
+                      <MenuItem value={"Product 3"}>Produit 3</MenuItem>
                     </Select>
-                    { this.state.catalog.error ? <FormHelperText>{this.state.catalog.errorMessage}</FormHelperText> : null }
+                    { this.state.featureOne.error ? <FormHelperText>{this.state.featureOne.errorMessage}</FormHelperText> : null }
                   </FormControl>
                 </div>
                 <div className="col-3">
                   <FormControl 
                     className={classes.formControl}
-                    error={ this.state.catalog.error && this.state.catalog.error }
+                    error={ this.state.featureTwo.error && this.state.featureTwo.error }
                   >
-                    <InputLabel id="product-catalog-select">Produit en vedette 2</InputLabel>
+                    <InputLabel id="product-feature-select-2">Produit en vedette 2</InputLabel>
                     <Select
-                      labelId="product-catalog-select"
-                      id="product-catalog"
-                      value={this.state.catalog.value}
-                      onChange={this.handleChangeCatalog.bind(this)}
+                      labelId="product-feature-select-2"
+                      id="product-feature-2"
+                      value={this.state.featureTwo.value}
+                      onChange={this.handleChangefeatureTwo.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"homme"}>Homme</MenuItem>
-                      <MenuItem value={'femme'}>Femme</MenuItem>
-                      <MenuItem value={"enfant"}>Enfant</MenuItem>
+                      <MenuItem value={"Product 1"}>Produit 1</MenuItem>
+                      <MenuItem value={'Product 2'}>Produit 2</MenuItem>
+                      <MenuItem value={"Product 3"}>Produit 3</MenuItem>
                     </Select>
-                    { this.state.catalog.error ? <FormHelperText>{this.state.catalog.errorMessage}</FormHelperText> : null }
+                    { this.state.featureTwo.error ? <FormHelperText>{this.state.featureTwo.errorMessage}</FormHelperText> : null }
                   </FormControl>
                 </div>
                 <div className="col-3">
                   <FormControl 
                     className={classes.formControl}
-                    error={ this.state.catalog.error && this.state.catalog.error }
+                    error={ this.state.featureThree.error && this.state.featureThree.error }
                   >
-                    <InputLabel id="product-catalog-select">Produit en vedette 3</InputLabel>
+                    <InputLabel id="product-featureThree-select">Produit en vedette 3</InputLabel>
                     <Select
-                      labelId="product-catalog-select"
-                      id="product-catalog"
-                      value={this.state.catalog.value}
-                      onChange={this.handleChangeCatalog.bind(this)}
+                      labelId="product-featureThree-select"
+                      id="product-featureThree"
+                      value={this.state.featureThree.value}
+                      onChange={this.handleChangefeatureThree.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"homme"}>Homme</MenuItem>
-                      <MenuItem value={'femme'}>Femme</MenuItem>
-                      <MenuItem value={"enfant"}>Enfant</MenuItem>
+                      <MenuItem value={"Product 1"}>Produit 1</MenuItem>
+                      <MenuItem value={'Product 2'}>Produit 2</MenuItem>
+                      <MenuItem value={"Product 3"}>Produit 3</MenuItem>
                     </Select>
-                    { this.state.catalog.error ? <FormHelperText>{this.state.catalog.errorMessage}</FormHelperText> : null }
+                    { this.state.featureThree.error ? <FormHelperText>{this.state.featureThree.errorMessage}</FormHelperText> : null }
                   </FormControl>
                 </div>
                 <div className="col-3">
                   <FormControl 
                     className={classes.formControl}
-                    error={ this.state.catalog.error && this.state.catalog.error }
+                    error={ this.state.featureFour.error && this.state.featureFour.error }
                   >
-                    <InputLabel id="product-catalog-select">Produit en vedette 4</InputLabel>
+                    <InputLabel id="product-featureFour-select">Produit en vedette 4</InputLabel>
                     <Select
-                      labelId="product-catalog-select"
-                      id="product-catalog"
-                      value={this.state.catalog.value}
-                      onChange={this.handleChangeCatalog.bind(this)}
+                      labelId="product-featureFour-select"
+                      id="product-featureFour"
+                      value={this.state.featureFour.value}
+                      onChange={this.handleChangefeatureFour.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"homme"}>Homme</MenuItem>
-                      <MenuItem value={'femme'}>Femme</MenuItem>
-                      <MenuItem value={"enfant"}>Enfant</MenuItem>
+                      <MenuItem value={"Product 1"}>Produit 1</MenuItem>
+                      <MenuItem value={'Product 2'}>Produit 2</MenuItem>
+                      <MenuItem value={"Product 3"}>Produit 3</MenuItem>
                     </Select>
-                    { this.state.catalog.error ? <FormHelperText>{this.state.catalog.errorMessage}</FormHelperText> : null }
+                    { this.state.featureFour.error ? <FormHelperText>{this.state.featureFour.errorMessage}</FormHelperText> : null }
                   </FormControl>
                 </div>
               </div>
               <div className={`row ${classes.row}`} style={{ paddingLeft: 10 }}>
                 <div className="col-6">
                   <TextField
-                    id="title-error-helper-text"
+                    id="facebookUrl-error-helper-text"
                     label="URL Facebook"
-                    error={ this.state.title.error && this.state.title.error }
-                    name="title"
-                    onChange={ this.handleChangeTitle.bind(this) }
+                    error={ this.state.facebookUrl.error && this.state.facebookUrl.error }
+                    name="facebookUrl"
+                    onChange={ this.handleChangeFacebookUrl.bind(this) }
                     placeholder={"Lien partage Facebook"}
-                    value={this.state.title.value}
+                    value={this.state.facebookUrl.value}
                     type="text"
-                    helperText={ this.state.title.error ? this.state.title.errorMessage : null }
+                    helperText={ this.state.facebookUrl.error ? this.state.facebookUrl.errorMessage : null }
                     required
                     fullWidth
                   />
                 </div>
                 <div className="col-6">
                   <TextField
-                    id="title-error-helper-text"
+                    id="twitterUrl-error-helper-text"
                     label="URL Twitter"
-                    error={ this.state.title.error && this.state.title.error }
-                    name="title"
-                    onChange={ this.handleChangeTitle.bind(this) }
+                    error={ this.state.twitterUrl.error && this.state.twitterUrl.error }
+                    name="twitterUrl"
+                    onChange={ this.handleChangeTwitterUrl.bind(this) }
                     placeholder={"Lien partage Twitter"}
-                    value={this.state.title.value}
+                    value={this.state.twitterUrl.value}
                     type="text"
-                    helperText={ this.state.title.error ? this.state.title.errorMessage : null }
+                    helperText={ this.state.twitterUrl.error ? this.state.twitterUrl.errorMessage : null }
                     required
                     fullWidth
                   />
                 </div>
-                <div className="col-6">
+                <div className="col-6" style={{ marginTop: 20 }}>
                   <TextField
-                    id="title-error-helper-text"
+                    id="whatsappUrl-error-helper-text"
                     label="URL Whatsapp"
-                    error={ this.state.title.error && this.state.title.error }
-                    name="title"
-                    onChange={ this.handleChangeTitle.bind(this) }
+                    error={ this.state.whatsappUrl.error && this.state.whatsappUrl.error }
+                    name="whatsappUrl"
+                    onChange={ this.handleChangeWhatsappUrl.bind(this) }
                     placeholder={"Lien partage Whatsapp"}
-                    value={this.state.title.value}
+                    value={this.state.whatsappUrl.value}
                     type="text"
-                    helperText={ this.state.title.error ? this.state.title.errorMessage : null }
+                    helperText={ this.state.whatsappUrl.error ? this.state.whatsappUrl.errorMessage : null }
                     required
                     fullWidth
                   />
                 </div>
-                <div className="col-6">
+                <div className="col-6" style={{ marginTop: 20 }}>
                   <TextField
-                    id="title-error-helper-text"
+                    id="mailUrl-error-helper-text"
                     label="URL Email"
-                    error={ this.state.title.error && this.state.title.error }
-                    name="title"
-                    onChange={ this.handleChangeTitle.bind(this) }
+                    error={ this.state.mailUrl.error && this.state.mailUrl.error }
+                    name="mailUrl"
+                    onChange={ this.handleChangemailUrl.bind(this) }
                     placeholder={"Lien partage par mail"}
-                    value={this.state.title.value}
+                    value={this.state.mailUrl.value}
                     type="text"
-                    helperText={ this.state.title.error ? this.state.title.errorMessage : null }
+                    helperText={ this.state.mailUrl.error ? this.state.mailUrl.errorMessage : null }
                     required
                     fullWidth
                   />
