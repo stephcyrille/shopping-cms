@@ -19,7 +19,7 @@ class AllSize extends React.Component {
       { title: 'Titre', field: 'name' },
       { title: 'System de taille', field: 'size_system' },
     ];
-    const title = "Catalogues" 
+    const title = "Tailles" 
     const datas = [
       { category: 'Chaussure', name: '38', size_system: 'EU' },
       { category: 'Chemisier', name: 'XL', size_system: 'EU' },

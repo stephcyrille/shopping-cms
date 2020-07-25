@@ -1,0 +1,76 @@
+//  variables
+@import "../../../constants/constants";
+
+.side_bar {
+  .content {
+    .menu_header {
+      color: $white-color;
+      font-size: 30px;
+      margin-bottom: 5px;
+      padding-bottom: 10px;
+      text-align: center;
+      img {
+        width: 100%;
+        padding: 0 15px;
+        // Medium devices (tablets, 768px and up)
+        @media (min-width: 768px) and (max-width: 991.98px) {
+          width: 40vh;
+        }
+      }
+    }
+    a {
+      color: $black-color;
+      text-decoration: none;
+      &:focus {
+        background: $dynasty-white;
+      }
+    }
+    .active {
+      background: $dynasty-white;
+    }
+
+    .menu_item {
+      padding: 15px;
+      position: relative;
+      display: block;
+
+      &::after {
+        background-color: $primary-color;
+        height: 100%;
+        left: 0;
+        top: 0;
+        width: 5px;
+        display: none;
+        content: "";
+        position: absolute;
+      }
+
+      &:hover {
+        background: $dynasty-white;
+
+        &::after {
+          display: block;
+        }
+      }
+      // Medium devices (tablets, 768px and up)
+      @media (min-width: 768px) and (max-width: 991.98px) {
+        font-size: 2vh;
+        padding-left: 45px;
+      }
+    }
+  }
+}
+.dashboard_contain {
+  padding: 0px;
+}
+
+.count_item {
+  position: absolute;
+  top: calc(100% - 35px);
+  right: 0;
+  margin-right: 5px;
+  padding: 0 5px;
+  background: $primary-color;
+  color: $white-color;
+  border-radius: 30%;
+}

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 
 import Table from '../../Snippets/EditableTable/index'
-import urls from "../../Drawer/router/urls"
+import urls from "../../Dashboard/routes/urls"
 
 
 

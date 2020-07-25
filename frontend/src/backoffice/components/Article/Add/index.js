@@ -12,23 +12,12 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
-import Modal from '@material-ui/core/Modal';
-import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
-import EditIcon from '@material-ui/icons/Edit'
-import DeleteIcon from '@material-ui/icons/Delete'
-// Dialog Modal importations
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle'
 
 // Rich text importation
 import 'jodit';
 import 'jodit/build/jodit.min.css';
 import JoditEditor from "jodit-react";
 
-import MoneyField from '../../Snippets/Form/PrefixedInput'
 
 
 const useStyles = theme => ({
@@ -157,6 +146,18 @@ class AddArticle extends React.Component {
       },
       mailUrl : {
         value: '',
+        error: false,
+        errorMessage: null
+      },
+      cover : {
+        value: '',
+        checked: false,
+        error: false,
+        errorMessage: null
+      },
+      mainMenu : {
+        value: '',
+        checked: false,
         error: false,
         errorMessage: null
       },
@@ -320,6 +321,27 @@ class AddArticle extends React.Component {
       mailUrl: {
         value: event.target.value,
         error: false
+      }
+    })
+  }
+
+  handleChangeCover(event){
+    this.setState({
+      cover: {
+        checked : event.target.checked,
+        error: false,
+        errorMessage: null
+      }
+    })
+  }
+
+
+  handleChangeMainMenu(event){
+    this.setState({
+      mainMenu: {
+        checked : event.target.checked,
+        error: false,
+        errorMessage: null
       }
     })
   }
@@ -708,7 +730,26 @@ class AddArticle extends React.Component {
                 </div>
               </div>
 
-              
+              <div className={`${classes.row} row`}>
+                <div className={`col-3 ${classes.switch}`}>
+                  <FormGroup style={{ paddingLeft: 20 }}>
+                    <FormControlLabel
+                      control={<Switch checked={this.state.cover.checked} onChange={this.handleChangeCover.bind(this)} name="cover" />}
+                      label="A l'affiche"
+                    />
+                  </FormGroup>
+                </div>
+                <div className={`col-3 ${classes.switch}`}>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Switch checked={this.state.mainMenu.checked} onChange={this.handleChangeMainMenu.bind(this)} name="mainMenu" />}
+                      label="Menu principal"
+                    />
+                  </FormGroup>
+                </div>
+              </div>
+
+
               <div className={`${classes.row} row`}>
                 <div className={`${classes.button_box} mr-auto mx-auto`}>
                   <Button 

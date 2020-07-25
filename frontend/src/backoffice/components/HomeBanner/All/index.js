@@ -10,10 +10,10 @@ import urls from "../../Dashboard/routes/urls"
 export default
 @connect((state, props) => ({
 }))
-class AllMenuPicture extends React.Component {
+class HomeBanner extends React.Component {
   constructor(props){
     super(props)
-    document.title = 'Images menu principal | Afro Yaca Drum'
+    document.title = 'Bannière Accueil | Afro Yaca Drum'
   }
 
   _goToProduct(){
@@ -22,27 +22,23 @@ class AllMenuPicture extends React.Component {
 
 
   render() {
-    const title = "Toutes les images" 
+    const title = "Bannières index" 
     const columns = [
-      { title: 'Evenement', field: 'event' },
-      { title: 'Vêtements', field: 'clothes' },
-      { title: 'Chaussures', field: 'shoes' },
-      { title: 'Sacs', field: 'bags' },
-      { title: 'Accessoires', field: 'accesories' },
-      { title: 'Bijoux', field: 'jewelery' },
-      { title: 'Lingerie', field: 'lingerie' },
-      { title: 'Beauté', field: 'beauty' },
+      { title: 'Nom', field: 'name' },
+      { title: 'Titre', field: 'title' },
+      { title: 'Sous titre', field: 'subTitle' },
+      { title: 'Text lien', field: 'linkText' },
+      { title: 'Lien Url', field: 'linkUrl' },
+      { title: 'Actif', field: 'active' },
     ];
     const datas = [
       { 
-        event: 'Evenement 1', 
-        clothes: 'Photo vet.', 
-        shoes: 'Photo chaus.',
-        bags: 'Photo sac.',
-        accesories: 'Photo acces.',
-        jewelery: 'Photo bij.',
-        lingerie: 'Photo lin.',
-        beauty: 'Photo beau.',
+        name: 'Banière Collection', 
+        title: 'Découvrez la collection Madame', 
+        subTitle: "Explorer toute la collection que madame vous propose chez Afro Yaca Drum" , 
+        linkText: 'Découvrir maintenant' , 
+        linkUrl: '/shop' , 
+        active: true  
       },
     ]
 

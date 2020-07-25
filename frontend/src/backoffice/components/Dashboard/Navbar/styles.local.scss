@@ -1,0 +1,100 @@
+//  colors
+@import "../../../constants/constants";
+
+.nav_bar {
+  nav {
+    background: $primary-color !important;
+    height: 70px;
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      height: 120px;
+    }
+  }
+
+  .awesome {
+    color: $white-color;
+    font-size: 25px;
+    margin-right: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      font-size: 65px;
+      margin-right: 20px;
+    }
+  }
+
+  .settings {
+    color: $white-color;
+    font-size: 14px;
+    position: relative;
+    left: 15px;
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      font-size: 50px;
+    }
+  }
+  .profile {
+    position: absolute;
+    color: $white-color;
+    top: calc(70% + 5px);
+    right: calc(20% + 1px);
+    font-size: 15px;
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      top: calc(80% + 5px);
+      font-size: 25px;
+    }
+  }
+  .nav_bar_title {
+    color: $white-color;
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      font-size: 45px;
+    }
+  }
+
+  a {
+    color: $black-color;
+    text-decoration: none;
+  }
+  .menu_item {
+    padding: 0.25rem 1rem;
+    position: relative;
+    display: block;
+
+    &:hover {
+      background: $grey-fa;
+    }
+    border-bottom: 1px solid $grey-d1;
+    &:last-child {
+      border-bottom: none;
+      padding: 0 0 0 10px;
+    }
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      width: 25vh;
+      font-size: 2vh;
+    }
+  }
+
+  .dropdown_wrapper {
+    border: 1px solid $primary-color;
+    box-shadow: 0px 0px 5px $primary-color;
+    top: calc(100% + 15px);
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      top: calc(100% + 30px);
+    }
+  }
+  .collapse_wrapper {
+    height: 40px;
+  }
+  /*
+  .navbar-light .navbar-nav .nav-link {
+    color: $white-color !important;
+  }  */
+}

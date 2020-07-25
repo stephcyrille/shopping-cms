@@ -9,7 +9,8 @@ import {
 //import url
 import urls from "./urls";
 
-import PersistentDrawer from "app-js/backoffice/components/Drawer/index.js";
+// import PersistentDrawer from "app-js/backoffice/components/Drawer/index.js";
+import Dashboard from "app-js/backoffice/components/Dashboard/index.js";
 import NotFound from "app-js/frontoffice/components/404/index"
 
 
@@ -19,8 +20,8 @@ class Routes extends Component {
   render() {
     return (
       <Switch>
-        <Route exact path={urls.DASHBOARD} component={PersistentDrawer} />
-        <Redirect to={urls.DASHBOARD} />
+        <Route path={urls.DASHBOARD} component={Dashboard} />
+        {/* <Redirect to={urls.DASHBOARD} /> */}
       </Switch>
     );
   }

@@ -4,10 +4,6 @@ import { Paper } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 // import Autocomplete from '@material-ui/lab/Autocomplete';
 import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
@@ -147,6 +143,13 @@ class AddMenuPic extends React.Component {
         errorMessage: null,
         fileInput: React.createRef()
       },
+      picture8 : {
+        value: null,
+        error: false,
+        errorMessage: null,
+        fileInput: React.createRef()
+      },
+      
       formSubmitDisabled: true,
       formValid: false,
       editMode: false,
@@ -243,6 +246,18 @@ class AddMenuPic extends React.Component {
           })
         })
       }
+      if(this.props.initialsValues.picture8){
+        this.fileToDataURL(this.props.initialsValues.picture8)
+        .then(dataUrl => {
+          var file = this.dataURLtoFile(dataUrl, 'Picture8.jpg');
+          this.setState({
+            picture8: {
+              value: this.props.initialsValues.picture8,
+              fileInput: file
+            }
+          })
+        })
+      }
     }
     else{
       this.setState({
@@ -265,6 +280,9 @@ class AddMenuPic extends React.Component {
           value: null
         },
         picture7: {
+          value: null
+        },
+        picture8: {
           value: null
         },
       })
@@ -358,9 +376,18 @@ class AddMenuPic extends React.Component {
           },
         })
       }
-      else{
+      else if(picNber==7){
         this.setState({
           picture7: {
+            value: localImageUrl,
+            fileInput: imageFile,
+            error: false,
+          },
+        })
+      }
+      else{
+        this.setState({
+          picture8: {
             value: localImageUrl,
             fileInput: imageFile,
             error: false,
@@ -425,9 +452,18 @@ class AddMenuPic extends React.Component {
         },
       })
     }
-    else{
+    else if(picNber==7){
       this.setState({
         picture7: {
+          value: null,
+          error: false,
+          fileInput: null
+        },
+      })
+    }
+    else{
+      this.setState({
+        picture8: {
           value: null,
           error: false,
           fileInput: null
@@ -461,6 +497,7 @@ class AddMenuPic extends React.Component {
         picture5: this.state.picture5.fileInput,
         picture6: this.state.picture6.fileInput,
         picture7: this.state.picture7.fileInput,
+        picture8: this.state.picture8.fileInput,
       }
 
       console.log("Form Values", values)
@@ -521,6 +558,14 @@ class AddMenuPic extends React.Component {
           },
         })
       }
+      if( !(values.picture8 instanceof File) == true  ){
+        this.setState({
+          picture8: {
+            error: true,
+            errorMessage: "L'ajout d'image est obligatoire"
+          },
+        })
+      }
       
       // Form s valid here
       if(
@@ -530,7 +575,8 @@ class AddMenuPic extends React.Component {
         (values.picture4 instanceof File) === true &&
         (values.picture5 instanceof File) === true &&
         (values.picture6 instanceof File) === true &&
-        (values.picture7 instanceof File) === true 
+        (values.picture7 instanceof File) === true && 
+        (values.picture8 instanceof File) === true 
       ){
         
         // Post form data on server
@@ -544,6 +590,7 @@ class AddMenuPic extends React.Component {
           picture5: values.picture5,
           picture6: values.picture6,
           picture7: values.picture7,
+          picture8: values.picture8,
         }
         
         // SUBLMIT TO API THERE
@@ -561,6 +608,7 @@ class AddMenuPic extends React.Component {
         picture5: this.state.picture5.fileInput,
         picture6: this.state.picture6.fileInput,
         picture7: this.state.picture7.fileInput,
+        picture8: this.state.picture8.fileInput,
       }
 
       if( !(values.picture1 instanceof File) == true ){
@@ -614,6 +662,14 @@ class AddMenuPic extends React.Component {
       if( !(values.picture7 instanceof File) == true  ){
         this.setState({
           picture7: {
+            error: true,
+            errorMessage: "L'ajout d'image est obligatoire"
+          },
+        })
+      }
+      if( !(values.picture8 instanceof File) == true  ){
+        this.setState({
+          picture8: {
             error: true,
             errorMessage: "L'ajout d'image est obligatoire"
           },
@@ -1002,6 +1058,58 @@ class AddMenuPic extends React.Component {
                               style={{ textAlign: "center", fontWeight: 400 }}
                             >
                               {this.state.picture7.errorMessage}
+                            </FormHelperText> 
+                            : 
+                            null 
+                          }
+                        </FormControl>
+                      </div>
+                  } 
+                </div>
+                <div className="col-3" style={{ paddingLeft: 0, marginTop: 20 }}>
+                  <label style={{ paddingLeft: 10 }}>Menu editorial</label>
+                  {
+                    this.state.picture8.value ? 
+                      (
+                      <div>
+                        <div className={classes.img}>
+                          <img src={this.state.picture8.value} width="100%" height="250px"/>
+                        </div>
+                        <div className={classes.imgHover}>
+                          <i className={`${classes.deleteIco} deleteIco fa fa-times fa-2x`} onClick={this._handleRemovePicture.bind(this, 8)} />
+                        </div>
+                      </div>
+                      )
+                      :
+                      <div>
+                        <FormControl 
+                          className={classes.formControl}
+                          error={ this.state.picture8.error && this.state.picture8.error }
+                        >
+                          <Button 
+                            variant="contained" 
+                            className=""
+                            fullWidth
+                          >
+                            <label for="raised-input-file-8" style={{ marginBottom: 0 }}>
+                              <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
+                              Photo 8 (PNG, JPG)*
+                            </label>
+                            <input
+                              accept=".png, .jpg, .jpeg"
+                              id="raised-input-file-8"
+                              name="picture7"
+                              type="file"
+                              onChange={ event => this.handlePictureChange(event, 8)}
+                              ref={this.state.picture8.fileInput}
+                              style={{ display: "none" }}
+                            />
+                          </Button>
+                          { this.state.picture8.error ? 
+                            <FormHelperText 
+                              style={{ textAlign: "center", fontWeight: 400 }}
+                            >
+                              {this.state.picture8.errorMessage}
                             </FormHelperText> 
                             : 
                             null 

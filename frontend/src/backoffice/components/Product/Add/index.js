@@ -9,8 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Modal from '@material-ui/core/Modal';
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
@@ -298,8 +298,8 @@ class AddProduct extends React.Component {
     this.setState({
       feature: {
         checked : event.target.checked,
-        error: true,
-        errorMessage: "Le champ doit être contenir au moins 4 caractères"
+        error: false,
+        errorMessage: null
       }
     })
   }
@@ -309,8 +309,8 @@ class AddProduct extends React.Component {
     this.setState({
       discount: {
         checked : event.target.checked,
-        error: true,
-        errorMessage: "Le champ doit être contenir au moins 4 caractères"
+        error: false,
+        errorMessage: null
       }
     })
   }
