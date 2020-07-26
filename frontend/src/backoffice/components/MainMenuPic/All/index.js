@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
+import Button from '@material-ui/core/Button';
 
 import Table from '../../Snippets/EditableTable/index'
 import urls from "../../Dashboard/routes/urls"
@@ -16,14 +17,19 @@ class AllMenuPicture extends React.Component {
     document.title = 'Images menu principal | Afro Yaca Drum'
   }
 
-  _goToProduct(){
-    this.props.dispatch(push(`${urls.ADDPRODUCT}`))
+  _goToAddNew(){
+    this.props.dispatch(push(`${urls.ADDMAINMENUPIC}`))
+  }
+
+  _goToEditNew(){
+    this.props.dispatch(push(`${urls.ADDMAINMENUPIC}`))
   }
 
 
   render() {
     const title = "Toutes les images" 
     const columns = [
+      { title: 'N°', field: 'id' },
       { title: 'Evenement', field: 'event' },
       { title: 'Vêtements', field: 'clothes' },
       { title: 'Chaussures', field: 'shoes' },
@@ -35,6 +41,7 @@ class AllMenuPicture extends React.Component {
     ];
     const datas = [
       { 
+        id: 1,
         event: 'Evenement 1', 
         clothes: 'Photo vet.', 
         shoes: 'Photo chaus.',
@@ -49,12 +56,24 @@ class AllMenuPicture extends React.Component {
     return (
       <div>
         <section>
+          <Button
+            onClick={ this._goToAddNew.bind(this) }
+            variant="contained"
+            color="primary"
+          >
+            <i className="fa fa-plus"/> &nbsp;&nbsp;
+            Ajouter
+          </Button>
+
+          <br />
+          <br />
+
           <Table 
             table_title={title} 
             table_columns={columns} 
             table_datas={datas} 
-            product={true} 
-            addProduct={this._goToProduct.bind(this)} 
+            simple={true} 
+            goToEdit={this._goToEditNew.bind(this)} 
           />
         </section>
       </div>

@@ -26,7 +26,7 @@ export default function MaterialTableDemo(props) {
 
   return (
     <div>
-    { props.product ?
+    { props.simple ?
       (
         <MaterialTable
           title={state.title}
@@ -39,7 +39,7 @@ export default function MaterialTableDemo(props) {
             {
               icon: 'edit',
               tooltip: 'Modifier catalogue',
-              onClick: (event, rowData) => {props.addProduct()}
+              onClick: (event, rowData) => {props.goToEdit()}
             }
           ]}
         />
@@ -65,6 +65,7 @@ export default function MaterialTableDemo(props) {
               }),
             onRowUpdate: (newData, oldData) =>
               new Promise((resolve) => {
+                console.log("Hello world!!", oldData)
                 setTimeout(() => {
                   resolve();
                   if (oldData) {
@@ -77,6 +78,7 @@ export default function MaterialTableDemo(props) {
                           newData['picture'] = setPictureUrl(props.file)
                           // Handle method to update data here
                           data[data.indexOf(oldData)] = newData;
+                          console.log("Nouvelles datas postés", newData)
                           return { ...prevState, data };
                         } else {
                           props.setPictureError()
@@ -111,13 +113,6 @@ export default function MaterialTableDemo(props) {
           options={{
             actionsColumnIndex: -1
           }}
-          // actions={[
-          //   {
-          //     icon: 'edit',
-          //     tooltip: 'Modifier catalogue',
-          //     onClick: (event, rowData) => props.handleEditRow
-          //   }
-          // ]}
         />
       )
     }

@@ -130,75 +130,39 @@ class Index extends React.Component {
                   {0}
                 </div>
               </NavLink>
-
-              <Collapse onChange={this.callback} expandIconPosition={"right"}>
-                <Panel
-                  header={"Produits"}
-                  key="1"
-                >
-                  <NavLink
-                    activeClassName={styles.active}
-                    to={`${path}${urls.PRODUCT}`}
-                    className={styles.menu_item}
-                  >
-                    {"Tous"}
-                  </NavLink>
-
-                  <NavLink
-                    activeClassName={styles.active}
-                    to={`${path}${urls.ADDPRODUCT}`}
-                    className={styles.menu_item}
-                  >
-                    {"Ajouter"}
-                  </NavLink>
-                </Panel>
-              </Collapse>
-
-              <Collapse onChange={this.callback} expandIconPosition={"right"}>
-                <Panel
-                  header={"Article"}
-                  key="1"
-                >
-                  <NavLink
-                    activeClassName={styles.active}
-                    to={`${path}${urls.ARTICLE}`}
-                    className={styles.menu_item}
-                  >
-                    {"Tous"}
-                  </NavLink>
-
-                  <NavLink
-                    activeClassName={styles.active}
-                    to={`${path}${urls.ADDARTICLE}`}
-                    className={styles.menu_item}
-                  >
-                    {"Ajouter"}
-                  </NavLink>
-                </Panel>
-              </Collapse>
-
-              <Collapse onChange={this.callback} expandIconPosition={"right"}>
-                <Panel
-                  header={"Photos Menu"}
-                  key="1"
-                >
-                  <NavLink
-                    activeClassName={styles.active}
-                    to={`${path}${urls.MAINMENUPIC}`}
-                    className={styles.menu_item}
-                  >
-                    {"Tous"}
-                  </NavLink>
-
-                  <NavLink
-                    activeClassName={styles.active}
-                    to={`${path}${urls.ADDMAINMENUPIC}`}
-                    className={styles.menu_item}
-                  >
-                    {"Ajouter"}
-                  </NavLink>
-                </Panel>
-              </Collapse>
+              
+              <NavLink
+                activeClassName={styles.active}
+                to={`${path}${urls.PRODUCT}`}
+                className={styles.menu_item}
+              >
+                {'Produits'}
+                <div className={styles.count_item}>
+                  {0}
+                </div>
+              </NavLink>
+              
+              <NavLink
+                activeClassName={styles.active}
+                to={`${path}${urls.ARTICLE}`}
+                className={styles.menu_item}
+              >
+                {'Articles magazine'}
+                <div className={styles.count_item}>
+                  {0}
+                </div>
+              </NavLink>
+              
+              <NavLink
+                activeClassName={styles.active}
+                to={`${path}${urls.MAINMENUPIC}`}
+                className={styles.menu_item}
+              >
+                {'Photos mega menu'}
+                <div className={styles.count_item}>
+                  {0}
+                </div>
+              </NavLink>
 
               <NavLink
                 activeClassName={styles.active}
@@ -206,30 +170,21 @@ class Index extends React.Component {
                 className={styles.menu_item}
               >
                 {"SEO"}
+                <div className={styles.count_item}>
+                  {0}
+                </div>
               </NavLink>
 
-              <Collapse onChange={this.callback} expandIconPosition={"right"}>
-                <Panel
-                  header={"Banière accueil"}
-                  key="1"
-                >
-                  <NavLink
-                    activeClassName={styles.active}
-                    to={`${path}${urls.HOMEBANNER}`}
-                    className={styles.menu_item}
-                  >
-                    {"Tous"}
-                  </NavLink>
-
-                  {/* <NavLink
-                    activeClassName={styles.active}
-                    to={`${path}${urls.ADDMAINMENUPIC}`}
-                    className={styles.menu_item}
-                  >
-                    {"Ajouter"}
-                  </NavLink> */}
-                </Panel>
-              </Collapse>
+              <NavLink
+                activeClassName={styles.active}
+                to={`${path}${urls.HOMEBANNER}`}
+                className={styles.menu_item}
+              >
+                {"Bannière d'accueil"}
+                <div className={styles.count_item}>
+                  {0}
+                </div>
+              </NavLink>
             </div>
           }
           open={sidebarOpen}

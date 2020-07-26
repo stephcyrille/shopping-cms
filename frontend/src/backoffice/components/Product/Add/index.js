@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { push } from "react-router-redux";
 import { Paper } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -8,8 +9,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
+import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Modal from '@material-ui/core/Modal';
@@ -26,9 +27,12 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import MoneyField from '../../Snippets/Form/PrefixedInput'
 import appConfig from '../../../config/index'
 
+import urls from '../../Dashboard/routes/urls'
+
 import VarietyForm from '../../Variety/Add/index'
 
 import { addProductStoreActions } from './store'
+
 
 
 const useStyles = theme => ({
@@ -40,7 +44,7 @@ const useStyles = theme => ({
     padding: 20,
   },
   form: {
-    paddingTop: 20
+    paddingTop: 0
   },
   row: {
     marginTop: 20,
@@ -484,6 +488,10 @@ class AddProduct extends React.Component {
     
   }
 
+  _goToProduct(){
+    this.props.dispatch(push(`${urls.PRODUCT}`))
+  }
+
   
 
   render() {
@@ -496,7 +504,8 @@ class AddProduct extends React.Component {
       <div>
         <section className="container">
           <Paper className={classes.paper}>
-            <h2>Ajouter un produit</h2>
+            <h2 style={{ paddingLeft: 20 }}>Ajouter un produit</h2>
+            <hr />
             <form className={`${classes.form}`} noValidate autoComplete="off" onSubmit={ this._handleOnSubmit.bind(this) }>
               <div className={`${classes.row} row`}>
                 <div className="col-2">
@@ -764,7 +773,10 @@ class AddProduct extends React.Component {
                     Enregistrer
                   </Button>
                   &nbsp;&nbsp;&nbsp;
-                  <Button variant="contained">
+                  <Button 
+                    variant="contained"
+                    onClick={ this._goToProduct.bind(this) }
+                  >
                     Annuler
                   </Button>
                 </div>

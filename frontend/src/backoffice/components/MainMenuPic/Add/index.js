@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { push } from "react-router-redux";
 import { Paper } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -8,8 +9,7 @@ import Button from '@material-ui/core/Button';
 // import Autocomplete from '@material-ui/lab/Autocomplete';
 import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 
-
-import { addProductStoreActions } from '../../Product/Add/store'
+import urls from '../../Dashboard/routes/urls'
 
 
 
@@ -22,7 +22,7 @@ const useStyles = theme => ({
     padding: 20,
   },
   form: {
-    paddingTop: 20
+    paddingTop: 0
   },
   row: {
     marginTop: 20,
@@ -680,6 +680,11 @@ class AddMenuPic extends React.Component {
   }
 
 
+  _goToAll(){
+    this.props.dispatch(push(`${urls.MAINMENUPIC}`))
+  }
+
+
   
 
   render() {
@@ -693,7 +698,8 @@ class AddMenuPic extends React.Component {
       <div>
         <section className="container">
           <Paper className={classes.paper}>
-            <h2>Ajouter des images du menu principal</h2>
+            <h2 style={{ paddingLeft: 20 }}>Ajouter des images du menu principal</h2>
+            <hr />
             <form 
               className={`${classes.form}`} 
               autoComplete="off" 
@@ -1133,7 +1139,7 @@ class AddMenuPic extends React.Component {
                   &nbsp;&nbsp;&nbsp;
                   <Button 
                     variant="contained"
-                    onClick={this.props.handleClose}
+                    onClick={ this._goToAll.bind(this) }
                   >
                     Annuler
                   </Button>

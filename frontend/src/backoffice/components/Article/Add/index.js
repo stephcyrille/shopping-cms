@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { push } from "react-router-redux";
 import { Paper } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -18,6 +19,8 @@ import 'jodit';
 import 'jodit/build/jodit.min.css';
 import JoditEditor from "jodit-react";
 
+import urls from '../../Dashboard/routes/urls'
+
 
 
 const useStyles = theme => ({
@@ -29,7 +32,7 @@ const useStyles = theme => ({
     padding: 20,
   },
   form: {
-    paddingTop: 20
+    paddingTop: 0
   },
   row: {
     marginTop: 20,
@@ -419,6 +422,10 @@ class AddArticle extends React.Component {
     console.log("Rich text value============", value, this.refEditor)
     // this.setState({content: this.refEditor.current.value})
   }
+
+  _goToArticle(){
+    this.props.dispatch(push(`${urls.ARTICLE}`))
+  }
   
 
   render() {
@@ -460,7 +467,8 @@ class AddArticle extends React.Component {
       <div>
         <section className="container">
           <Paper className={classes.paper}>
-            <h2>Ajouter un article</h2>
+            <h2 style={{ paddingLeft: 20 }}>Ajouter un article</h2>
+            <hr />
             <form className={`${classes.form}`} noValidate autoComplete="off" onSubmit={ this._handleOnSubmit.bind(this) }>
               <div className={`${classes.row} row`}>
                 <div className="col-4">
@@ -760,7 +768,10 @@ class AddArticle extends React.Component {
                     Enregistrer
                   </Button>
                   &nbsp;&nbsp;&nbsp;
-                  <Button variant="contained">
+                  <Button 
+                    variant="contained"
+                    onClick={ this._goToArticle.bind(this) }
+                  >
                     Annuler
                   </Button>
                 </div>

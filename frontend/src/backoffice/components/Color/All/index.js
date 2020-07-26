@@ -1,9 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
+import { push } from "react-router-redux";
 import Button from '@material-ui/core/Button';
 
-import Snackbar from '../../Snippets/FlashBagMessage/index'
 import Table from '../../Snippets/EditableTable/index'
+
+import urls from '../../Dashboard/routes/urls'
+
+
 
 export default
 @connect((state, props) => ({
@@ -12,146 +16,50 @@ class AllColor extends React.Component {
   constructor(props){
     super(props)
     document.title = "Couleurs de produit | Afro Yaca Drum"
-
-    this.fileInput = React.createRef();
-    this.state = {
-      picture_name : null,
-      edit_pic: false,
-      file: null,
-      snack_open: false,
-      snack_message: null,
-      snack_color: null,
-    }
   }
 
-  handleClose = () => {
-    this.setState({ snack_open: false });
-  };
-
+  _goToAddColor(){
+    this.props.dispatch(push(`${urls.ADDCOLOR}`))
+  }
   
-  handleClose = () => {
-    this.setState({ snack_open: false });
-  };
-
-
-  _handlePicPost(event){
-    event.preventDefault()
-    if(this.fileInput.current.files[0]){
-      this.setState({
-        picture_name: this.fileInput.current.files[0].name,
-        edit_pic: true,
-        file: this.fileInput.current.files[0],
-        snack_open: true,
-        snack_message: "Image chargée avec succès",
-        snack_color: "success"
-      })
-    } else {
-      this.setState({
-        snack_message: "Vous n'avez ajouter aucune image!",
-        snack_color: "error",
-        snack_open: true,
-      })
-    }
-  }
-
-
-  _handleEditUpload(){
-    this.setState({
-      edit_pic : false,
-      picture_name: null,
-      file: null
-    })
-  }
-
-  _handleLoadBeforeUpdate(){
-    this.setState({
-      snack_message: "Vous devez charger une image avant de valider la modification!",
-      snack_color: "error",
-      snack_open: true,
-    })
+  _goToEditColor(){
+    this.props.dispatch(push(`${urls.ADDCOLOR}`))
   }
 
 
   render() {
     const columns = [
-      { title: 'name', field: 'name' },
-      { 
-        title: 'Photo', 
-        field: 'picture', 
-        editable: 'always',
-        editComponent: () => (
-          <div>
-            {
-              this.state.edit_pic ? 
-                <div>
-                  <span className="col-8">
-                    {this.state.picture_name}
-                  </span>
-                  <Button 
-                    type="submit" 
-                    variant="raised" 
-                    className="col-4"
-                    onClick={ this._handleEditUpload.bind(this) }
-                  >
-                    Modifier
-                  </Button>
-                </div>
-                :
-                <form onSubmit={ this._handlePicPost.bind(this) }>
-                  <input
-                    accept="image/*"
-                    id="raised-button-file"
-                    name="picture"
-                    multiple
-                    type="file"
-                    ref={this.fileInput}
-                    className="col-8"
-                  />
-                  <Button type="submit" variant="raised" className="col-4">
-                    Upload
-                  </Button>
-                </form>
-            }
-            
-          </div>
-        ),
-        render: rowData =>
-          rowData.picture === undefined ?
-            (
-              <img src="/static/images/logo.jpg" style={{width: 40, borderRadius: '50%'}} />
-            )
-            :
-            (
-              <img src={rowData.picture} style={{width: 40, borderRadius: '50%'}} />
-            )
-      },
+      { title: 'N°', field: 'id' },
+      { title: 'Nom', field: 'title' },
+      { title: 'Slug', field: 'slug' },
     ];
     const title = "Couleurs" 
     const datas = [
-      { name: 'Turquoise', picture: undefined },
-      { name: 'Ecossais', picture: undefined },
+      { id: 1, title: 'Turquoise', slug: 'Turquoise' },
+      { id: 2, title: 'Ecossais', slug: 'Ecossais' },
     ]
 
     return (
       <div>
-        { this.state.snack_open &&
-            <Snackbar 
-              open={this.state.snack_open} 
-              message={this.state.snack_message} 
-              color={this.state.snack_color}
-              closePopup={this.handleClose.bind(this)} 
-            />
-        }
-
         <section>
+          <Button
+            onClick={ this._goToAddColor.bind(this) }
+            variant="contained"
+            color="primary"
+          >
+            <i className="fa fa-plus"/> &nbsp;&nbsp;
+            Ajouter une couleur
+          </Button>
+
+          <br />
+          <br />
+
           <Table 
             table_title={title} 
             table_columns={columns} 
             table_datas={datas} 
-            file={ this.state.file } 
-            clearPicture={ this._handleEditUpload.bind(this) } 
-            setPictureError={ this._handleLoadBeforeUpdate.bind(this) } 
-            img_table={true} 
+            simple={true} 
+            goToEdit={this._goToEditColor.bind(this)} 
           />
         </section>
       </div>

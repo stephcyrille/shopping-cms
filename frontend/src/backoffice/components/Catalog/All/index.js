@@ -1,9 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
+import { push } from "react-router-redux";
 import Button from '@material-ui/core/Button';
 
 import Table from '../../Snippets/EditableTable/index'
-import Snackbar from '../../Snippets/FlashBagMessage/index'
+
+import urls from '../../Dashboard/routes/urls'
 
 
 
@@ -14,144 +16,53 @@ class AllCatalog extends React.Component {
   constructor(props){
     super(props)
     document.title = "Catalogues | Afro Yaca Drum"
-    
-    this.fileInput = React.createRef();
-    this.state = {
-      picture_name : null,
-      edit_pic: false,
-      file: null,
-      snack_open: false,
-      snack_message: null,
-      snack_color: null,
-    }
-  }
-
-  handleClose = () => {
-    this.setState({ snack_open: false });
-  };
-
-  _handlePicPost(event){
-    event.preventDefault()
-    if(this.fileInput.current.files[0]){
-      this.setState({
-        picture_name: this.fileInput.current.files[0].name,
-        edit_pic: true,
-        file: this.fileInput.current.files[0],
-        snack_open: true,
-        snack_message: "Image chargée avec succès",
-        snack_color: "success"
-      })
-    } else {
-      this.setState({
-        snack_message: "Vous n'avez ajouter aucune image!",
-        snack_color: "error",
-        snack_open: true,
-      })
-    }
   }
 
 
-  _handleEditUpload(){
-    this.setState({
-      edit_pic : false,
-      picture_name: null,
-      file: null
-    })
+  _goToAddCatalog(){
+    this.props.dispatch(push(`${urls.ADDCATALOG}`))
   }
-
-
-  _handleLoadBeforeUpdate(){
-    this.setState({
-      snack_message: "Vous devez charger une image avant de valider la modification!",
-      snack_color: "error",
-      snack_open: true,
-    })
+  
+  _goToEditCatalog(){
+    this.props.dispatch(push(`${urls.ADDCATALOG}`))
   }
 
 
 
   render() {
     const columns = [
+      { title: 'N°', field: 'id' },
       { title: 'Titre', field: 'title' },
       { title: 'Slug', field: 'slug' },
-      { 
-        title: 'Photo', 
-        field: 'picture', 
-        editable: 'always',
-        editComponent: () => (
-          <div>
-            {
-              this.state.edit_pic ? 
-                <div>
-                  <span className="col-8">
-                    {this.state.picture_name}
-                  </span>
-                  <Button 
-                    type="submit" 
-                    variant="raised" 
-                    className="col-4"
-                    onClick={ this._handleEditUpload.bind(this) }
-                  >
-                    Modifier
-                  </Button>
-                </div>
-                :
-                <form onSubmit={ this._handlePicPost.bind(this) }>
-                  <input
-                    accept="image/*"
-                    id="raised-button-file"
-                    name="picture"
-                    multiple
-                    type="file"
-                    ref={this.fileInput}
-                    className="col-8"
-                  />
-                  <Button type="submit" variant="raised" className="col-4">
-                    Upload
-                  </Button>
-                </form>
-            }
-            
-          </div>
-        ),
-        render: rowData =>
-          rowData.picture === undefined ?
-            (
-              <img src="/static/images/logo.jpg" style={{width: 40, borderRadius: '50%'}} />
-            )
-            :
-            (
-              <img src={rowData.picture} style={{width: 40, borderRadius: '50%'}} />
-            )
-      },
     ];
     const title = "Catalogues" 
     const datas = [
-      { title: 'Femme', slug: 'femme', picture: undefined },
-      { title: 'Enfant', slug: 'enfant', picture: undefined },
-      { title: 'Homme', slug: 'homme', picture: undefined },
+      { id: 1 ,title: 'Femme', slug: 'femme', },
+      { id: 2 ,title: 'Enfant', slug: 'enfant' },
+      { id: 3 ,title: 'Homme', slug: 'homme', },
     ]
 
     return (
       <div>
-        { this.state.snack_open &&
-            <Snackbar 
-              open={this.state.snack_open} 
-              message={this.state.snack_message} 
-              color={this.state.snack_color}
-              closePopup={this.handleClose.bind(this)} 
-            />
-        }
-
         <section>
+          <Button
+            onClick={ this._goToAddCatalog.bind(this) }
+            variant="contained"
+            color="primary"
+          >
+            <i className="fa fa-plus"/> &nbsp;&nbsp;
+            Ajouter un catalogue
+          </Button>
+
+          <br />
+          <br />
+
           <Table 
             table_title={title} 
             table_columns={columns} 
             table_datas={datas} 
-            file={ this.state.file } 
-            clearPicture={ this._handleEditUpload.bind(this) } 
-            setPictureError={ this._handleLoadBeforeUpdate.bind(this) } 
-            img_table={true} 
+            simple={true} 
+            goToEdit={this._goToEditCatalog.bind(this)} 
           />
         </section>
       </div>

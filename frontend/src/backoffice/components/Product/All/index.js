@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
+import Button from '@material-ui/core/Button';
 
 import Table from '../../Snippets/EditableTable/index'
+
 import urls from "../../Dashboard/routes/urls"
 
 
@@ -16,7 +18,11 @@ class AllProduct extends React.Component {
     document.title = 'Produits | Afro Yaca Drum'
   }
 
-  _goToProduct(){
+  _goToAddProduct(){
+    this.props.dispatch(push(`${urls.ADDPRODUCT}`))
+  }
+
+  _goToEditProduct(){
     this.props.dispatch(push(`${urls.ADDPRODUCT}`))
   }
 
@@ -51,12 +57,24 @@ class AllProduct extends React.Component {
     return (
       <div>
         <section>
+          <Button
+            onClick={ this._goToAddProduct.bind(this) }
+            variant="contained"
+            color="primary"
+          >
+            <i className="fa fa-plus"/> &nbsp;&nbsp;
+            Ajouter un produit
+          </Button>
+
+          <br />
+          <br />
+
           <Table 
             table_title={title} 
             table_columns={columns} 
             table_datas={datas} 
-            product={true} 
-            addProduct={this._goToProduct.bind(this)} 
+            simple={true} 
+            goToEdit={this._goToEditProduct.bind(this)} 
           />
         </section>
       </div>
