@@ -81,7 +81,7 @@ class Index extends React.Component {
                 to={`${path}${urls.CATALOG}`}
                 className={styles.menu_item}
               >
-                {'Catalogue'}
+                {'Catalogues'}
                 <div className={styles.count_item}>
                   {0}
                 </div>
@@ -92,7 +92,18 @@ class Index extends React.Component {
                 to={`${path}${urls.CATEGORY}`}
                 className={styles.menu_item}
               >
-                {'Categorie'}
+                {'Categories'}
+                <div className={styles.count_item}>
+                  {0}
+                </div>
+              </NavLink>
+              
+              <NavLink
+                activeClassName={styles.active}
+                to={`${path}${urls.COLLECTION}`}
+                className={styles.menu_item}
+              >
+                {'Collections'}
                 <div className={styles.count_item}>
                   {0}
                 </div>
@@ -103,7 +114,7 @@ class Index extends React.Component {
                 to={`${path}${urls.GROUP}`}
                 className={styles.menu_item}
               >
-                {'Groupe'}
+                {'Groupes'}
                 <div className={styles.count_item}>
                   {0}
                 </div>
@@ -114,7 +125,7 @@ class Index extends React.Component {
                 to={`${path}${urls.SIZE}`}
                 className={styles.menu_item}
               >
-                {'Taille'}
+                {'Tailles'}
                 <div className={styles.count_item}>
                   {0}
                 </div>
@@ -125,7 +136,7 @@ class Index extends React.Component {
                 to={`${path}${urls.COLOR}`}
                 className={styles.menu_item}
               >
-                {'Couleur'}
+                {'Couleurs'}
                 <div className={styles.count_item}>
                   {0}
                 </div>

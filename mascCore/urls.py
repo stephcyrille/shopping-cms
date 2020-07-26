@@ -1,9 +1,5 @@
-"""mascCore URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.2/topics/http/urls/
-th
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+    mascCore URL Configuration
 """
 
 from django.contrib import admin
@@ -14,11 +10,10 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('apis/', include('backend.urls')),
-    path('dashboard/', include('frontend.urls_dashboard')),
-    path('shop/', include('frontend.urls_client')),
-    path('shop/', include('frontend.urls_client')),
     path('auth/', include('rest_auth.urls')),
     path('auth/registration/', include('rest_auth.registration.urls')),
+    path('dashboard/', include('frontend.urls_dashboard')),
+    path('shop/', include('frontend.urls_client')),
 ]
 
 if settings.DEBUG:

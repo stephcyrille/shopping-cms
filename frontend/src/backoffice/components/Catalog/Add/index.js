@@ -10,7 +10,9 @@ import Button from '@material-ui/core/Button';
 import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 
 import urls from '../../Dashboard/routes/urls'
-
+import { Alert, AlertTitle } from '@material-ui/lab';
+import Snackbar from '../../Snippets/FlashBagMessage/index'
+import appConfig from '../../../config'
 
 
 const useStyles = theme => ({
@@ -131,6 +133,9 @@ class AddCatalogue extends React.Component {
         errorMessage: null,
         fileInput: React.createRef()
       },
+      snack_open: false,
+      snack_message: null,
+      snack_color: null,
     }
   }
 
@@ -235,15 +240,72 @@ class AddCatalogue extends React.Component {
       (values.slug) !== "" &&
       (values.picture instanceof File) === true
     ){
+      const service = "catalog/add"
+      const formUrl = `${appConfig.FORMBASEURL}${service}`
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("slug", values.slug);
+      formData.append("picture", values.picture);
       // SUBMIT THERE
-      console.log("Catalogue add Form values ", values)
+      this.postToApi(formUrl, formData)
     }
   }
+
+
+  postToApi(form_base_url, data){
+    window
+    .file_axios.post(`${form_base_url}`, data)
+      .then((response) => {
+          console.log("Success", response)
+          this.setState({
+            snack_open: true,
+            snack_message: "Catalogue enregistrée avec success",
+            snack_color: "success"
+          })
+          this.props.dispatch(push(`${urls.CATALOG}`, { snack_open: true }));
+        }
+      )
+      .catch((error) =>{
+          console.log("Error", error.response)
+          let response = error.response.data
+          if('slug' in response){
+            let text = response.slug
+            this.setState({
+              snack_message: text,
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+          
+          if('title' in response){
+            let text = response.title
+            this.setState({
+              snack_message: text,
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+        }
+      )
+  }
+
 
   _goToCatalogue(){
     this.props.dispatch(push(`${urls.CATALOG}`))
   }
 
+  handleClose = () => {
+    this.setState({ snack_open: false });
+  }
+
+  alertContent(){
+    return (
+      <Alert severity="error">
+        <AlertTitle>Error</AlertTitle>
+        This is an error alert — <strong>check it out!</strong>
+      </Alert>
+    )
+  }
   
 
   render() {
@@ -251,6 +313,15 @@ class AddCatalogue extends React.Component {
     
     return (
       <div>
+        { this.state.snack_open &&
+            <Snackbar 
+              open={this.state.snack_open} 
+              message={this.state.snack_message} 
+              color={this.state.snack_color}
+              closePopup={this.handleClose.bind(this)} 
+            />
+        }
+
         <section className="container">
           <Paper className={classes.paper}>
             <h2 style={{ paddingLeft: 20 }}>Ajouter un catalogue</h2>
@@ -312,7 +383,7 @@ class AddCatalogue extends React.Component {
                             className=""
                             fullWidth
                           >
-                            <label for="raised-input-file-1" style={{ marginBottom: 0 }}>
+                            <label htmlFor="raised-input-file-1" style={{ marginBottom: 0 }}>
                               <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
                               Photo (PNG, JPG)*
                             </label>

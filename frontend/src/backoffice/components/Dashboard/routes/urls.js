@@ -6,6 +6,8 @@ const urls = {
     ADDCATALOG: "catalogue-add",
     CATEGORY: "category",
     ADDCATEGORY: "category-add",
+    COLLECTION: "collection",
+    ADDCOLLECTION: "collection-add",
     GROUP: "group",
     SIZE: "size",
     COLOR: "color",

@@ -8,6 +8,8 @@ import AllCatalog from "app-js/backoffice/components/Catalog/All";
 import AddCatalog from "app-js/backoffice/components/Catalog/Add";
 import AllCategory from "app-js/backoffice/components/Category/All";
 import AddCategory from "app-js/backoffice/components/Category/Add";
+import AllCollection from "app-js/backoffice/components/Collection/All";
+import AddCollection from "app-js/backoffice/components/Collection/Add";
 import AllGroup from "app-js/backoffice/components/Group/All";
 import AllSize from "app-js/backoffice/components/Size/All";
 import AllColor from "app-js/backoffice/components/Color/All";
@@ -35,6 +37,8 @@ const Routes = props => {
         <Route path={`${path}${urls.ADDCATALOG}`} component={AddCatalog} />
         <Route path={`${path}${urls.CATEGORY}`} component={AllCategory} />
         <Route path={`${path}${urls.ADDCATEGORY}`} component={AddCategory} />
+        <Route path={`${path}${urls.COLLECTION}`} component={AllCollection} />
+        <Route path={`${path}${urls.ADDCOLLECTION}`} component={AddCollection} />
         <Route path={`${path}${urls.GROUP}`} component={AllGroup} />
         <Route path={`${path}${urls.SIZE}`} component={AllSize} />
         <Route path={`${path}${urls.COLOR}`} component={AllColor} />

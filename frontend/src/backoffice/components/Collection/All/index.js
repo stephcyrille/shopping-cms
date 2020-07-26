@@ -12,10 +12,10 @@ import urls from '../../Dashboard/routes/urls'
 export default
 @connect((state, props) => ({
 }))
-class AllCatalog extends React.Component {
+class AllCollection extends React.Component {
   constructor(props){
     super(props)
-    document.title = "Catalogues | Afro Yaca Drum"
+    document.title = "Collection | Afro Yaca Drum"
     this.state = {
       snack_open: false,
       snack_message: null,
@@ -29,25 +29,25 @@ class AllCatalog extends React.Component {
     if(param==true){
       this.setState({
         snack_open: true,
-        snack_message: "Catalogue enregistrée avec success",
+        snack_message: "Collection enregistrée avec success",
         snack_color: "success"
       })
     }
   }
 
-  _goToAddCatalog(){
-    this.props.dispatch(push(`${urls.ADDCATALOG}`))
+
+  _goToAddCollection(){
+    this.props.dispatch(push(`${urls.ADDCOLLECTION}`))
   }
   
-  _goToEditCatalog(){
-    this.props.dispatch(push(`${urls.ADDCATALOG}`))
+  _goToEditCollection(){
+    this.props.dispatch(push(`${urls.ADDCOLLECTION}`))
   }
 
   handleClose = () => {
     this.setState({ snack_open: false });
-  }
-  
-  
+  };
+
 
   render() {
     const columns = [
@@ -57,9 +57,7 @@ class AllCatalog extends React.Component {
     ];
     const title = "Catalogues" 
     const datas = [
-      { id: 1 ,title: 'Femme', slug: 'femme', },
-      { id: 2 ,title: 'Enfant', slug: 'enfant' },
-      { id: 3 ,title: 'Homme', slug: 'homme', },
+      { id: 1 ,title: 'Automne', slug: 'automne', },
     ]
 
     return (
@@ -74,12 +72,12 @@ class AllCatalog extends React.Component {
         }
         <section>
           <Button
-            onClick={ this._goToAddCatalog.bind(this) }
+            onClick={ this._goToAddCollection.bind(this) }
             variant="contained"
             color="primary"
           >
             <i className="fa fa-plus"/> &nbsp;&nbsp;
-            Ajouter un catalogue
+            Ajouter une collection
           </Button>
 
           <br />
@@ -90,7 +88,7 @@ class AllCatalog extends React.Component {
             table_columns={columns} 
             table_datas={datas} 
             simple={true} 
-            goToEdit={this._goToEditCatalog.bind(this)} 
+            goToEdit={this._goToEditCollection.bind(this)} 
           />
         </section>
       </div>

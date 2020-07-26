@@ -14,7 +14,6 @@ import Snackbar from '../../Snippets/FlashBagMessage/index'
 import appConfig from '../../../config'
 
 
-
 const useStyles = theme => ({
   root: {
     
@@ -111,10 +110,10 @@ export default
 @connect((state, props) => ({
 }))
 @withStyles(useStyles)
-class AddCategory extends React.Component {
+class AddCollection extends React.Component {
   constructor(props){
     super(props)
-    document.title = 'Ajouter une categorie | Afro Yaca Drum'
+    document.title = 'Ajouter une collection | Afro Yaca Drum'
 
     this.state = {
       title : {
@@ -240,8 +239,7 @@ class AddCategory extends React.Component {
       (values.slug) !== "" &&
       (values.picture instanceof File) === true
     ){
-      // SUBMIT THERE
-      const service = "category/add"
+      const service = "collection/add"
       const formUrl = `${appConfig.FORMBASEURL}${service}`
       const formData = new FormData();
       formData.append("title", values.title);
@@ -249,8 +247,10 @@ class AddCategory extends React.Component {
       formData.append("picture", values.picture);
       // SUBMIT THERE
       this.postToApi(formUrl, formData)
+
     }
   }
+
 
   postToApi(form_base_url, data){
     window
@@ -259,10 +259,10 @@ class AddCategory extends React.Component {
           console.log("Success", response)
           this.setState({
             snack_open: true,
-            snack_message: "Catégorie enregistrée avec success",
+            snack_message: "Collection enregistrée avec success",
             snack_color: "success"
           })
-          this.props.dispatch(push(`${urls.CATEGORY}`, { snack_open: true }));
+          this.props.dispatch(push(`${urls.COLLECTION}`, { snack_open: true }));
         }
       )
       .catch((error) =>{
@@ -289,8 +289,9 @@ class AddCategory extends React.Component {
       )
   }
 
-  _goToCategory(){
-    this.props.dispatch(push(`${urls.CATEGORY}`))
+
+  _goToAddCollection(){
+    this.props.dispatch(push(`${urls.COLLECTION}`))
   }
 
   handleClose = () => {
@@ -314,18 +315,18 @@ class AddCategory extends React.Component {
         }
         <section className="container">
           <Paper className={classes.paper}>
-            <h2 style={{ paddingLeft: 20 }}>Ajouter une categorie</h2>
+            <h2 style={{ paddingLeft: 20 }}>Ajouter une collection</h2>
             <hr />
             <form className={`${classes.form}`} noValidate autoComplete="off" onSubmit={ this._handleOnSubmit.bind(this) }>
               <div className={`${classes.row} row`}>
                 <div className="col-8">
                   <TextField
-                    id="category-title-text"
-                    label="Nom de la categorie"
+                    id="collection-title-text"
+                    label="Titre de la collection"
                     error={ this.state.title.error && this.state.title.error }
                     name="title"
                     onChange={ this.handleChangeTitle.bind(this) }
-                    placeholder={"Catégorie"}
+                    placeholder={"Titre de la collection"}
                     value={this.state.title.value}
                     type="text"
                     helperText={ this.state.title.error ? this.state.title.errorMessage : null }
@@ -335,8 +336,8 @@ class AddCategory extends React.Component {
                 </div>
                 <div className="col-4">
                   <TextField
-                    id="category-slug"
-                    label="Slug de la catégorie"
+                    id="collection-slug"
+                    label="Slug de la collection"
                     error={ this.state.slug.error && this.state.slug.error }
                     name="slug"
                     placeholder={"slug"}
@@ -349,7 +350,7 @@ class AddCategory extends React.Component {
                   />
                 </div>
                 <div className="col-4" style={{ paddingLeft: 0, marginTop: 20 }}>
-                  <label style={{ paddingLeft: 15, marginBottom: 0 }}>Photo de la categorie*</label>
+                  <label style={{ paddingLeft: 15, marginBottom: 0 }}>Photo de la collection*</label>
                   {
                     this.state.picture.value ? 
                       (
@@ -373,7 +374,7 @@ class AddCategory extends React.Component {
                             className=""
                             fullWidth
                           >
-                            <label for="raised-input-file-1" style={{ marginBottom: 0 }}>
+                            <label htmlFor="raised-input-file-1" style={{ marginBottom: 0 }}>
                               <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
                               Photo (PNG, JPG)*
                             </label>
@@ -414,7 +415,7 @@ class AddCategory extends React.Component {
                   &nbsp;&nbsp;&nbsp;
                   <Button 
                     variant="contained"
-                    onClick={ this._goToCategory.bind(this) }
+                    onClick={ this._goToAddCollection.bind(this) }
                   >
                     Annuler
                   </Button>

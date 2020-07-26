@@ -19,7 +19,7 @@ export default function PositionedSnackbar(props) {
   return (
     <div>
       <Snackbar
-        autoHideDuration={3000}
+        autoHideDuration={5000}
         anchorOrigin={{ vertical, horizontal }}
         open={props.open}
         onClose={props.closePopup}

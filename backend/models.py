@@ -6,6 +6,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
+catalog_upload_path = "catalogs"
 category_upload_path = "categories"
 collection_upload_path = "collections"
 
@@ -63,6 +64,18 @@ class CoreTrackedModel(models.Model):
         ordering = ['-created_date']
 
 
+class Catalog(CoreTrackedModel):
+    title = models.CharField(max_length=50)
+    slug = models.SlugField(unique=True)
+    picture = models.FileField(upload_to=catalog_upload_path, null=True)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse("single_catalog", kwargs={"slug": self.slug})
+
+
 class Category(CoreTrackedModel):
     title = models.CharField(max_length=50)
     slug = models.SlugField(unique=True)
@@ -96,17 +109,6 @@ class Group(CoreTrackedModel):
 
     def get_absolute_url(self):
         return reverse("single_group", kwargs={"slug": self.slug})
-
-
-class Catalog(CoreTrackedModel):
-    title = models.CharField(max_length=50)
-    slug = models.SlugField(unique=True)
-
-    def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse("single_catalog", kwargs={"slug": self.slug})
 
 
 class Product(CoreTrackedModel):

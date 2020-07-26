@@ -1,5 +1,4 @@
-from django.urls import path
-from django.conf.urls import url
+from django.urls import path, include
 
 from core_session.apis import CoreSessionAPIView, GetSessionCartAPIView
 from .apis.frontoffice import CategoryAPIView, ProductsAPIView, ProductSingleAPIView, \
@@ -7,6 +6,9 @@ from .apis.frontoffice import CategoryAPIView, ProductsAPIView, ProductSingleAPI
 from .apis.frontoffice.forms import AddCartItemAPIView
 
 urlpatterns = [
+    path('backoffice/', include('backend.apis.urls.backoffice.urls')),
+
+    # TODO Redefine all these route with the new synthax
     path('core/session/create', CoreSessionAPIView.as_view(), name='create_session'),
     path('core/session/carts/update/<int:id>/', GetSessionCartAPIView.as_view(), name='update_session_cart'),
 
