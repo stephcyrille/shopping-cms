@@ -39,7 +39,7 @@
     "i18next-browser-languagedetector": "^4.1.1",
     "jodit-react": "^1.0.51",
     "lodash.debounce": "^4.0.8",
-    "material-table": "^1.64.0",
+    "material-table": "^1.67.1",
     "moment": "^2.25.3",
     "node-sass": "^4.13.1",
     "react-css-modules": "^4.7.11",

@@ -12,7 +12,7 @@ import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 import urls from '../../Dashboard/routes/urls'
 import Snackbar from '../../Snippets/FlashBagMessage/index'
 import appConfig from '../../../config'
-
+import slugify from '../../../utils/generic'
 
 
 const useStyles = theme => ({
@@ -139,14 +139,6 @@ class AddCategory extends React.Component {
     }
   }
 
-  convertToSlug(text){
-    return text
-        .toLowerCase()
-        .replace(/[^\w ]+/g,'')
-        .replace(/ +/g,'-')
-        ;
-  }
-
 
   handleChangeTitle = (event) => {
     event.preventDefault();
@@ -156,7 +148,7 @@ class AddCategory extends React.Component {
         error: false
       },
       slug: {
-        value: this.convertToSlug(event.target.value)
+        value: slugify(event.target.value)
       }
     })
   }

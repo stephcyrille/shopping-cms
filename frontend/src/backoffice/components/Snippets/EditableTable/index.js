@@ -1,5 +1,6 @@
 import React from 'react';
 import MaterialTable from 'material-table';
+import tableIcons from "./TableIcon";
 
 
 
@@ -29,6 +30,7 @@ export default function MaterialTableDemo(props) {
     { props.simple ?
       (
         <MaterialTable
+          icons={tableIcons}
           title={state.title}
           columns={state.columns}
           data={state.data}
@@ -59,23 +61,26 @@ export default function MaterialTableDemo(props) {
       )
       :
       (
-        <MaterialTable
+        <MaterialTable 
+          icons={tableIcons}
+          actions={props.actions ? props.actions : null}
           title={state.title}
           columns={state.columns}
           data={state.data}
           editable={{
             onRowUpdateCancelled: rowData => props.clearPicture ? props.clearPicture() : null,
-            onRowAdd: (newData) =>
-              new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve();
-                  setState((prevState) => {
-                    const data = [...prevState.data];
-                    data.push(newData);
-                    return { ...prevState, data };
-                  });
-                }, 600);
-              }),
+            // onRowAdd: (newData) =>
+            //   new Promise((resolve) => {
+            //     setTimeout(() => {
+            //       resolve();
+            //       setState((prevState) => {
+            //         console.log("Nouvelles datas postés", newData)
+            //         const data = [...prevState.data];
+            //         data.push(newData);
+            //         return { ...prevState, data };
+            //       });
+            //     }, 600);
+            //   }),
             onRowUpdate: (newData, oldData) =>
               new Promise((resolve) => {
                 console.log("Hello world!!", oldData)
@@ -100,6 +105,7 @@ export default function MaterialTableDemo(props) {
                         }
                       } else {
                         // Handle method to update data here
+                        console.log("Nouvelles datas postés", newData)
                         data[data.indexOf(oldData)] = newData;
                         return { ...prevState, data };
                       }

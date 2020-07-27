@@ -3,19 +3,6 @@ import { createAction, createReducer } from "redux-act";
 const initialState = {
 	initial_values:{},
     varieties: [],
-    // varieties: [
-    //   {
-    //     id : 0,
-    //     color: 'Noir',
-    //     size: 'XXL',
-    //     quantity: 4,
-    //     picture1: '/static/images/accessories.png',
-    //     picture2: '/static/images/bag.jpg',
-    //     picture3: '/static/images/product3.jpg',
-    //     picture4: '/static/images/beauty.jpg',
-    //   },
-    // ],
-
     id_initial : 1,
 };
 

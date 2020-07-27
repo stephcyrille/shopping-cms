@@ -10,6 +10,9 @@ import Button from '@material-ui/core/Button';
 import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 
 import urls from '../../Dashboard/routes/urls'
+import Snackbar from '../../Snippets/FlashBagMessage/index'
+import appConfig from '../../../config'
+import slugify from '../../../utils/generic'
 
 
 
@@ -131,15 +134,10 @@ class AddColor extends React.Component {
         errorMessage: null,
         fileInput: React.createRef()
       },
+      snack_open: false,
+      snack_message: null,
+      snack_color: null,
     }
-  }
-
-  convertToSlug(text){
-    return text
-        .toLowerCase()
-        .replace(/[^\w ]+/g,'')
-        .replace(/ +/g,'-')
-        ;
   }
 
 
@@ -151,7 +149,7 @@ class AddColor extends React.Component {
         error: false
       },
       slug: {
-        value: this.convertToSlug(event.target.value)
+        value: slugify(event.target.value)
       }
     })
   }
@@ -236,13 +234,63 @@ class AddColor extends React.Component {
       (values.picture instanceof File) === true
     ){
       // SUBMIT THERE
-      console.log("Couleur add Form values ", values)
+      const service = "color/add"
+      const formUrl = `${appConfig.FORMBASEURL}${service}`
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("slug", values.slug);
+      formData.append("picture", values.picture);
+      // SUBMIT THERE
+      this.postToApi(formUrl, formData)
     }
+  }
+
+
+  postToApi(form_base_url, data){
+    window
+    .file_axios.post(`${form_base_url}`, data)
+      .then((response) => {
+          console.log("Success", response)
+          this.setState({
+            snack_open: true,
+            snack_message: "Couleur enregistrée avec success",
+            snack_color: "success"
+          })
+          this.props.dispatch(push(`${urls.COLOR}`, { snack_open: true }));
+        }
+      )
+      .catch((error) =>{
+          console.log("Error", error.response)
+          let response = error.response.data
+          if('slug' in response){
+            let text = response.slug
+            this.setState({
+              snack_message: text,
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+          
+          if('title' in response){
+            let text = response.title
+            this.setState({
+              snack_message: text,
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+        }
+      )
   }
 
   _goToColor(){
     this.props.dispatch(push(`${urls.COLOR}`))
   }
+
+
+  handleClose = () => {
+    this.setState({ snack_open: false });
+  };
 
   
 
@@ -251,6 +299,14 @@ class AddColor extends React.Component {
     
     return (
       <div>
+        { this.state.snack_open &&
+            <Snackbar 
+              open={this.state.snack_open} 
+              message={this.state.snack_message} 
+              color={this.state.snack_color}
+              closePopup={this.handleClose.bind(this)} 
+            />
+        }
         <section className="container">
           <Paper className={classes.paper}>
             <h2 style={{ paddingLeft: 20 }}>Ajouter une couleur</h2>

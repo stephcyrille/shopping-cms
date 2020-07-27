@@ -9,6 +9,7 @@ from django.utils.text import slugify
 catalog_upload_path = "catalogs"
 category_upload_path = "categories"
 collection_upload_path = "collections"
+color_motif_upload_path = "motifs"
 
 
 def product_variety_image_path(instance, filename):
@@ -101,11 +102,11 @@ class Collection(CoreTrackedModel):
 
 
 class Group(CoreTrackedModel):
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
 
     def __str__(self):
-        return self.name
+        return self.title
 
     def get_absolute_url(self):
         return reverse("single_group", kwargs={"slug": self.slug})
@@ -133,11 +134,12 @@ class Product(CoreTrackedModel):
 
 
 class Color(CoreTrackedModel):
-    name = models.CharField(max_length=200)
-    code = models.CharField(max_length=10)
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    picture = models.FileField(upload_to=color_motif_upload_path, null=True)
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class Variety(CoreTrackedModel):
@@ -151,7 +153,7 @@ class Variety(CoreTrackedModel):
     picture4 = models.FileField(upload_to=product_variety_image_path, null=True, blank=True)
 
     def __str__(self):
-        return '%s - %s' % (self.product.title, self.color.name)
+        return '%s - %s' % (self.product.title, self.color.title)
 
 
 class Size(CoreTrackedModel):
@@ -186,5 +188,5 @@ class CartItem(CoreTrackedModel):
     line_total = models.IntegerField(default=1)
 
     def __str__(self):
-        return 'Cart %s - %s (%s)' % (str(self.cart.ref), self.variety.product.title, self.variety.color.name)
+        return 'Cart %s - %s (%s)' % (str(self.cart.ref), self.variety.product.title, self.variety.color.title)
 
