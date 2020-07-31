@@ -15,9 +15,10 @@ import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
 
 // Rich text importation
-import 'jodit';
-import 'jodit/build/jodit.min.css';
-import JoditEditor from "jodit-react";
+// Require Editor CSS files.
+import 'froala-editor/css/froala_style.min.css';
+import 'froala-editor/css/froala_editor.pkgd.min.css';
+import FroalaEditor from 'react-froala-wysiwyg';
 
 import urls from '../../Dashboard/routes/urls'
 import { slugify } from "../../../utils/generic";
@@ -605,16 +606,12 @@ class AddArticle extends React.Component {
                 </div>
               </div>
 
-              {/* <div className={`row ${classes.row}`} style={{ marginTop: 20 }}>
+              <div className={`row ${classes.row}`} style={{ marginTop: 20 }}>
                 <div className="col-12">
                   <label>Résumé de l'article</label>
-                  <JoditEditor
-                    ref={this.refResumeEditor}
-                    // value={this.state.content}
-                    tabIndex={2} // tabIndex of textarea
+                  <FroalaEditor
+                    model={this.state.content}
                     onChange={ this.updateResumeContent.bind(this) }
-                    config={config}
-                    // onChange={newContent => {}}
                   />
                 </div>
               </div>
@@ -622,16 +619,12 @@ class AddArticle extends React.Component {
               <div className={`row ${classes.row}`} style={{ marginTop: 20 }}>
                 <div className="col-12">
                   <label>Contenu de l'article</label>
-                  <JoditEditor
-                    ref={this.refArticleEditor}
-                    // value={this.state.content}
-                    tabIndex={2} // tabIndex of textarea
+                  <FroalaEditor
+                    model={this.state.content}
                     onChange={ this.updateContent.bind(this) }
-                    config={config}
-                    // onChange={newContent => {}}
                   />
                 </div>
-              </div> */}
+              </div>
 
 
               <div className={`row ${classes.row}`}>

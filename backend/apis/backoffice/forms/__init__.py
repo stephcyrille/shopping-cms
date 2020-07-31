@@ -4,3 +4,4 @@ from .add_category import *
 from .add_group import *
 from .add_size import *
 from .add_color import *
+from .add_product import *

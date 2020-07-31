@@ -10,4 +10,5 @@ urlpatterns = [
     path('group/add', AddGroupView.as_view(), name='add_group'),
     path('size/add', AddSizeView.as_view(), name='add_size'),
     path('color/add', AddColorView.as_view(), name='add_color'),
+    path('product/add', AddProductAPIView.as_view(), name='add_product'),
 ]
