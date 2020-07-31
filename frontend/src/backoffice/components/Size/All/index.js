@@ -42,14 +42,30 @@ class AllSize extends React.Component {
         errorMessage: null
       },
       dialogOpen: false,
-      datas: [
-        { id: 1, category: 'Chaussure', name: '38' , quantity: 3, size_system: 'EU' },
-        { id: 2, category: 'Pantallon', name: '26' , quantity: 5, size_system: 'EU' },
-      ],
+      datas: [],
       snack_open: false,
       snack_message: null,
       snack_color: null,
     }
+  }
+
+  componentWillMount(){
+    this._fetchListItems()
+  }
+
+  _fetchListItems(){
+    const service = "size"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        datas: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
   }
 
 

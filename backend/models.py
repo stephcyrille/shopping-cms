@@ -152,7 +152,7 @@ class Color(CoreTrackedModel):
 
 
 class Variety(CoreTrackedModel):
-    product = models.ForeignKey(Product, blank=False, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, blank=False, on_delete=models.CASCADE, related_name="product_variety")
     color = models.ForeignKey(Color, blank=True, null=True, on_delete=models.CASCADE)
     size = models.ForeignKey("Size", blank=True, null=True, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
@@ -223,14 +223,14 @@ class Article(CoreTrackedModel):
 
 
 class MainMenuNavPicture(CoreTrackedModel):
-    picture1 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
-    picture2 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
-    picture3 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
-    picture4 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
-    picture5 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
-    picture6 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
-    picture7 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
-    picture8 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    clothing = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    shoes = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    bag = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    accessory = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    jewelery = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    lingerie = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    beauty = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    editorial = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
 
     def __str__(self):
         return self.pk

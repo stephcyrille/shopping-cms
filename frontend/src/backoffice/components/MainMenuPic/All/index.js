@@ -2,10 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import Button from '@material-ui/core/Button';
+import MaterialTable from "material-table";
 
-import Table from '../../Snippets/EditableTable/index'
+import tableIcons from "../../Snippets/EditableTable/TableIcon";
 import Snackbar from '../../Snippets/FlashBagMessage/index'
 import urls from "../../Dashboard/routes/urls"
+import appConfig from '../../../config'
 
 
 
@@ -20,6 +22,7 @@ class AllMenuPicture extends React.Component {
       snack_open: false,
       snack_message: null,
       snack_color: null,
+      datas: [],
     }
   }
 
@@ -33,6 +36,22 @@ class AllMenuPicture extends React.Component {
         snack_color: "success"
       })
     }
+    this._fetchListItems()
+  }
+
+  _fetchListItems(){
+    const service = "mainmenupic"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        datas: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
   }
 
   _goToAddNew(){
@@ -52,28 +71,11 @@ class AllMenuPicture extends React.Component {
     const title = "Toutes les images" 
     const columns = [
       { title: 'N°', field: 'id' },
-      { title: 'Evenement', field: 'event' },
-      { title: 'Vêtements', field: 'clothes' },
+      { title: 'Vêtements', field: 'clothing' },
       { title: 'Chaussures', field: 'shoes' },
-      { title: 'Sacs', field: 'bags' },
-      { title: 'Accessoires', field: 'accesories' },
-      { title: 'Bijoux', field: 'jewelery' },
-      { title: 'Lingerie', field: 'lingerie' },
-      { title: 'Beauté', field: 'beauty' },
+      { title: 'Sacs', field: 'bag' },
+      { title: 'Accessoires', field: 'accessory' },
     ];
-    const datas = [
-      { 
-        id: 1,
-        event: 'Evenement 1', 
-        clothes: 'Photo vet.', 
-        shoes: 'Photo chaus.',
-        bags: 'Photo sac.',
-        accesories: 'Photo acces.',
-        jewelery: 'Photo bij.',
-        lingerie: 'Photo lin.',
-        beauty: 'Photo beau.',
-      },
-    ]
 
     return (
       <div>
@@ -98,12 +100,34 @@ class AllMenuPicture extends React.Component {
           <br />
           <br />
 
-          <Table 
-            table_title={title} 
-            table_columns={columns} 
-            table_datas={datas} 
-            simple={true} 
-            goToEdit={this._goToEditNew.bind(this)} 
+          <MaterialTable
+            icons={tableIcons}
+            title={title}
+            columns={columns}
+            data={this.state.datas}
+            options={{
+              actionsColumnIndex: -1
+            }}
+            actions={[
+              {
+                icon: 'edit',
+                tooltip: "Modifier la ligne" ,
+                onClick: () => this._goToEditNew() 
+              }
+            ]}
+            editable={{
+              onRowDelete: (oldData) =>
+                new Promise((resolve) => {
+                  setTimeout(() => {
+                    resolve();
+                    setState((prevState) => {
+                      const data = [...prevState.data];
+                      data.splice(data.indexOf(oldData), 1);
+                      return { ...prevState, data };
+                    });
+                  }, 600);
+                }),
+            }}
           />
         </section>
       </div>

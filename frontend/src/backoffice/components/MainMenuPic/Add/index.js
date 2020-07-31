@@ -581,14 +581,14 @@ class AddMenuPic extends React.Component {
       const service = "mainmenupicture/add"
       const formUrl = `${appConfig.FORMBASEURL}${service}`
       const formData = new FormData();
-      formData.append("picture1", values.picture1);
-      formData.append("picture2", values.picture2);
-      formData.append("picture3", values.picture3);
-      formData.append("picture4", values.picture4);
-      formData.append("picture5", values.picture5);
-      formData.append("picture6", values.picture6);
-      formData.append("picture7", values.picture7);
-      formData.append("picture8", values.picture8);
+      formData.append("clothing", values.picture1);
+      formData.append("shoes", values.picture2);
+      formData.append("bag", values.picture3);
+      formData.append("accessory", values.picture4);
+      formData.append("jewelery", values.picture5);
+      formData.append("lingerie", values.picture6);
+      formData.append("beauty", values.picture7);
+      formData.append("editorial", values.picture8);
       // SUBMIT THERE
       this.postToApi(formUrl, formData)
     }
@@ -661,7 +661,7 @@ class AddMenuPic extends React.Component {
             >             
               <div className={`row ${classes.row}`} style={{ paddingLeft: 10 }}>
                 <div className="col-3" style={{ paddingLeft: 0 }}>
-                  <label style={{marginBottom: 10, paddingLeft: 10 }}>Menu Vêtements</label>
+                  <label style={{marginBottom: 10, paddingLeft: 10 }}>Menu vêtements</label>
                   {
                     this.state.picture1.value ? 
                       (

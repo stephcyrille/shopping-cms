@@ -2,10 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import Button from '@material-ui/core/Button';
+import MaterialTable from "material-table";
 
-import Table from '../../Snippets/EditableTable/index'
+import tableIcons from "../../Snippets/EditableTable/TableIcon";
 import Snackbar from '../../Snippets/FlashBagMessage/index'
 import urls from '../../Dashboard/routes/urls'
+import appConfig from '../../../config'
 
 
 export default
@@ -19,6 +21,7 @@ class AllCategory extends React.Component {
       snack_open: false,
       snack_message: null,
       snack_color: null,
+      data: [],
     }
   }
 
@@ -32,6 +35,23 @@ class AllCategory extends React.Component {
         snack_color: "success"
       })
     }
+
+    this._fetchListItems()
+  }
+
+  _fetchListItems(){
+    const service = "category"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        datas: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
   }
 
 
@@ -50,16 +70,11 @@ class AllCategory extends React.Component {
 
   render() {
     const columns = [
-      { title: 'N°', field: 'title' },
+      { title: 'N°', field: 'id' },
       { title: 'Titre', field: 'title' },
       { title: 'Slug', field: 'slug' },
     ];
     const title = "Categories" 
-    const datas = [
-      { id: 1, title: 'Robe', slug: 'robe' },
-      { id: 2, title: 'Jupe', slug: 'jupe' },
-      { id: 3, title: 'Leggins', slug: 'leggins' },
-    ]
 
     return (
       <div>
@@ -84,13 +99,36 @@ class AllCategory extends React.Component {
           <br />
           <br />
 
-          <Table 
-            table_title={title} 
-            table_columns={columns} 
-            table_datas={datas} 
-            simple={true} 
-            goToEdit={this._goToEditCategory.bind(this)} 
+          <MaterialTable
+            icons={tableIcons}
+            title={title}
+            columns={columns}
+            data={this.state.datas}
+            options={{
+              actionsColumnIndex: -1
+            }}
+            actions={[
+              {
+                icon: 'edit',
+                tooltip: "Modifier la catégorie" ,
+                onClick: () => this._goToEditCategory() 
+              }
+            ]}
+            editable={{
+              onRowDelete: (oldData) =>
+                new Promise((resolve) => {
+                  setTimeout(() => {
+                    resolve();
+                    setState((prevState) => {
+                      const data = [...prevState.data];
+                      data.splice(data.indexOf(oldData), 1);
+                      return { ...prevState, data };
+                    });
+                  }, 600);
+                }),
+            }}
           />
+
         </section>
       </div>
     );

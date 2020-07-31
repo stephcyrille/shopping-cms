@@ -322,7 +322,7 @@ class AddSEO extends React.Component {
       const service = "seo/add"
       const formUrl = `${appConfig.FORMBASEURL}${service}`
       const formData = new FormData();
-      formData.append("title", values.title);
+      formData.append("title", values.pageTitle);
       formData.append("slug", values.slug);
       formData.append("keywords", values.keywords);
       formData.append("description", values.description);

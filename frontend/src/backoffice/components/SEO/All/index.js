@@ -2,10 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import Button from '@material-ui/core/Button';
+import MaterialTable from "material-table";
 
-import Table from '../../Snippets/EditableTable/index'
+import tableIcons from "../../Snippets/EditableTable/TableIcon";
 import Snackbar from '../../Snippets/FlashBagMessage/index'
 import urls from "../../Dashboard/routes/urls"
+import appConfig from '../../../config'
 
 
 
@@ -21,6 +23,7 @@ class SEO extends React.Component {
       snack_open: false,
       snack_message: null,
       snack_color: null,
+      datas: [],
     }
   }
 
@@ -34,6 +37,23 @@ class SEO extends React.Component {
         snack_color: "success"
       })
     }
+
+    this._fetchListItems()
+  }
+
+  _fetchListItems(){
+    const service = "seo"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        datas: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
   }
 
 
@@ -54,22 +74,13 @@ class SEO extends React.Component {
     const title = "Optimisation sur les moteurs de recherche" 
     const columns = [
         { title: 'N°', field: 'id' },
-        { title: 'Titre Page', field: 'pageTitle' },
+        { title: 'Titre Page', field: 'title' },
         { title: 'Slug', field: 'slug' },
         { title: 'Description', field: 'description' },
         { title: 'Mots clés', field: 'keywords' },
-        { title: 'URL', field: 'baseUrl' },
+        { title: 'URL', field: 'linkUrl' },
       ];
-    const datas = [
-      { 
-        id: 1, 
-        pageTitle: 'Acceuil', 
-        description: 'Page d\'accueil de Afro yaca drum description et voila le reste ici', 
-        keywords: 'Afro, Vêtement, Mode, Fshion', 
-        baseUrl: '/shop',
-        slug: 'home', 
-      },
-    ]
+    
 
     return (
       <div>
@@ -94,12 +105,34 @@ class SEO extends React.Component {
           <br />
           <br />
 
-          <Table 
-            table_title={title} 
-            table_columns={columns} 
-            table_datas={datas} 
-            simple={true} 
-            goToEdit={this._goToEditSEO.bind(this)} 
+          <MaterialTable
+            icons={tableIcons}
+            title={title}
+            columns={columns}
+            data={this.state.datas}
+            options={{
+              actionsColumnIndex: -1
+            }}
+            actions={[
+              {
+                icon: 'edit',
+                tooltip: "Modifier la ligne" ,
+                onClick: () => this._goToEditSEO() 
+              }
+            ]}
+            editable={{
+              onRowDelete: (oldData) =>
+                new Promise((resolve) => {
+                  setTimeout(() => {
+                    resolve();
+                    setState((prevState) => {
+                      const data = [...prevState.data];
+                      data.splice(data.indexOf(oldData), 1);
+                      return { ...prevState, data };
+                    });
+                  }, 600);
+                }),
+            }}
           />
         </section>
       </div>

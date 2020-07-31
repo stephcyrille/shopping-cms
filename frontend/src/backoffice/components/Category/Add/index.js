@@ -248,7 +248,6 @@ class AddCategory extends React.Component {
     window
     .file_axios.post(`${form_base_url}`, data)
       .then((response) => {
-          console.log("Success", response)
           this.setState({
             snack_open: true,
             snack_message: "Catégorie enregistrée avec success",
@@ -258,7 +257,6 @@ class AddCategory extends React.Component {
         }
       )
       .catch((error) =>{
-          console.log("Error", error.response)
           let response = error.response.data
           if('slug' in response){
             let text = response.slug

@@ -2,10 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import Button from '@material-ui/core/Button';
+import MaterialTable from "material-table";
 
-import Table from '../../Snippets/EditableTable/index'
+import tableIcons from "../../Snippets/EditableTable/TableIcon";
 import Snackbar from '../../Snippets/FlashBagMessage/index'
 import urls from "../../Dashboard/routes/urls"
+import appConfig from '../../../config'
 
 
 
@@ -20,6 +22,7 @@ class HomeBanner extends React.Component {
       snack_open: false,
       snack_message: null,
       snack_color: null,
+      datas: [],
     }
   }
 
@@ -33,7 +36,26 @@ class HomeBanner extends React.Component {
         snack_color: "success"
       })
     }
+
+    this._fetchListItems()
   }
+
+
+  _fetchListItems(){
+    const service = "banner"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        datas: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
 
   _goToAddHomeBanner(){
     this.props.dispatch(push(`${urls.ADDHOMEBANNER}`))
@@ -59,17 +81,6 @@ class HomeBanner extends React.Component {
       { title: 'Lien Url', field: 'linkUrl' },
       { title: 'Actif', field: 'active' },
     ];
-    const datas = [
-      { 
-        id: 1,
-        name: 'Banière Collection', 
-        title: 'Découvrez la collection Madame', 
-        subTitle: "Explorer toute la collection que madame vous propose chez Afro Yaca Drum" , 
-        linkText: 'Découvrir maintenant' , 
-        linkUrl: '/shop' , 
-        active: true  
-      },
-    ]
 
     return (
       <div>
@@ -94,12 +105,34 @@ class HomeBanner extends React.Component {
           <br />
           <br />
 
-          <Table 
-            table_title={title} 
-            table_columns={columns} 
-            table_datas={datas} 
-            simple={true} 
-            goToEdit={this._goToEditHomeBanner.bind(this)} 
+          <MaterialTable
+            icons={tableIcons}
+            title={title}
+            columns={columns}
+            data={this.state.datas}
+            options={{
+              actionsColumnIndex: -1
+            }}
+            actions={[
+              {
+                icon: 'edit',
+                tooltip: "Modifier la ligne" ,
+                onClick: () => this._goToEditHomeBanner() 
+              }
+            ]}
+            editable={{
+              onRowDelete: (oldData) =>
+                new Promise((resolve) => {
+                  setTimeout(() => {
+                    resolve();
+                    setState((prevState) => {
+                      const data = [...prevState.data];
+                      data.splice(data.indexOf(oldData), 1);
+                      return { ...prevState, data };
+                    });
+                  }, 600);
+                }),
+            }}
           />
         </section>
       </div>

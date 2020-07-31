@@ -32,15 +32,32 @@ class AllGroup extends React.Component {
         errorMessage: null
       },
       dialogOpen: false,
-      datas: [
-        { id: 1, title: 'Groupe 1', slug: 'groupe-1' },
-        { id: 2, title: 'Groupe 2', slug: 'groupe-2' },
-      ],
+      datas: [],
       snack_open: false,
       snack_message: null,
       snack_color: null,
     }
   }
+
+  componentWillMount(){
+    this._fetchListItems()
+  }
+
+  _fetchListItems(){
+    const service = "group"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        datas: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
 
   handleSetDialogOpen(){
     this.setState({
