@@ -4,12 +4,17 @@ import { push } from "react-router-redux";
 import { Paper } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
+import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 
 import urls from '../../Dashboard/routes/urls'
+import { slugify } from "../../../utils/generic";
+import Snackbar from '../../Snippets/FlashBagMessage/index'
+import appConfig from '../../../config'
 
 
 
@@ -151,15 +156,17 @@ class AddHomeBanner extends React.Component {
         error: false,
         errorMessage: null
       },
-    }
-  }
+      picture : {
+        value: null,
+        error: false,
+        errorMessage: null,
+        fileInput: React.createRef()
+      },
 
-  convertToSlug(text){
-    return text
-        .toLowerCase()
-        .replace(/[^\w ]+/g,'')
-        .replace(/ +/g,'-')
-        ;
+      snack_open: false,
+      snack_message: null,
+      snack_color: null,
+    }
   }
 
 
@@ -171,7 +178,7 @@ class AddHomeBanner extends React.Component {
         error: false
       },
       slug: {
-        value: this.convertToSlug(event.target.value)
+        value: slugify(event.target.value)
       }
     })
 	}
@@ -227,6 +234,45 @@ class AddHomeBanner extends React.Component {
   }
 
 
+  handlePictureChange = (event, picNber) => {
+    event.preventDefault();
+    let imageFile = event.target.files[0];
+    if (imageFile) {
+      const localImageUrl = URL.createObjectURL(imageFile);
+      const imageObject = new window.Image();
+      imageObject.onload = () => {
+        imageFile.width = imageObject.naturalWidth;
+        imageFile.height = imageObject.naturalHeight;
+        URL.revokeObjectURL(imageFile);
+      };
+      imageObject.src = localImageUrl;
+      if(picNber==1){
+        this.setState({
+          picture: {
+            value: localImageUrl,
+            fileInput: imageFile,
+            error: false,
+          },
+        })
+      }
+    }
+  };
+
+
+
+  _handleRemovePicture(picNber){
+    if(picNber==1){
+      this.setState({
+        picture: {
+          value: null,
+          error: false,
+          fileInput: null
+        },
+      })
+    }
+  }
+
+
 
     
   _handleOnSubmit(event){
@@ -241,6 +287,7 @@ class AddHomeBanner extends React.Component {
       linkText: this.state.linkText.value,
       linkUrl: this.state.linkUrl.value,
       active: this.state.active.checked,
+      picture: this.state.picture.fileInput,
     }
 
     if( !values.name ){
@@ -299,6 +346,14 @@ class AddHomeBanner extends React.Component {
         },
       })
     }
+    if( !(values.picture instanceof File) == true ){
+      this.setState({
+        picture: {
+          error: true,
+          errorMessage: "L'ajout d'image est obligatoire"
+        },
+      })
+    }
 
     if(
       (values.name) !== "" &&
@@ -306,16 +361,79 @@ class AddHomeBanner extends React.Component {
       (values.subTitle) !== "" &&
       (values.slug) !== "" &&
       (values.linkText) !== "" &&
-      (values.linkUrl) !== ""
+      (values.linkUrl) !== "" &&
+      (values.picture instanceof File) === true
     ){
+      const service = "banner/add"
+      const formUrl = `${appConfig.FORMBASEURL}${service}`
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("title", values.title);
+      formData.append("subTitle", values.subTitle);
+      formData.append("slug", values.slug);
+      formData.append("linkText", values.linkText);
+      formData.append("linkUrl", values.linkUrl);
+      formData.append("active", this.state.active.checked);
+      formData.append("picture", values.picture);
       // SUBMIT THERE
-      console.log("Home banner add Form values ", values)
+      this.postToApi(formUrl, formData)
     }
+  }
+
+
+  postToApi(form_base_url, data){
+    window
+    .file_axios.post(`${form_base_url}`, data)
+      .then((response) => {
+          console.log("Success", response)
+          this.setState({
+            snack_open: true,
+            snack_message: "Banière enregistrée avec success",
+            snack_color: "success"
+          })
+          this.props.dispatch(push(`${urls.HOMEBANNER}`, { snack_open: true }));
+        }
+      )
+      .catch((error) =>{
+          console.log("Error", error.response)
+          let response = error.response.data
+          if('slug' in response){
+            let text = response.slug
+            this.setState({
+              snack_message: text,
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+          
+          if('title' in response){
+            let text = response.title
+            this.setState({
+              snack_message: text,
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+
+          else{
+            this.setState({
+              snack_message: "Une erreur est survenue lors de l'enregistrement",
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+        }
+      )
   }
 
   _goToHomeBanner(){
     this.props.dispatch(push(`${urls.HOMEBANNER}`))
   }
+
+
+  handleClose = () => {
+    this.setState({ snack_open: false });
+  };
 
   
 
@@ -324,9 +442,17 @@ class AddHomeBanner extends React.Component {
     
     return (
       <div>
+        { this.state.snack_open &&
+            <Snackbar 
+              open={this.state.snack_open} 
+              message={this.state.snack_message} 
+              color={this.state.snack_color}
+              closePopup={this.handleClose.bind(this)} 
+            />
+        }
         <section className="container">
           <Paper className={classes.paper}>
-            <h2 style={{ paddingLeft: 20 }}>Ajout SEO page</h2>
+            <h2 style={{ paddingLeft: 20 }}>Ajout bannière accueil</h2>
 						<hr />
             <form className={`${classes.form}`} noValidate autoComplete="off" onSubmit={ this._handleOnSubmit.bind(this) }>
               <div className={`${classes.row} row`}>
@@ -430,6 +556,61 @@ class AddHomeBanner extends React.Component {
                       label="Banière active ?"
                     />
                   </FormGroup>
+                </div>
+              </div>
+
+              <div className={`${classes.row} row`}>
+              <div className="col-4" style={{ paddingLeft: 10, marginTop: 20 }}>
+                  <label style={{ paddingLeft: 15, marginBottom: 0 }}>Photo partage*</label>
+                  {
+                    this.state.picture.value ? 
+                      (
+                      <div>
+                        <div className={classes.img}>
+                          <img src={this.state.picture.value} width="100%" height="250px"/>
+                        </div>
+                        <div className={classes.imgHover}>
+                          <i className={`${classes.deleteIco} deleteIco fa fa-times fa-2x`} onClick={this._handleRemovePicture.bind(this, 1)} />
+                        </div>
+                      </div>
+                      )
+                      :
+                      <div>
+                        <FormControl 
+                          className={classes.formControl}
+                          error={ this.state.picture.error && this.state.picture.error }
+                        >
+                          <Button 
+                            variant="contained" 
+                            className=""
+                            fullWidth
+                          >
+                            <label for="raised-input-file-1" style={{ marginBottom: 0 }}>
+                              <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
+                              Photo (PNG, JPG)*
+                            </label>
+                            <input
+                              accept=".png, .jpg, .jpeg"
+                              id="raised-input-file-1"
+                              name="picture"
+                              type="file"
+                              onChange={ event => this.handlePictureChange(event, 1)}
+                              ref={this.state.picture.fileInput}
+                              style={{ display: "none" }}
+                            />
+                          </Button>
+                          { this.state.picture.error ? 
+                            <FormHelperText 
+                              style={{ textAlign: "center", fontWeight: 400 }}
+                            >
+                              {this.state.picture.errorMessage}
+                            </FormHelperText> 
+                            : 
+                            null 
+                          }
+                        </FormControl>
+                      </div>
+                  }
                 </div>
               </div>
             

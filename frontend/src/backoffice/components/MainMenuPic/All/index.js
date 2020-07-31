@@ -4,6 +4,7 @@ import { push } from "react-router-redux";
 import Button from '@material-ui/core/Button';
 
 import Table from '../../Snippets/EditableTable/index'
+import Snackbar from '../../Snippets/FlashBagMessage/index'
 import urls from "../../Dashboard/routes/urls"
 
 
@@ -15,6 +16,23 @@ class AllMenuPicture extends React.Component {
   constructor(props){
     super(props)
     document.title = 'Images menu principal | Afro Yaca Drum'
+    this.state = {
+      snack_open: false,
+      snack_message: null,
+      snack_color: null,
+    }
+  }
+
+  componentWillMount(){
+    let param = this.props.location.state ? this.props.location.state.snack_open : false
+
+    if(param==true){
+      this.setState({
+        snack_open: true,
+        snack_message: "Article enregistré avec success",
+        snack_color: "success"
+      })
+    }
   }
 
   _goToAddNew(){
@@ -24,6 +42,10 @@ class AllMenuPicture extends React.Component {
   _goToEditNew(){
     this.props.dispatch(push(`${urls.ADDMAINMENUPIC}`))
   }
+
+  handleClose = () => {
+    this.setState({ snack_open: false });
+  };
 
 
   render() {
@@ -55,6 +77,14 @@ class AllMenuPicture extends React.Component {
 
     return (
       <div>
+        { this.state.snack_open &&
+            <Snackbar 
+              open={this.state.snack_open} 
+              message={this.state.snack_message} 
+              color={this.state.snack_color}
+              closePopup={this.handleClose.bind(this)} 
+            />
+        }
         <section>
           <Button
             onClick={ this._goToAddNew.bind(this) }

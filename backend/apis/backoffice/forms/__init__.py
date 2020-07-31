@@ -5,3 +5,7 @@ from .add_group import *
 from .add_size import *
 from .add_color import *
 from .add_product import *
+from .add_article import *
+from .add_mainmenunavpic import *
+from .add_seo import *
+from .add_banner import *

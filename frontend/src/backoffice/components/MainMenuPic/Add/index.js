@@ -10,7 +10,8 @@ import Button from '@material-ui/core/Button';
 import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 
 import urls from '../../Dashboard/routes/urls'
-
+import Snackbar from '../../Snippets/FlashBagMessage/index'
+import appConfig from '../../../config'
 
 
 const useStyles = theme => ({
@@ -154,6 +155,10 @@ class AddMenuPic extends React.Component {
       formValid: false,
       editMode: false,
       initial: this.props.initialsValues,
+
+      snack_open: false,
+      snack_message: null,
+      snack_color: null,
     }
   }
 
@@ -486,197 +491,133 @@ class AddMenuPic extends React.Component {
     event.preventDefault();
     // console.log("Form Values", event.target)
     // Make the validation process here
-    console.log("EDIT MODEEEEEEEE", this.state.editMode);
-    
-    if(!this.state.editMode){
-      var values = {
-        picture1: this.state.picture1.fileInput,
-        picture2: this.state.picture2.fileInput,
-        picture3: this.state.picture3.fileInput,
-        picture4: this.state.picture4.fileInput,
-        picture5: this.state.picture5.fileInput,
-        picture6: this.state.picture6.fileInput,
-        picture7: this.state.picture7.fileInput,
-        picture8: this.state.picture8.fileInput,
-      }
 
-      console.log("Form Values", values)
+    var values = {
+      picture1: this.state.picture1.fileInput,
+      picture2: this.state.picture2.fileInput,
+      picture3: this.state.picture3.fileInput,
+      picture4: this.state.picture4.fileInput,
+      picture5: this.state.picture5.fileInput,
+      picture6: this.state.picture6.fileInput,
+      picture7: this.state.picture7.fileInput,
+      picture8: this.state.picture8.fileInput,
+    }
 
-      if( !(values.picture1 instanceof File) == true ){
-        this.setState({
-          picture1: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture2 instanceof File) == true  ){
-        this.setState({
-          picture2: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture3 instanceof File) == true  ){
-        this.setState({
-          picture3: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture4 instanceof File) == true  ){
-        this.setState({
-          picture4: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture5 instanceof File) == true  ){
-        this.setState({
-          picture5: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture6 instanceof File) == true  ){
-        this.setState({
-          picture6: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture7 instanceof File) == true  ){
-        this.setState({
-          picture7: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture8 instanceof File) == true  ){
-        this.setState({
-          picture8: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      
-      // Form s valid here
-      if(
-        (values.picture1 instanceof File) === true &&
-        (values.picture2 instanceof File) === true &&
-        (values.picture3 instanceof File) === true &&
-        (values.picture4 instanceof File) === true &&
-        (values.picture5 instanceof File) === true &&
-        (values.picture6 instanceof File) === true &&
-        (values.picture7 instanceof File) === true && 
-        (values.picture8 instanceof File) === true 
-      ){
-        
-        // Post form data on server
-        // We will use redux for updating the varieties table values
+    if( !(values.picture1 instanceof File) == true ){
+      this.setState({
+        picture1: {
+          error: true,
+          errorMessage: "L'ajout d'image est obligatoire"
+        },
+      })
+    }
+    if( !(values.picture2 instanceof File) == true  ){
+      this.setState({
+        picture2: {
+          error: true,
+          errorMessage: "L'ajout d'image est obligatoire"
+        },
+      })
+    }
+    if( !(values.picture3 instanceof File) == true  ){
+      this.setState({
+        picture3: {
+          error: true,
+          errorMessage: "L'ajout d'image est obligatoire"
+        },
+      })
+    }
+    if( !(values.picture4 instanceof File) == true  ){
+      this.setState({
+        picture4: {
+          error: true,
+          errorMessage: "L'ajout d'image est obligatoire"
+        },
+      })
+    }
+    if( !(values.picture5 instanceof File) == true  ){
+      this.setState({
+        picture5: {
+          error: true,
+          errorMessage: "L'ajout d'image est obligatoire"
+        },
+      })
+    }
+    if( !(values.picture6 instanceof File) == true  ){
+      this.setState({
+        picture6: {
+          error: true,
+          errorMessage: "L'ajout d'image est obligatoire"
+        },
+      })
+    }
+    if( !(values.picture7 instanceof File) == true  ){
+      this.setState({
+        picture7: {
+          error: true,
+          errorMessage: "L'ajout d'image est obligatoire"
+        },
+      })
+    }
+    if( !(values.picture8 instanceof File) == true  ){
+      this.setState({
+        picture8: {
+          error: true,
+          errorMessage: "L'ajout d'image est obligatoire"
+        },
+      })
+    }
 
-        const Newvalues = {
-          picture1: values.picture1,
-          picture2: values.picture2,
-          picture3: values.picture3,
-          picture4: values.picture4,
-          picture5: values.picture5,
-          picture6: values.picture6,
-          picture7: values.picture7,
-          picture8: values.picture8,
+    if(
+      (values.picture1 instanceof File) === true &&
+      (values.picture2 instanceof File) === true &&
+      (values.picture3 instanceof File) === true &&
+      (values.picture4 instanceof File) === true &&
+      (values.picture5 instanceof File) === true &&
+      (values.picture6 instanceof File) === true &&
+      (values.picture7 instanceof File) === true &&
+      (values.picture8 instanceof File) === true 
+    ){
+      const service = "mainmenupicture/add"
+      const formUrl = `${appConfig.FORMBASEURL}${service}`
+      const formData = new FormData();
+      formData.append("picture1", values.picture1);
+      formData.append("picture2", values.picture2);
+      formData.append("picture3", values.picture3);
+      formData.append("picture4", values.picture4);
+      formData.append("picture5", values.picture5);
+      formData.append("picture6", values.picture6);
+      formData.append("picture7", values.picture7);
+      formData.append("picture8", values.picture8);
+      // SUBMIT THERE
+      this.postToApi(formUrl, formData)
+    }
+  }
+
+
+  postToApi(form_base_url, data){
+    window
+    .file_axios.post(`${form_base_url}`, data)
+      .then((response) => {
+          console.log("Success", response)
+          this.setState({
+            snack_open: true,
+            snack_message: "Produit enregistré avec success",
+            snack_color: "success"
+          })
+          this.props.dispatch(push(`${urls.MAINMENUPIC}`, { snack_open: true }));
         }
-        
-        // SUBLMIT TO API THERE
-        // ======================================================= 
-        // ======================================================= 
-        console.log("Data Posted! Greatttt=== Verif new pics====", Newvalues)
-      } 
-    }
-    else {
-      var values = {
-        picture1: this.state.picture1.fileInput,
-        picture2: this.state.picture2.fileInput,
-        picture3: this.state.picture3.fileInput,
-        picture4: this.state.picture4.fileInput,
-        picture5: this.state.picture5.fileInput,
-        picture6: this.state.picture6.fileInput,
-        picture7: this.state.picture7.fileInput,
-        picture8: this.state.picture8.fileInput,
-      }
-
-      if( !(values.picture1 instanceof File) == true ){
-        this.setState({
-          picture1: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture2 instanceof File) == true  ){
-        this.setState({
-          picture2: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture3 instanceof File) == true  ){
-        this.setState({
-          picture3: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture4 instanceof File) == true  ){
-        this.setState({
-          picture4: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture5 instanceof File) == true  ){
-        this.setState({
-          picture5: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture6 instanceof File) == true  ){
-        this.setState({
-          picture6: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture7 instanceof File) == true  ){
-        this.setState({
-          picture7: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-      if( !(values.picture8 instanceof File) == true  ){
-        this.setState({
-          picture8: {
-            error: true,
-            errorMessage: "L'ajout d'image est obligatoire"
-          },
-        })
-      }
-    }
-
+      )
+      .catch((error) =>{
+          console.log("Error", error.response)
+          let response = error.response.data
+          this.setState({
+            snack_message: "Une erreur est survenue lors de l'enregistrement",
+            snack_color: "error",
+            snack_open: true,
+          })
+        }
+      )
   }
 
 
@@ -684,6 +625,9 @@ class AddMenuPic extends React.Component {
     this.props.dispatch(push(`${urls.MAINMENUPIC}`))
   }
 
+  handleClose = () => {
+    this.setState({ snack_open: false });
+  };
 
   
 
@@ -696,6 +640,14 @@ class AddMenuPic extends React.Component {
 
     return (
       <div>
+        { this.state.snack_open &&
+            <Snackbar 
+              open={this.state.snack_open} 
+              message={this.state.snack_message} 
+              color={this.state.snack_color}
+              closePopup={this.handleClose.bind(this)} 
+            />
+        }
         <section className="container">
           <Paper className={classes.paper}>
             <h2 style={{ paddingLeft: 20 }}>Ajouter des images du menu principal</h2>

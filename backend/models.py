@@ -10,12 +10,21 @@ catalog_upload_path = "catalogs"
 category_upload_path = "categories"
 collection_upload_path = "collections"
 color_motif_upload_path = "motifs"
+main_menu_pic_upload_path = "mainmenunav"
+seo_pic_upload_path = "seo"
+banner_pic_upload_path = "banner"
 
 
 def product_variety_image_path(instance, filename):
     category = instance.product.category.title
     category_slug = slugify(category)
     return "products/%s/variety/%s" % (category_slug, instance.product.slug)
+
+
+def articles_image_path(instance, filename):
+    title = instance.title
+    author = slugify(title)
+    return "articles/%s/%s" % (title, author)
 
 
 class UserProfile(models.Model):
@@ -190,3 +199,64 @@ class CartItem(CoreTrackedModel):
     def __str__(self):
         return 'Cart %s - %s (%s)' % (str(self.cart.ref), self.variety.product.title, self.variety.color.title)
 
+
+class Article(CoreTrackedModel):
+    title = models.CharField(max_length=250, null=False, blank=False)
+    slug = models.SlugField(unique=True)
+    author = models.CharField(max_length=250, null=False, blank=False)
+    guess = models.CharField(max_length=150, null=False, blank=False)
+    photograph = models.CharField(max_length=150, null=False, blank=False)
+    date = models.DateTimeField(null=True, blank=True)
+    resume = models.TextField()
+    content = models.TextField()
+    facebookUrl = models.TextField(blank=True, null=True)
+    twitterUrl = models.TextField(blank=True, null=True)
+    whatsappUrl = models.TextField(blank=True, null=True)
+    mailUrl = models.TextField(blank=True, null=True)
+    coverImage = models.FileField(upload_to=articles_image_path, null=True, blank=True)
+    articleImage = models.FileField(upload_to=articles_image_path, null=True, blank=True)
+    cover = models.BooleanField(default=False)
+    mainMenu = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '%s - %s' % (self.title, self.author)
+
+
+class MainMenuNavPicture(CoreTrackedModel):
+    picture1 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    picture2 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    picture3 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    picture4 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    picture5 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    picture6 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    picture7 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+    picture8 = models.FileField(upload_to=main_menu_pic_upload_path, null=True, blank=True)
+
+    def __str__(self):
+        return self.pk
+
+
+class SeoPage(CoreTrackedModel):
+    title = models.CharField(max_length=250, null=False, blank=False)
+    slug = models.SlugField(unique=True)
+    keywords = models.CharField(max_length=250, null=False, blank=False)
+    description = models.TextField()
+    url = models.TextField()
+    picture = models.FileField(upload_to=seo_pic_upload_path, null=True, blank=True)
+
+    def __str__(self):
+        return '%s' % (self.title)
+
+
+class Banner(CoreTrackedModel):
+    name = models.CharField(max_length=250, null=False, blank=False)
+    title = models.CharField(max_length=250, null=False, blank=False)
+    subTitle = models.CharField(max_length=250, null=False, blank=False)
+    slug = models.SlugField(unique=True)
+    linkText = models.CharField(max_length=250, null=False, blank=False)
+    linkUrl = models.TextField()
+    active = models.BooleanField(default=False)
+    picture = models.FileField(upload_to=banner_pic_upload_path, null=True, blank=True)
+
+    def __str__(self):
+        return '%s' % (self.name)

@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import UserProfile, Category, Collection, Product, Variety, Color, Size, Catalog, Cart, CartItem, Group
+from .models import UserProfile, Category, Collection, Product, Variety, Color, Size, \
+                        Catalog, Cart, CartItem, Group, Article, MainMenuNavPicture, SeoPage, \
+                        Banner
 
 all_models = [
         UserProfile,
@@ -12,7 +14,11 @@ all_models = [
         Catalog,
         CartItem,
         Cart,
-        Group
+        Group,
+        Article,
+        MainMenuNavPicture,
+        SeoPage,
+        Banner
     ]
 
 for m in all_models:

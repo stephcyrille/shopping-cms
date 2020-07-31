@@ -4,8 +4,9 @@ import { push } from "react-router-redux";
 import Button from '@material-ui/core/Button';
 
 import Table from '../../Snippets/EditableTable/index'
-
+import Snackbar from '../../Snippets/FlashBagMessage/index'
 import urls from "../../Dashboard/routes/urls"
+
 
 
 
@@ -16,6 +17,23 @@ class SEO extends React.Component {
   constructor(props){
     super(props)
     document.title = "SEO | Afro Yaca Drum"
+    this.state = {
+      snack_open: false,
+      snack_message: null,
+      snack_color: null,
+    }
+  }
+
+  componentWillMount(){
+    let param = this.props.location.state ? this.props.location.state.snack_open : false
+
+    if(param==true){
+      this.setState({
+        snack_open: true,
+        snack_message: "SEO enregistré avec success pour la page",
+        snack_color: "success"
+      })
+    }
   }
 
 
@@ -26,6 +44,10 @@ class SEO extends React.Component {
   _goToEditSEO(){
     this.props.dispatch(push(`${urls.ADDSEO}`))
   }
+
+  handleClose = () => {
+    this.setState({ snack_open: false });
+  };
 
 
   render() {
@@ -51,6 +73,14 @@ class SEO extends React.Component {
 
     return (
       <div>
+        { this.state.snack_open &&
+            <Snackbar 
+              open={this.state.snack_open} 
+              message={this.state.snack_message} 
+              color={this.state.snack_color}
+              closePopup={this.handleClose.bind(this)} 
+            />
+        }
         <section>
           <Button
             onClick={ this._goToAddSEO.bind(this) }

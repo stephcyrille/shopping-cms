@@ -1,22 +1,24 @@
+# -*- coding: utf-8 -*-
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import serializers, status
-from backend.models import Size
+from backend.models import Banner
 from rest_framework.parsers import MultiPartParser, JSONParser
 
 
-class AddSizeSerializer(serializers.ModelSerializer):
+class AddBannerSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Size
-        fields = ("category", "name", "size_system", "quantity")
+        model = Banner
+        fields = "__all__"
 
 
-class AddSizeView(APIView):
-    parser_classes = (JSONParser,)
+class AddBannerView(APIView):
+    parser_classes = (MultiPartParser, JSONParser)
 
     def post(self, request, format=None):
-        serializer = AddSizeSerializer(data=request.data)
+        serializer = AddBannerSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

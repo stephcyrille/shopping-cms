@@ -10,6 +10,9 @@ import Button from '@material-ui/core/Button';
 import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 
 import urls from '../../Dashboard/routes/urls'
+import { slugify } from "../../../utils/generic";
+import Snackbar from '../../Snippets/FlashBagMessage/index'
+import appConfig from '../../../config'
 
 
 
@@ -146,15 +149,11 @@ class AddSEO extends React.Component {
         errorMessage: null,
         fileInput: React.createRef()
       },
-    }
-  }
 
-  convertToSlug(text){
-    return text
-        .toLowerCase()
-        .replace(/[^\w ]+/g,'')
-        .replace(/ +/g,'-')
-        ;
+      snack_open: false,
+      snack_message: null,
+      snack_color: null,
+    }
   }
 
 
@@ -166,7 +165,7 @@ class AddSEO extends React.Component {
         error: false
       },
       slug: {
-        value: this.convertToSlug(event.target.value)
+        value: slugify(event.target.value)
       }
     })
 	}
@@ -320,15 +319,74 @@ class AddSEO extends React.Component {
       (values.baseUrl) !== "" &&
       (values.picture instanceof File) === true
     ){
+      const service = "seo/add"
+      const formUrl = `${appConfig.FORMBASEURL}${service}`
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("slug", values.slug);
+      formData.append("keywords", values.keywords);
+      formData.append("description", values.description);
+      formData.append("url", values.baseUrl);
+      formData.append("picture", values.picture);
       // SUBMIT THERE
-      console.log("SEO Page add Form values ", values)
+      this.postToApi(formUrl, formData)
     }
+  }
+
+  postToApi(form_base_url, data){
+    window
+    .file_axios.post(`${form_base_url}`, data)
+      .then((response) => {
+          console.log("Success", response)
+          this.setState({
+            snack_open: true,
+            snack_message: "SEO page enregistré avec success",
+            snack_color: "success"
+          })
+          this.props.dispatch(push(`${urls.SEO}`, { snack_open: true }));
+        }
+      )
+      .catch((error) =>{
+          console.log("Error", error.response)
+          let response = error.response.data
+          if('slug' in response){
+            let text = response.slug
+            this.setState({
+              snack_message: text,
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+          
+          if('title' in response){
+            let text = response.title
+            this.setState({
+              snack_message: text,
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+
+          else{
+            this.setState({
+              snack_message: "Une erreur est survenue lors de l'enregistrement",
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+        }
+      )
   }
 
   _goToSEOAll(){
     this.props.dispatch(push(`${urls.SEO}`))
   }
 
+
+  handleClose = () => {
+    this.setState({ snack_open: false });
+  };
+  
   
 
   render() {
@@ -337,6 +395,14 @@ class AddSEO extends React.Component {
     return (
       <div>
         <section className="container">
+        { this.state.snack_open &&
+            <Snackbar 
+              open={this.state.snack_open} 
+              message={this.state.snack_message} 
+              color={this.state.snack_color}
+              closePopup={this.handleClose.bind(this)} 
+            />
+        }
           <Paper className={classes.paper}>
             <h2 style={{ paddingLeft: 20 }}>Ajout SEO page</h2>
 						<hr />

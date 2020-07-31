@@ -11,4 +11,8 @@ urlpatterns = [
     path('size/add', AddSizeView.as_view(), name='add_size'),
     path('color/add', AddColorView.as_view(), name='add_color'),
     path('product/add', AddProductAPIView.as_view(), name='add_product'),
+    path('article/add', AddArticleView.as_view(), name='add_article'),
+    path('mainmenupicture/add', AddMainMenuNavPictureView.as_view(), name='add_mainmenunavpic'),
+    path('seo/add', AddSEOView.as_view(), name='add_seo'),
+    path('banner/add', AddBannerView.as_view(), name='add_banner'),
 ]

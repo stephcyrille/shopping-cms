@@ -1,22 +1,24 @@
+# -*- coding: utf-8 -*-
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import serializers, status
-from backend.models import Size
+from backend.models import MainMenuNavPicture
 from rest_framework.parsers import MultiPartParser, JSONParser
 
 
-class AddSizeSerializer(serializers.ModelSerializer):
+class AddMainMenuNavPictureSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Size
-        fields = ("category", "name", "size_system", "quantity")
+        model = MainMenuNavPicture
+        fields = "__all__"
 
 
-class AddSizeView(APIView):
-    parser_classes = (JSONParser,)
+class AddMainMenuNavPictureView(APIView):
+    parser_classes = (MultiPartParser, JSONParser)
 
     def post(self, request, format=None):
-        serializer = AddSizeSerializer(data=request.data)
+        serializer = AddMainMenuNavPictureSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

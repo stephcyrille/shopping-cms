@@ -5,15 +5,12 @@ import { Paper } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
-
+import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 // Rich text importation
 // Require Editor CSS files.
 import 'froala-editor/css/froala_style.min.css';
@@ -22,6 +19,10 @@ import FroalaEditor from 'react-froala-wysiwyg';
 
 import urls from '../../Dashboard/routes/urls'
 import { slugify } from "../../../utils/generic";
+import Snackbar from '../../Snippets/FlashBagMessage/index'
+import appConfig from '../../../config'
+
+
 
 
 const useStyles = theme => ({
@@ -68,6 +69,51 @@ const useStyles = theme => ({
     top: `5%`,
     left: `20%`,
   },
+  img: {
+    position: "relative"
+  },
+  imgHover: {
+    position: "absolute",
+    height: "100%",
+    width: "94%",
+    top: 0,
+    transition: "ease-out",
+    transitionDuration: "0.6s",
+    "&:hover": {
+      backgroundColor: '#00000066',
+      cursor: "pointer",
+      transition: "ease-in",
+      transitionDuration: "0.6s"
+    },
+    "&:hover .deleteIco": {
+      transform: "translateY(0px)",
+      zIndex: 10,
+      transition: "ease-in",
+      transitionDuration: "0.4s"
+    }
+  },
+  deleteIco: {
+    top: "40%",
+    position: "relative",
+    left: "40%",
+    color: "#d5d5d5",
+    transform: "translateY(-200px)",
+    zIndex: -1,
+    transition: "ease-out",
+    transitionDuration: "0.3s",
+    color: "white",
+    border: "2px solid #d5d5d5",
+    borderRadius: "50%",
+    padding: "10px 13px",
+    "&:hover": {
+      color: "white",
+      border: "2px solid white",
+    },
+    "&:active": {
+      color: "white",
+      border: "2px solid rgba(0,0,0,0)",
+    }
+  }
 });
 
 
@@ -113,26 +159,6 @@ class AddArticle extends React.Component {
         error: false,
         errorMessage: null
       },
-      featureOne : {
-        value: '',
-        error: false,
-        errorMessage: null
-      },
-      featureTwo : {
-        value: '',
-        error: false,
-        errorMessage: null
-      },
-      featureThree : {
-        value: '',
-        error: false,
-        errorMessage: null
-      },
-      featureFour : {
-        value: '',
-        error: false,
-        errorMessage: null
-      },
       facebookUrl : {
         value: '',
         error: false,
@@ -165,11 +191,35 @@ class AddArticle extends React.Component {
         error: false,
         errorMessage: null
       },
+      resume : {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      content : {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      articleImage : {
+        value: null,
+        error: false,
+        errorMessage: null,
+        fileInput: React.createRef()
+      },
+      coverImage : {
+        value: null,
+        error: false,
+        errorMessage: null,
+        fileInput: React.createRef()
+      },
       
       editMode: false,
       initialsValues: null,
 
-      content: "content",
+      snack_open: false,
+      snack_message: null,
+      snack_color: null,
     }
   }
 
@@ -239,43 +289,6 @@ class AddArticle extends React.Component {
       }
     })
   }
-
-  handleChangeFeatureOne = (event) => {
-    this.setState({
-      featureOne: {
-        value: event.target.value,
-        error: false
-      }
-    })
-  }
-
-  handleChangefeatureTwo = (event) => {
-    this.setState({
-      featureTwo: {
-        value: event.target.value,
-        error: false
-      }
-    })
-  }
-
-  handleChangefeatureThree = (event) => {
-    this.setState({
-      featureThree: {
-        value: event.target.value,
-        error: false
-      }
-    })
-  }
-
-  handleChangefeatureFour = (event) => {
-    this.setState({
-      featureFour: {
-        value: event.target.value,
-        error: false
-      }
-    })
-  }
-
   
   handleChangeDate = (event) => {
     this.setState({
@@ -344,6 +357,80 @@ class AddArticle extends React.Component {
   }
 
 
+  updateResumeContent(value) {
+    this.setState({
+      resume: {
+        value: value,
+        error: false,
+      },
+    })
+  }
+
+
+  updateContent(value) {
+    this.setState({
+      content: {
+        value: value,
+        error: false,
+      },
+    })
+  }
+
+
+  handlePictureChange = (event, picNber) => {
+    event.preventDefault();
+    let imageFile = event.target.files[0];
+    if (imageFile) {
+      const localImageUrl = URL.createObjectURL(imageFile);
+      const imageObject = new window.Image();
+      imageObject.onload = () => {
+        imageFile.width = imageObject.naturalWidth;
+        imageFile.height = imageObject.naturalHeight;
+        URL.revokeObjectURL(imageFile);
+      };
+      imageObject.src = localImageUrl;
+      
+      if(picNber==1){
+        this.setState({
+          coverImage: {
+            value: localImageUrl,
+            fileInput: imageFile,
+            error: false,
+          },
+        })
+      } else {
+        this.setState({
+          articleImage: {
+            value: localImageUrl,
+            fileInput: imageFile,
+            error: false,
+          },
+        })
+      }
+    }
+  }
+
+  _handleRemovePicture(picNber){
+    if(picNber==1){
+      this.setState({
+        coverImage: {
+          value: null,
+          error: false,
+          fileInput: null
+        },
+      })
+    }
+    else if(picNber==2){
+      this.setState({
+        articleImage: {
+          value: null,
+          error: false,
+          fileInput: null
+        },
+      })
+    }
+  }
+
 
   _handleOnSubmit(event){
     event.preventDefault();
@@ -359,19 +446,15 @@ class AddArticle extends React.Component {
       date: this.state.date.value,
       author: this.state.author.value,
       photograph: this.state.photograph.value,
-      featureOne: this.state.featureOne.value,
-      featureTwo: this.state.featureTwo.value,
-      featureThree: this.state.featureThree.value,
-      featureFour: this.state.featureFour.value,
       facebookUrl: this.state.facebookUrl.value,
       twitterUrl: this.state.twitterUrl.value,
       whatsappUrl: this.state.whatsappUrl.value,
       mailUrl: this.state.mailUrl.value,
-      // resume: refvalue1,
-      // content: refvalue2,
+      resume: this.state.resume.value,
+      content: this.state.content.value,
+      coverImage: this.state.coverImage.fileInput,
+      articleImage: this.state.articleImage.fileInput,
     }
-
-    console.log("Article posting form values ", values)
 
     if( !values.title ){
       this.setState({
@@ -413,100 +496,134 @@ class AddArticle extends React.Component {
         },
       })
     }
-    if( !values.featureOne ){
+    if( !(values.coverImage instanceof File) == true ){
       this.setState({
-        featureOne: {
+        coverImage: {
           error: true,
-          errorMessage: "Le champ ne doit pas être vide"
+          errorMessage: "L'ajout d'image est obligatoire"
         },
       })
     }
-    if( !values.featureTwo ){
+    if( !(values.articleImage instanceof File) == true ){
       this.setState({
-        featureTwo: {
+        articleImage: {
           error: true,
-          errorMessage: "Le champ ne doit pas être vide"
-        },
-      })
-    }
-    if( !values.featureThree ){
-      this.setState({
-        featureThree: {
-          error: true,
-          errorMessage: "Le champ ne doit pas être vide"
-        },
-      })
-    }
-    if( !values.featureFour ){
-      this.setState({
-        featureFour: {
-          error: true,
-          errorMessage: "Le champ ne doit pas être vide"
+          errorMessage: "L'ajout d'image est obligatoire"
         },
       })
     }
 
-
-
-    // Call validator here, then return erros
-    // const validator = validator(valuer) 
-
+    if(
+      (values.title) !== "" &&
+      (values.slug) !== "" &&
+      (values.guess) !== "" &&
+      (values.author) !== "" &&
+      (values.photograph) !== "" &&
+      (values.coverImage instanceof File) === true &&
+      (values.articleImage instanceof File) === true 
+    ){
+      const service = "article/add"
+      const formUrl = `${appConfig.FORMBASEURL}${service}`
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("slug", values.slug);
+      formData.append("guess", values.guess);
+      formData.append("date", values.date);
+      formData.append("author", values.author);
+      formData.append("photograph", values.photograph);
+      formData.append("facebookUrl", values.facebookUrl);
+      formData.append("twitterUrl", values.twitterUrl);
+      formData.append("whatsappUrl", values.whatsappUrl);
+      formData.append("mailUrl", values.mailUrl);
+      formData.append("resume", values.resume);
+      formData.append("content", values.content);
+      formData.append("coverImage", values.coverImage);
+      formData.append("articleImage", values.articleImage);
+      formData.append("cover", this.state.cover.checked);
+      formData.append("mainMenu", this.state.mainMenu.checked);
+      // SUBMIT THERE
+      this.postToApi(formUrl, formData)
+    }
   }
 
 
-  updateResumeContent(value) {
-    console.log("Rich text value============", value, this.refEditor)
-    // this.setState({content: this.refEditor.current.value})
+  postToApi(form_base_url, data){
+    window
+    .file_axios.post(`${form_base_url}`, data)
+      .then((response) => {
+          console.log("Success", response)
+          this.setState({
+            snack_open: true,
+            snack_message: "Article enregistré avec success",
+            snack_color: "success"
+          })
+          this.props.dispatch(push(`${urls.ARTICLE}`, { snack_open: true }));
+        }
+      )
+      .catch((error) =>{
+          console.log("Error", error.response)
+          let response = error.response.data
+          if('slug' in response){
+            let text = response.slug
+            this.setState({
+              snack_message: text,
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+          
+          if('title' in response){
+            let text = response.title
+            this.setState({
+              snack_message: text,
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+
+          else{
+            this.setState({
+              snack_message: "Une erreur est survenue lors de l'enregistrement",
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+        }
+      )
   }
 
-
-  updateContent(value) {
-    console.log("Rich text value============", value, this.refEditor)
-    // this.setState({content: this.refEditor.current.value})
-  }
 
   _goToArticle(){
     this.props.dispatch(push(`${urls.ARTICLE}`))
   }
+
+  handleClose = () => {
+    this.setState({ snack_open: false });
+  };
   
 
   render() {
     const { classes } = this.props
-    const config = {
-      readonly: false, // all options from https://xdsoft.net/jodit/doc/
-      enableDragAndDropFileToEditor: true,
-      uploader: {
-        url: "http://google.com", //URL pic upload
-        // data: {
-        //   dir: "/papa/" // Directory where update is don
-        // },
-        // baseurl: "relativePathURL",
-        // process: (response) => {
-        //   let files = [];
-        //   response.list.map((file) => {
-        //     files.push(file.name);
-        //   });
-        //   return { 
-        //     files,
-        //     path: relativePathURL,
-        //     baseurl: '/content/assets',
-        //     error: (response.success ? 0 : 1),
-        //     msg: response.message
-        //   };
-        // },
-        // defaultHandlerSuccess: (response) => {      
-        //   if (response.files && response.files.length) {
-        //     for (let i = 0; i < response.files.length; i++) {
-        //       let full_file_path = response.path + response.files[i];
-        //       // this.selection.insertImage(full_file_path);
-        //     }
-        //   }
-        // }
-      }
+    const config1 ={
+      placeholderText: 'Modifier le résumé',
+      charCounterCount: false
+    }
+    const config2 = {
+      placeholderText: 'Modifier le contenu',
+      charCounterCount: false,
+      fileUpload: true
     }
     
     return (
       <div>
+        { this.state.snack_open &&
+            <Snackbar 
+              open={this.state.snack_open} 
+              message={this.state.snack_message} 
+              color={this.state.snack_color}
+              closePopup={this.handleClose.bind(this)} 
+            />
+        }
         <section className="container">
           <Paper className={classes.paper}>
             <h2 style={{ paddingLeft: 20 }}>Ajouter un article</h2>
@@ -610,8 +727,9 @@ class AddArticle extends React.Component {
                 <div className="col-12">
                   <label>Résumé de l'article</label>
                   <FroalaEditor
-                    model={this.state.content}
-                    onChange={ this.updateResumeContent.bind(this) }
+                    model={this.state.resume.value }
+                    onModelChange={ this.updateResumeContent.bind(this) }
+                    config={ config1 }
                   />
                 </div>
               </div>
@@ -620,95 +738,14 @@ class AddArticle extends React.Component {
                 <div className="col-12">
                   <label>Contenu de l'article</label>
                   <FroalaEditor
-                    model={this.state.content}
-                    onChange={ this.updateContent.bind(this) }
+                    tag='textarea'
+                    model={this.state.content.value }
+                    onModelChange={ this.updateContent.bind(this) }
+                    config={ config2 }
                   />
                 </div>
               </div>
 
-
-              <div className={`row ${classes.row}`}>
-                <div className="col-3">
-                  <FormControl 
-                    className={classes.formControl}
-                    error={ this.state.featureOne.error && this.state.featureOne.error }
-                  >
-                    <InputLabel id="product-feature-select-1">Produit en vedette 1</InputLabel>
-                    <Select
-                      labelId="product-feature-select-1"
-                      id="product-feature-1"
-                      value={this.state.featureOne.value}
-                      onChange={this.handleChangeFeatureOne.bind(this)}
-                      fullWidth
-                    >
-                      <MenuItem value={"1"}>Produit 1</MenuItem>
-                      <MenuItem value={'2'}>Produit 2</MenuItem>
-                      <MenuItem value={"3"}>Produit 3</MenuItem>
-                    </Select>
-                    { this.state.featureOne.error ? <FormHelperText>{this.state.featureOne.errorMessage}</FormHelperText> : null }
-                  </FormControl>
-                </div>
-                <div className="col-3">
-                  <FormControl 
-                    className={classes.formControl}
-                    error={ this.state.featureTwo.error && this.state.featureTwo.error }
-                  >
-                    <InputLabel id="product-feature-select-2">Produit en vedette 2</InputLabel>
-                    <Select
-                      labelId="product-feature-select-2"
-                      id="product-feature-2"
-                      value={this.state.featureTwo.value}
-                      onChange={this.handleChangefeatureTwo.bind(this)}
-                      fullWidth
-                    >
-                      <MenuItem value={"1"}>Produit 1</MenuItem>
-                      <MenuItem value={'2'}>Produit 2</MenuItem>
-                      <MenuItem value={"3"}>Produit 3</MenuItem>
-                    </Select>
-                    { this.state.featureTwo.error ? <FormHelperText>{this.state.featureTwo.errorMessage}</FormHelperText> : null }
-                  </FormControl>
-                </div>
-                <div className="col-3">
-                  <FormControl 
-                    className={classes.formControl}
-                    error={ this.state.featureThree.error && this.state.featureThree.error }
-                  >
-                    <InputLabel id="product-featureThree-select">Produit en vedette 3</InputLabel>
-                    <Select
-                      labelId="product-featureThree-select"
-                      id="product-featureThree"
-                      value={this.state.featureThree.value}
-                      onChange={this.handleChangefeatureThree.bind(this)}
-                      fullWidth
-                    >
-                      <MenuItem value={"1"}>Produit 1</MenuItem>
-                      <MenuItem value={'2'}>Produit 2</MenuItem>
-                      <MenuItem value={"3"}>Produit 3</MenuItem>
-                    </Select>
-                    { this.state.featureThree.error ? <FormHelperText>{this.state.featureThree.errorMessage}</FormHelperText> : null }
-                  </FormControl>
-                </div>
-                <div className="col-3">
-                  <FormControl 
-                    className={classes.formControl}
-                    error={ this.state.featureFour.error && this.state.featureFour.error }
-                  >
-                    <InputLabel id="product-featureFour-select">Produit en vedette 4</InputLabel>
-                    <Select
-                      labelId="product-featureFour-select"
-                      id="product-featureFour"
-                      value={this.state.featureFour.value}
-                      onChange={this.handleChangefeatureFour.bind(this)}
-                      fullWidth
-                    >
-                      <MenuItem value={"1"}>Produit 1</MenuItem>
-                      <MenuItem value={'2'}>Produit 2</MenuItem>
-                      <MenuItem value={"3"}>Produit 3</MenuItem>
-                    </Select>
-                    { this.state.featureFour.error ? <FormHelperText>{this.state.featureFour.errorMessage}</FormHelperText> : null }
-                  </FormControl>
-                </div>
-              </div>
               <div className={`row ${classes.row}`} style={{ paddingLeft: 10 }}>
                 <div className="col-6">
                   <TextField
@@ -784,6 +821,113 @@ class AddArticle extends React.Component {
                       label="Menu principal"
                     />
                   </FormGroup>
+                </div>
+              </div>
+
+              <div className={`${classes.row} row`}>
+                <div className="col-4" style={{ paddingLeft: 15}}>
+                  <label style={{ marginBottom: 0, fontSize: "1.3em" }}>Photo de couverture*</label>
+                  {
+                    this.state.coverImage.value ? 
+                      (
+                      <div>
+                        <div className={classes.img}>
+                          <img src={ this.state.coverImage.value } width="100%" height="400px"/>
+                        </div>
+                        <div className={classes.imgHover}>
+                          <i className={`${classes.deleteIco} deleteIco fa fa-times fa-2x`} onClick={this._handleRemovePicture.bind(this, 1)} />
+                        </div>
+                      </div>
+                      )
+                      :
+                      <div>
+                        <FormControl 
+                          className={classes.formControl}
+                          error={ this.state.coverImage.error && this.state.coverImage.error }
+                        >
+                          <Button 
+                            variant="contained" 
+                            className=""
+                            fullWidth
+                          >
+                            <label htmlFor="cover-input-file-1" style={{ marginBottom: 0 }}>
+                              <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
+                              Photo 1 (PNG, JPG)*
+                            </label>
+                            <input
+                              accept=".png, .jpg, .jpeg"
+                              id="cover-input-file-1"
+                              name="coverImage"
+                              type="file"
+                              onChange={ event => this.handlePictureChange(event, 1)}
+                              ref={this.state.coverImage.fileInput}
+                              style={{ display: "none" }}
+                            />
+                          </Button>
+                          { this.state.coverImage.error ? 
+                            <FormHelperText 
+                              style={{ textAlign: "center", fontWeight: 400 }}
+                            >
+                              {this.state.coverImage.errorMessage}
+                            </FormHelperText> 
+                            : 
+                            null 
+                          }
+                        </FormControl>
+                      </div>
+                  }
+                </div>
+                <div className="col-4" style={{ paddingLeft: 15 }}>
+                  <label style={{ paddingLeft: 15, marginBottom: 0,  fontSize: "1.3em" }}>Photo de l'article*</label>
+                  {
+                    this.state.articleImage.value ? 
+                      (
+                      <div>
+                        <div className={classes.img}>
+                          <img src={this.state.articleImage.value} width="100%" height="200px"/>
+                        </div>
+                        <div className={classes.imgHover}>
+                          <i className={`${classes.deleteIco} deleteIco fa fa-times fa-2x`} onClick={this._handleRemovePicture.bind(this, 2)} />
+                        </div>
+                      </div>
+                      )
+                      :
+                      <div>
+                        <FormControl 
+                          className={classes.formControl}
+                          error={ this.state.articleImage.error && this.state.articleImage.error }
+                        >
+                          <Button 
+                            variant="contained" 
+                            className=""
+                            fullWidth
+                          >
+                            <label htmlFor="main-pic-input-file-4" style={{ marginBottom: 0 }}>
+                              <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
+                              Photo 4 (PNG, JPG)*
+                            </label>
+                            <input
+                              accept=".png, .jpg, .jpeg"
+                              id="main-pic-input-file-4"
+                              name="articleImage"
+                              type="file"
+                              onChange={ event => this.handlePictureChange(event, 2)}
+                              ref={this.state.articleImage.fileInput}
+                              style={{ display: "none" }}
+                            />
+                          </Button>
+                          { this.state.articleImage.error ? 
+                            <FormHelperText 
+                              style={{ textAlign: "center", fontWeight: 400 }}
+                            >
+                              {this.state.articleImage.errorMessage}
+                            </FormHelperText> 
+                            : 
+                            null 
+                          }
+                        </FormControl>
+                      </div>
+                  } 
                 </div>
               </div>
 
