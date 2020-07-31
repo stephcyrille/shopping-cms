@@ -20,7 +20,7 @@ import 'jodit/build/jodit.min.css';
 import JoditEditor from "jodit-react";
 
 import urls from '../../Dashboard/routes/urls'
-
+import { slugify } from "../../../utils/generic";
 
 
 const useStyles = theme => ({
@@ -172,13 +172,6 @@ class AddArticle extends React.Component {
     }
   }
 
-  convertToSlug(text){
-    return text
-        .toLowerCase()
-        .replace(/[^\w ]+/g,'')
-        .replace(/ +/g,'-')
-        ;
-  }
 
   handleChangeRef = (event) => {
     event.preventDefault();
@@ -202,7 +195,7 @@ class AddArticle extends React.Component {
           errorMessage: "Le champ doit être contenir au moins 4 caractères"
         },
         slug: {
-          value: this.convertToSlug(event.target.value)
+          value: slugify(event.target.value)
         }
       })
     } else {
@@ -212,7 +205,7 @@ class AddArticle extends React.Component {
           error: false
         },
         slug: {
-          value: this.convertToSlug(event.target.value)
+          value: slugify(event.target.value)
         }
       })
     }
@@ -354,8 +347,8 @@ class AddArticle extends React.Component {
   _handleOnSubmit(event){
     event.preventDefault();
 
-    var refvalue1 = this.refResumeEditor.current.value
-    var refvalue2 = this.refArticleEditor.current.value
+    // var refvalue1 = this.refResumeEditor.current.value
+    // var refvalue2 = this.refArticleEditor.current.value
 
     // Make the validation process here
     var values = {
@@ -373,36 +366,84 @@ class AddArticle extends React.Component {
       twitterUrl: this.state.twitterUrl.value,
       whatsappUrl: this.state.whatsappUrl.value,
       mailUrl: this.state.mailUrl.value,
-      resume: refvalue1,
-      content: refvalue2,
+      // resume: refvalue1,
+      // content: refvalue2,
     }
 
     console.log("Article posting form values ", values)
 
-    // if( !values.ref ){
-    //   this.setState({
-    //     ref: {
-    //       error: true,
-    //       errorMessage: "Le champ ne doit pas être vide"
-    //     },
-    //   })
-    // }
-    // if( !values.name ){
-    //   this.setState({
-    //     name: {
-    //       error: true,
-    //       errorMessage: "Le champ ne doit pas être vide"
-    //     },
-    //   })
-    // }
-    // if( !values.description ){
-    //   this.setState({
-    //     description: {
-    //       error: true,
-    //       errorMessage: "Le champ ne doit pas être vide"
-    //     },
-    //   })
-    // }
+    if( !values.title ){
+      this.setState({
+        title: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !values.slug ){
+      this.setState({
+        slug: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !values.guess ){
+      this.setState({
+        guess: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !values.author ){
+      this.setState({
+        author: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !values.photograph ){
+      this.setState({
+        photograph: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !values.featureOne ){
+      this.setState({
+        featureOne: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !values.featureTwo ){
+      this.setState({
+        featureTwo: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !values.featureThree ){
+      this.setState({
+        featureThree: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !values.featureFour ){
+      this.setState({
+        featureFour: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
 
 
 
@@ -564,7 +605,7 @@ class AddArticle extends React.Component {
                 </div>
               </div>
 
-              <div className={`row ${classes.row}`} style={{ marginTop: 20 }}>
+              {/* <div className={`row ${classes.row}`} style={{ marginTop: 20 }}>
                 <div className="col-12">
                   <label>Résumé de l'article</label>
                   <JoditEditor
@@ -590,7 +631,7 @@ class AddArticle extends React.Component {
                     // onChange={newContent => {}}
                   />
                 </div>
-              </div>
+              </div> */}
 
 
               <div className={`row ${classes.row}`}>
@@ -607,9 +648,9 @@ class AddArticle extends React.Component {
                       onChange={this.handleChangeFeatureOne.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"Product 1"}>Produit 1</MenuItem>
-                      <MenuItem value={'Product 2'}>Produit 2</MenuItem>
-                      <MenuItem value={"Product 3"}>Produit 3</MenuItem>
+                      <MenuItem value={"1"}>Produit 1</MenuItem>
+                      <MenuItem value={'2'}>Produit 2</MenuItem>
+                      <MenuItem value={"3"}>Produit 3</MenuItem>
                     </Select>
                     { this.state.featureOne.error ? <FormHelperText>{this.state.featureOne.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -627,9 +668,9 @@ class AddArticle extends React.Component {
                       onChange={this.handleChangefeatureTwo.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"Product 1"}>Produit 1</MenuItem>
-                      <MenuItem value={'Product 2'}>Produit 2</MenuItem>
-                      <MenuItem value={"Product 3"}>Produit 3</MenuItem>
+                      <MenuItem value={"1"}>Produit 1</MenuItem>
+                      <MenuItem value={'2'}>Produit 2</MenuItem>
+                      <MenuItem value={"3"}>Produit 3</MenuItem>
                     </Select>
                     { this.state.featureTwo.error ? <FormHelperText>{this.state.featureTwo.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -647,9 +688,9 @@ class AddArticle extends React.Component {
                       onChange={this.handleChangefeatureThree.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"Product 1"}>Produit 1</MenuItem>
-                      <MenuItem value={'Product 2'}>Produit 2</MenuItem>
-                      <MenuItem value={"Product 3"}>Produit 3</MenuItem>
+                      <MenuItem value={"1"}>Produit 1</MenuItem>
+                      <MenuItem value={'2'}>Produit 2</MenuItem>
+                      <MenuItem value={"3"}>Produit 3</MenuItem>
                     </Select>
                     { this.state.featureThree.error ? <FormHelperText>{this.state.featureThree.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -667,9 +708,9 @@ class AddArticle extends React.Component {
                       onChange={this.handleChangefeatureFour.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"Product 1"}>Produit 1</MenuItem>
-                      <MenuItem value={'Product 2'}>Produit 2</MenuItem>
-                      <MenuItem value={"Product 3"}>Produit 3</MenuItem>
+                      <MenuItem value={"1"}>Produit 1</MenuItem>
+                      <MenuItem value={'2'}>Produit 2</MenuItem>
+                      <MenuItem value={"3"}>Produit 3</MenuItem>
                     </Select>
                     { this.state.featureFour.error ? <FormHelperText>{this.state.featureFour.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -687,7 +728,6 @@ class AddArticle extends React.Component {
                     value={this.state.facebookUrl.value}
                     type="text"
                     helperText={ this.state.facebookUrl.error ? this.state.facebookUrl.errorMessage : null }
-                    required
                     fullWidth
                   />
                 </div>
@@ -702,7 +742,6 @@ class AddArticle extends React.Component {
                     value={this.state.twitterUrl.value}
                     type="text"
                     helperText={ this.state.twitterUrl.error ? this.state.twitterUrl.errorMessage : null }
-                    required
                     fullWidth
                   />
                 </div>
@@ -717,7 +756,6 @@ class AddArticle extends React.Component {
                     value={this.state.whatsappUrl.value}
                     type="text"
                     helperText={ this.state.whatsappUrl.error ? this.state.whatsappUrl.errorMessage : null }
-                    required
                     fullWidth
                   />
                 </div>
@@ -732,7 +770,6 @@ class AddArticle extends React.Component {
                     value={this.state.mailUrl.value}
                     type="text"
                     helperText={ this.state.mailUrl.error ? this.state.mailUrl.errorMessage : null }
-                    required
                     fullWidth
                   />
                 </div>

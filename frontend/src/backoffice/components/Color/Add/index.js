@@ -12,7 +12,7 @@ import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 import urls from '../../Dashboard/routes/urls'
 import Snackbar from '../../Snippets/FlashBagMessage/index'
 import appConfig from '../../../config'
-import slugify from '../../../utils/generic'
+import { slugify } from '../../../utils/generic'
 
 
 

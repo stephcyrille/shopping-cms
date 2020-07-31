@@ -25,7 +25,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle'
 
 import MoneyField from '../../Snippets/Form/PrefixedInput'
-import appConfig from '../../../config/index'
 
 import urls from '../../Dashboard/routes/urls'
 
@@ -33,7 +32,9 @@ import VarietyForm from '../../Variety/Add/index'
 
 import { addProductStoreActions } from './store'
 
-
+import Snackbar from '../../Snippets/FlashBagMessage/index'
+import appConfig from '../../../config'
+import { slugify, objectToFormData } from "../../../utils/generic";
 
 const useStyles = theme => ({
   root: {
@@ -166,16 +167,13 @@ class AddProduct extends React.Component {
 
       editMode: false,
       initialsValues: null,
+
+      snack_open: false,
+      snack_message: null,
+      snack_color: null,
     }
   }
 
-  convertToSlug(text){
-    return text
-        .toLowerCase()
-        .replace(/[^\w ]+/g,'')
-        .replace(/ +/g,'-')
-        ;
-  }
 
   handleChangeRef = (event) => {
     event.preventDefault();
@@ -199,7 +197,7 @@ class AddProduct extends React.Component {
           errorMessage: "Le champ doit être contenir au moins 4 caractères"
         },
         slug: {
-          value: this.convertToSlug(event.target.value)
+          value: slugify(event.target.value)
         }
       })
     } else {
@@ -209,7 +207,7 @@ class AddProduct extends React.Component {
           error: false
         },
         slug: {
-          value: this.convertToSlug(event.target.value)
+          value: slugify(event.target.value)
         }
       })
     }
@@ -406,9 +404,82 @@ class AddProduct extends React.Component {
     values.varieties = this.props.addProductStore.varieties
     console.log("Produc add Form values ", values)
 
-    // Call validator here, then return erros
-    // const validator = validator(valuer) 
+    if(
+      (values.ref) !== "" &&
+      (values.slug) !== "" &&
+      (values.name) !== "" &&
+      (values.description) !== "" &&
+      (values.price) !== "" &&
+      (values.material) !== "" &&
+      (values.catalog) !== "" &&
+      (values.category) !== "" &&
+      (values.group) !== ""
+    ){
+      // SUBMIT THERE
+      const service = "product/add"
+      const formUrl = `${appConfig.FORMBASEURL}${service}`
 
+      const data = {
+        "product": {
+          "ref": values.ref,
+          "slug": values.slug,
+          "title": values.name,
+          "price": values.price,
+          "description": values.description,
+          "catalog": values.catalog,
+          "category": values.category,
+          "group": values.group,
+          "collection": values.collection,
+          "material": values.material,
+          "is_feature": values.is_feature,
+          "is_discount": values.is_discount,
+        },
+        "varieties_list": values.varieties,
+        "variety_number": values.varieties.length
+      }
+      
+      const formData = objectToFormData(data)
+      // SUBMIT THERE
+      this.postToApi(formUrl, formData)
+    }
+  }
+
+
+  postToApi(form_base_url, data){
+    window
+    .file_axios.post(`${form_base_url}`, data)
+      .then((response) => {
+          console.log("Success", response)
+          this.setState({
+            snack_open: true,
+            snack_message: "Produit enregistré avec success",
+            snack_color: "success"
+          })
+          this.props.dispatch(push(`${urls.PRODUCT}`, { snack_open: true }));
+        }
+      )
+      .catch((error) =>{
+          console.log("Error", error.response)
+          let response = error.response.data
+          if('slug' in response){
+            let text = response.slug
+            this.setState({
+              snack_message: text,
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+          
+          if('title' in response){
+            let text = response.title
+            this.setState({
+              snack_message: text,
+              snack_color: "error",
+              snack_open: true,
+            })
+          }
+        }
+      )
   }
   
   handleOpenModal(){
@@ -425,6 +496,11 @@ class AddProduct extends React.Component {
       editMode: false
     })
   }
+
+  handleClose = () => {
+    this.setState({ snack_open: false });
+  };
+
   
   _handleEditVariety(id){
     // Get variety with ID
@@ -502,6 +578,14 @@ class AddProduct extends React.Component {
     
     return (
       <div>
+        { this.state.snack_open &&
+            <Snackbar 
+              open={this.state.snack_open} 
+              message={this.state.snack_message} 
+              color={this.state.snack_color}
+              closePopup={this.handleClose.bind(this)} 
+            />
+        }
         <section className="container">
           <Paper className={classes.paper}>
             <h2 style={{ paddingLeft: 20 }}>Ajouter un produit</h2>
@@ -604,9 +688,9 @@ class AddProduct extends React.Component {
                       onChange={this.handleChangeCatalog.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"homme"}>Homme</MenuItem>
-                      <MenuItem value={'femme'}>Femme</MenuItem>
-                      <MenuItem value={"enfant"}>Enfant</MenuItem>
+                      <MenuItem value={"1"}>Homme</MenuItem>
+                      <MenuItem value={'2'}>Femme</MenuItem>
+                      <MenuItem value={"3"}>Enfant</MenuItem>
                     </Select>
                     { this.state.catalog.error ? <FormHelperText>{this.state.catalog.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -624,9 +708,9 @@ class AddProduct extends React.Component {
                       onChange={this.handleChangeCategory.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"Chapeaux"}>Chapeaux</MenuItem>
-                      <MenuItem value={'Robe'}>Robes</MenuItem>
-                      <MenuItem value={"Bas"}>Bas</MenuItem>
+                      <MenuItem value={"1"}>Chapeaux</MenuItem>
+                      <MenuItem value={'2'}>Robes</MenuItem>
+                      <MenuItem value={"3"}>Bas</MenuItem>
                     </Select>
                     { this.state.category.error ? <FormHelperText>{this.state.category.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -644,9 +728,9 @@ class AddProduct extends React.Component {
                       onChange={this.handleChangeGroup.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"group 1"}>Groupe 1</MenuItem>
-                      <MenuItem value={'group 2'}>Groupe 2</MenuItem>
-                      <MenuItem value={"group 3"}>Groupe 3</MenuItem>
+                      <MenuItem value={"1"}>Groupe 1</MenuItem>
+                      <MenuItem value={'2'}>Groupe 2</MenuItem>
+                      <MenuItem value={"3"}>Groupe 3</MenuItem>
                     </Select>
                     { this.state.group.error ? <FormHelperText>{this.state.group.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -661,9 +745,9 @@ class AddProduct extends React.Component {
                       onChange={this.handleChangeCollection.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"ete"}>Eté</MenuItem>
-                      <MenuItem value={'automne'}>Automne</MenuItem>
-                      <MenuItem value={"printemp"}>Printemp</MenuItem>
+                      <MenuItem value={"1"}>Eté</MenuItem>
+                      <MenuItem value={'2'}>Automne</MenuItem>
+                      <MenuItem value={"3"}>Printemp</MenuItem>
                     </Select>
                   </FormControl>
                 </div>

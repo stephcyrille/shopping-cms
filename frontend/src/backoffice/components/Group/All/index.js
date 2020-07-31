@@ -6,7 +6,7 @@ import MaterialTable from "material-table";
 
 import tableIcons from "../../Snippets/EditableTable/TableIcon";
 import Dialog from '../../Snippets/MyDialog'
-import slugify from '../../../utils/generic'
+import { slugify } from '../../../utils/generic'
 import Snackbar from '../../Snippets/FlashBagMessage/index'
 import appConfig from '../../../config'
 

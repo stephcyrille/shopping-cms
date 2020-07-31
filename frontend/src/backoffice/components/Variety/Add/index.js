@@ -661,10 +661,10 @@ class AddVariety extends React.Component {
                       onChange={this.handleChangeColor.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"Rouge"}>Rouge</MenuItem>
-                      <MenuItem value={'Bleu'}>Bleu</MenuItem>
-                      <MenuItem value={"Vert"}>Vert</MenuItem>
-                      <MenuItem value={"Noir"}>Noir</MenuItem>
+                      <MenuItem value={"1"}>Rouge</MenuItem>
+                      <MenuItem value={'2'}>Bleu</MenuItem>
+                      <MenuItem value={"3"}>Vert</MenuItem>
+                      <MenuItem value={"4"}>Noir</MenuItem>
                     </Select>
                     { this.state.color.error ? <FormHelperText>{this.state.color.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -703,10 +703,10 @@ class AddVariety extends React.Component {
                       onChange={this.handleChangeSize.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"M"}>M</MenuItem>
-                      <MenuItem value={'S'}>S</MenuItem>
-                      <MenuItem value={"XS"}>XS</MenuItem>
-                      <MenuItem value={"XXL"}>XXL</MenuItem>
+                      <MenuItem value={"1"}>M</MenuItem>
+                      <MenuItem value={'2'}>S</MenuItem>
+                      <MenuItem value={"3"}>XS</MenuItem>
+                      <MenuItem value={"4"}>XXL</MenuItem>
                     </Select>
                     { this.state.size.error ? <FormHelperText>{this.state.size.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -759,7 +759,7 @@ class AddVariety extends React.Component {
                             className=""
                             fullWidth
                           >
-                            <label for="raised-input-file-1" style={{ marginBottom: 0 }}>
+                            <label htmlFor="raised-input-file-1" style={{ marginBottom: 0 }}>
                               <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
                               Photo 1 (PNG, JPG)*
                             </label>
@@ -810,7 +810,7 @@ class AddVariety extends React.Component {
                             className=""
                             fullWidth
                           >
-                            <label for="raised-input-file-2" style={{ marginBottom: 0 }}>
+                            <label htmlFor="raised-input-file-2" style={{ marginBottom: 0 }}>
                               <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
                               Photo 2 (PNG, JPG)*
                             </label>
@@ -861,7 +861,7 @@ class AddVariety extends React.Component {
                             className=""
                             fullWidth
                           >
-                            <label for="raised-input-file-3" style={{ marginBottom: 0 }}>
+                            <label htmlFor="raised-input-file-3" style={{ marginBottom: 0 }}>
                               <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
                               Photo 3 (PNG, JPG)*
                             </label>
@@ -912,7 +912,7 @@ class AddVariety extends React.Component {
                             className=""
                             fullWidth
                           >
-                            <label for="raised-input-file-4" style={{ marginBottom: 0 }}>
+                            <label htmlFor="raised-input-file-4" style={{ marginBottom: 0 }}>
                               <CloudUploadOutlinedIcon style={{ padding: 5, fontSize: 35 }} />
                               Photo 4 (PNG, JPG)*
                             </label>
