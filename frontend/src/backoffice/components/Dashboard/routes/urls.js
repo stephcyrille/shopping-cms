@@ -23,6 +23,8 @@ const urls = {
     ADDSEO: "seo-add",
     HOMEBANNER: "home-banner",
     ADDHOMEBANNER: "add-home-banner",
+    FEATURE: "feature",
+    ADDFEATURE: "feature-add",
   };
   
   

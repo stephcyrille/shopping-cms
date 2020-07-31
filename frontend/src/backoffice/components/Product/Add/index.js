@@ -160,6 +160,13 @@ class AddProduct extends React.Component {
         error: false,
         errorMessage: null
       },
+      // for pushing the element on trending mainmenu
+      trending : {
+        value: '',
+        checked: false,
+        error: false,
+        errorMessage: null
+      },
 
       varieties: [],
 
@@ -299,7 +306,6 @@ class AddProduct extends React.Component {
 
 
   handleChangeIsFeature(event){
-    console.log("checked", event.target.name, event.target.checked)
     this.setState({
       feature: {
         checked : event.target.checked,
@@ -310,9 +316,18 @@ class AddProduct extends React.Component {
   }
 
   handleChangeIsDiscount(event){
-    console.log("checked", event.target.name, event.target.checked)
     this.setState({
       discount: {
+        checked : event.target.checked,
+        error: false,
+        errorMessage: null
+      }
+    })
+  }
+  
+  handleChangeIsTrending(event){
+    this.setState({
+      trending: {
         checked : event.target.checked,
         error: false,
         errorMessage: null
@@ -337,6 +352,7 @@ class AddProduct extends React.Component {
       material: this.state.material.value,
       is_feature: this.state.feature.checked,
       is_discount: this.state.discount.checked,
+      trending: this.state.trending.checked,
     }
     console.log("Form Values", values)
     if( !values.ref ){
@@ -436,6 +452,7 @@ class AddProduct extends React.Component {
           "material": values.material,
           "is_feature": values.is_feature,
           "is_discount": values.is_discount,
+          "trending": values.trending,
         },
         "varieties_list": values.varieties,
         "variety_number": values.varieties.length
@@ -787,7 +804,13 @@ class AddProduct extends React.Component {
                     />
                   </FormGroup>
                 </div>
-                <div className={`col-3`}>
+                <div className={`col-3 ${classes.switch}`}>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Switch checked={this.state.trending.checked} onChange={this.handleChangeIsTrending.bind(this)} name="trending" />}
+                      label="Tendance"
+                    />
+                  </FormGroup>
                 </div>
               </div>
 

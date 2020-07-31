@@ -134,6 +134,7 @@ class Product(CoreTrackedModel):
     material = models.CharField(max_length=150, null=True, blank=True)  # Material in which the product is made
     is_feature = models.BooleanField(default=False)
     is_discount = models.BooleanField(default=False)
+    trending = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
