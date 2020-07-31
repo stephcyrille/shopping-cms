@@ -40,7 +40,7 @@ export default function MaterialTableDemo(props) {
           actions={[
             {
               icon: 'edit',
-              tooltip: 'Modifier catalogue',
+              tooltip: props.editText ,
               onClick: (event, rowData) => {props.goToEdit()}
             }
           ]}

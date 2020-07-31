@@ -6,7 +6,7 @@ from .apis.frontoffice import CategoryAPIView, ProductsAPIView, ProductSingleAPI
 from .apis.frontoffice.forms import AddCartItemAPIView
 
 urlpatterns = [
-    path('backoffice/', include('backend.apis.urls.backoffice.urls')),
+    path('core/', include('backend.apis.urls.backoffice.urls')),
 
     # TODO Redefine all these route with the new synthax
     path('core/session/create', CoreSessionAPIView.as_view(), name='create_session'),
