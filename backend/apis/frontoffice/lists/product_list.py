@@ -89,7 +89,7 @@ class TrendingProductListAPIView(ListAPIView):
         return self.get_paginated_response(self.paginate_queryset(serializer.data))
 
 
-class TrendingProductListByCatalogAPIView(APIView):
+class ProductListByCatalogAPIView(APIView):
     queryset = Product.objects.none()
     serializer_class = TrendingProductSerializer
 
@@ -106,6 +106,33 @@ class TrendingProductListByCatalogAPIView(APIView):
                 return Product.objects.filter(catalog__slug=catalog, trending=True)
             else:
                 return Product.objects.none()
+
+        # All new products newly created
+        # TODO Write a specific filter for this list
+        elif 'femme' == catalog and 'news-products' == category:
+            return Product.objects.filter(catalog__slug=catalog, trending=True)
+
+        elif 'femme' == catalog and ('clothings' == category or 'vetements' == category ):
+            return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+
+        elif 'femme' == catalog and ('shoes' == category or 'chaussures' == category ):
+            return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+
+        elif 'femme' == catalog and ('bags' == category or 'sacs' == category ):
+            return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+
+        elif 'femme' == catalog and ('accessories' == category or 'accessoires' == category ):
+            return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+
+        elif 'femme' == catalog and ('jewelry' == category or 'bijoux' == category ):
+            return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+
+        elif 'femme' == catalog and 'lingeries' == category:
+            return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+
+        elif 'femme' == catalog and ('beauties' == category or 'beautes' == category):
+            return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+
         else:
             return Product.objects.none()
 

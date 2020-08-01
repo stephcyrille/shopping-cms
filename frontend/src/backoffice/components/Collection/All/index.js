@@ -74,7 +74,7 @@ class AllCollection extends React.Component {
       { title: 'Titre', field: 'title' },
       { title: 'Slug', field: 'slug' },
     ];
-    const title = "Catalogues" 
+    const title = "Collection" 
 
     return (
       <div>

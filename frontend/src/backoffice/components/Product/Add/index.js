@@ -133,7 +133,7 @@ class AddProduct extends React.Component {
         error: false,
         errorMessage: null
       },
-      group : {
+      type : {
         value: '',
         error: false,
         errorMessage: null
@@ -262,9 +262,9 @@ class AddProduct extends React.Component {
     })
   }
 
-  handleChangeGroup = (event) => {
+  handleChangeType = (event) => {
     this.setState({
-      group: {
+      type: {
         value: event.target.value,
         error: false
       }
@@ -347,7 +347,7 @@ class AddProduct extends React.Component {
       description: this.state.description.value,
       catalog: this.state.catalog.value,
       category: this.state.category.value,
-      group: this.state.group.value,
+      type: this.state.type.value,
       collection: this.state.collection.value,
       material: this.state.material.value,
       is_feature: this.state.feature.checked,
@@ -411,9 +411,9 @@ class AddProduct extends React.Component {
         },
       })
     }
-    if( !values.group ){
+    if( !values.type ){
       this.setState({
-        group: {
+        type: {
           error: true,
           errorMessage: "Veuillez selectionner un élement"
         },
@@ -432,7 +432,7 @@ class AddProduct extends React.Component {
       (values.material) !== "" &&
       (values.catalog) !== "" &&
       (values.category) !== "" &&
-      (values.group) !== ""
+      (values.type) !== ""
     ){
       // SUBMIT THERE
       const service = "product/add"
@@ -447,7 +447,7 @@ class AddProduct extends React.Component {
           "description": values.description,
           "catalog": values.catalog,
           "category": values.category,
-          "group": values.group,
+          "type": values.type,
           "collection": values.collection,
           "material": values.material,
           "is_feature": values.is_feature,
@@ -728,9 +728,9 @@ class AddProduct extends React.Component {
                       onChange={this.handleChangeCategory.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"1"}>Chapeaux</MenuItem>
-                      <MenuItem value={'2'}>Robes</MenuItem>
-                      <MenuItem value={"3"}>Bas</MenuItem>
+                      <MenuItem value={"1"}>Vêtements</MenuItem>
+                      <MenuItem value={'2'}>Sacs</MenuItem>
+                      <MenuItem value={"3"}>Chaussures</MenuItem>
                     </Select>
                     { this.state.category.error ? <FormHelperText>{this.state.category.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -738,21 +738,21 @@ class AddProduct extends React.Component {
                 <div className="col-3">
                   <FormControl 
                     className={classes.formControl}
-                    error={ this.state.group.error && this.state.group.error }
+                    error={ this.state.type.error && this.state.type.error }
                   >
-                    <InputLabel id="product-group-select">Groupe de Categorie</InputLabel>
+                    <InputLabel id="product-type-select">Type de produit</InputLabel>
                     <Select
-                      labelId="product-group-select"
-                      id="product-group"
-                      value={this.state.group.value}
-                      onChange={this.handleChangeGroup.bind(this)}
+                      labelId="product-type-select"
+                      id="product-type"
+                      value={this.state.type.value}
+                      onChange={this.handleChangeType.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"1"}>Groupe 1</MenuItem>
-                      <MenuItem value={'2'}>Groupe 2</MenuItem>
-                      <MenuItem value={"3"}>Groupe 3</MenuItem>
+                      <MenuItem value={"1"}>Robe</MenuItem>
+                      <MenuItem value={'2'}>Jupe</MenuItem>
+                      <MenuItem value={"3"}>Chemisier</MenuItem>
                     </Select>
-                    { this.state.group.error ? <FormHelperText>{this.state.group.errorMessage}</FormHelperText> : null }
+                    { this.state.type.error ? <FormHelperText>{this.state.type.errorMessage}</FormHelperText> : null }
                   </FormControl>
                 </div>
                 <div className="col-3">

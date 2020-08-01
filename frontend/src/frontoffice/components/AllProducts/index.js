@@ -45,7 +45,7 @@ class AllProducts extends React.Component {
   _fetchProducts(params){
     this.props.dispatch(allProductsCStoreActions.setLoading(true))
     
-    const service = `products/${params.catalog}/${params.category}?sort=${params.queryString}`
+    const service = `products/${params.catalog}/${params.category}${ params.queryString !== undefined ? `?sort=${params.queryString}` : `` }`
     const url = `${appConfig.LISTSBASEURL}${service}`
 
     window.axios
@@ -53,8 +53,10 @@ class AllProducts extends React.Component {
     .then(response => {
       var products = response.data 
       
-      this.props.dispatch(allProductsCStoreActions.setLoading(false))
       this.props.dispatch(allProductsCStoreActions.setProducts(products))
+      setTimeout(() => {
+        this.props.dispatch(allProductsCStoreActions.setLoading(false))
+      }, 2000);
     })
     .catch(
       error => {

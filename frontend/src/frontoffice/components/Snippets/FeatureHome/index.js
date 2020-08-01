@@ -17,7 +17,7 @@ class FeatureHome extends React.Component {
 
     return (
       <div className="features_items">
-        <h2 className="title text-center"></h2>
+        <h2 className="title text-center" style={{ opacity: 0 }}>Features Items</h2>
         <div className="row">
           { !_.isEmpty(products) ? 
             products

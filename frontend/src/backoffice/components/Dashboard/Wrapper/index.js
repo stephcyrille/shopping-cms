@@ -97,24 +97,24 @@ class Index extends React.Component {
                   {0}
                 </div>
               </NavLink>
+
+              <NavLink
+                activeClassName={styles.active}
+                to={`${path}${urls.GROUP}`}
+                className={styles.menu_item}
+              >
+                {'Type de produit'}
+                <div className={styles.count_item}>
+                  {0}
+                </div>
+              </NavLink>
               
               <NavLink
                 activeClassName={styles.active}
                 to={`${path}${urls.COLLECTION}`}
                 className={styles.menu_item}
               >
-                {'Collections'}
-                <div className={styles.count_item}>
-                  {0}
-                </div>
-              </NavLink>
-             
-              <NavLink
-                activeClassName={styles.active}
-                to={`${path}${urls.GROUP}`}
-                className={styles.menu_item}
-              >
-                {'Groupes'}
+                {'Collection'}
                 <div className={styles.count_item}>
                   {0}
                 </div>

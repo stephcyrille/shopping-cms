@@ -86,18 +86,6 @@ class Catalog(CoreTrackedModel):
         return reverse("single_catalog", kwargs={"slug": self.slug})
 
 
-class Category(CoreTrackedModel):
-    title = models.CharField(max_length=50)
-    slug = models.SlugField(unique=True)
-    picture = models.FileField(upload_to=category_upload_path, null=True)
-
-    def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse("single_category", kwargs={"slug": self.slug})
-
-
 class Collection(CoreTrackedModel):
     title = models.CharField(max_length=50)
     slug = models.SlugField(unique=True)
@@ -110,8 +98,23 @@ class Collection(CoreTrackedModel):
         return reverse("single_collection", kwargs={"slug": self.slug})
 
 
+# Clothing, Bag, Jewel, Accessory, etc.
+class Category(CoreTrackedModel):
+    title = models.CharField(max_length=50)
+    slug = models.SlugField(unique=True)
+    picture = models.FileField(upload_to=category_upload_path, null=True)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse("single_category", kwargs={"slug": self.slug})
+
+
+# Dress, skirt, Polo, shirt, Jeans, etc.
 class Group(CoreTrackedModel):
     title = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.CASCADE)
     slug = models.SlugField(unique=True)
 
     def __str__(self):
@@ -127,8 +130,8 @@ class Product(CoreTrackedModel):
     slug = models.SlugField(unique=True)
     price = models.IntegerField()
     description = models.TextField(default='')
-    category = models.ForeignKey(Category, blank=False, on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, blank=False, null=True, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, blank=False, null=True, on_delete=models.CASCADE)
+    type = models.ForeignKey(Group, blank=False, null=True, on_delete=models.CASCADE)
     collection = models.ForeignKey(Collection, blank=True, null=True, on_delete=models.CASCADE)
     catalog = models.ForeignKey(Catalog, blank=True, null=True, on_delete=models.CASCADE)
     material = models.CharField(max_length=150, null=True, blank=True)  # Material in which the product is made

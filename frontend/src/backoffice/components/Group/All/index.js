@@ -18,7 +18,7 @@ export default
 class AllGroup extends React.Component {
   constructor(props){
     super(props)
-    document.title = "Group | Afro Yaca Drum"
+    document.title = "Type de produit | Afro Yaca Drum"
 
     this.state = {
       title : {
@@ -176,7 +176,7 @@ class AllGroup extends React.Component {
           console.log("Success", response)
           this.setState({
             snack_open: true,
-            snack_message: "Groupe enregistré avec success",
+            snack_message: "Type de produit enregistré avec success",
             snack_color: "success"
           })
         }
@@ -225,13 +225,14 @@ class AllGroup extends React.Component {
       { title: 'N°', field: 'id' },
       { title: 'Titre', field: 'title' },
       { title: 'Slug', field: 'slug' },
+      { title: 'Catégorie', field: 'category' },
     ];
-    const title = "Groupes de produit" 
+    const title = "Type de produit" 
 
     const actions = [
       {
         icon: () => <AddIcon />,
-        tooltip: 'Ajouter un groupe',
+        tooltip: 'Ajouter un type de produit',
         isFreeAction: true,
         onClick: (event, rowData) => {
           this.handleSetDialogOpen();
@@ -271,7 +272,7 @@ class AllGroup extends React.Component {
           />
         </section>
 
-        <Dialog title="Ajouter un groupe" isOpen={ this.state.dialogOpen } onClose={ this.handleSetDialogClose.bind(this) }>
+        <Dialog title="Ajouter un type de produit" isOpen={ this.state.dialogOpen } onClose={ this.handleSetDialogClose.bind(this) }>
           <Paper style={{ padding: '2em' }}>
             <div className="row" style={{ marginLeft: 0, marginRight: 0 }}> 
               <div className="col-6">
@@ -279,7 +280,7 @@ class AllGroup extends React.Component {
                   value={ this.state.title.value } 
                   error={ this.state.title.error && this.state.title.error }
                   onChange={ this.handleEditTitle.bind(this) } 
-                  label="Titre du groupe" 
+                  label="Nom du type" 
                   helperText={ this.state.title.error ? this.state.title.errorMessage : null }
                   fullWidth
                   required

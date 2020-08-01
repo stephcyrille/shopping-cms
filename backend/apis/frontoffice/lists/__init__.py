@@ -1,1 +1,1 @@
-from .trending_product import *
+from .product_list import *
