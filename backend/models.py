@@ -135,6 +135,7 @@ class Product(CoreTrackedModel):
     is_feature = models.BooleanField(default=False)
     is_discount = models.BooleanField(default=False)
     trending = models.BooleanField(default=False)
+    # TODO Set currency field here, then create method field for returning price in a specific currency
 
     def __str__(self):
         return self.title

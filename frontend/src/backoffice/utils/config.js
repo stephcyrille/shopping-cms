@@ -1,5 +1,5 @@
 const config = {    
-    name: "FGI Eco"
+    APPNAME: "MASC CORE"
 }
 
 

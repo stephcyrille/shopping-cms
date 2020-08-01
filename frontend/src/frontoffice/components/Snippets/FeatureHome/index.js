@@ -17,7 +17,7 @@ class FeatureHome extends React.Component {
 
     return (
       <div className="features_items">
-        <h2 className="title text-center">Features Items</h2>
+        <h2 className="title text-center"></h2>
         <div className="row">
           { !_.isEmpty(products) ? 
             products
@@ -27,7 +27,15 @@ class FeatureHome extends React.Component {
                     <div className="product-image-wrapper">
                       <div className="single-products">
                           <div className="productinfo text-center">
-                            <img src={ val.varieties ? val.varieties[0].pictures ? val.varieties[0].pictures[0] : ""  : "" } alt="" />
+                            <img 
+                              src={ 
+                                    val.pictures ?
+                                      val.pictures[0]
+                                      : 
+                                      "" 
+                                  } 
+                              alt="" 
+                            />
                             <h2>{val.price} {'FCFA'}</h2>
                             <p>{val.title}</p>
                           </div>

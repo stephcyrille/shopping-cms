@@ -51,6 +51,9 @@
     text-transform: uppercase;
     margin-bottom: 5px;
 }
+.catalogue_menu .nav_tendencies .maintitle_actual{
+    font-size: 1.2rem;
+}
 
 .nav_picture{
     width: 180px;

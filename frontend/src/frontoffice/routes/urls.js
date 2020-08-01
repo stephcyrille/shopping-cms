@@ -22,7 +22,7 @@ const urls = {
   EDITORIAL: "/shop/editorial",
   SERVICE: "/shop/ayd/services",
 
-  ALL_PRODUCT: "/shop/all_products",
+  ALL_PRODUCT: "/shop/:catalog/:category?sort=:sort",
 };
 
 

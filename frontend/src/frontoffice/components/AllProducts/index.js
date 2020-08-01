@@ -10,6 +10,10 @@ import FeatureHome from "app-js/frontoffice/components/Snippets/FeatureHome/inde
 import PaginationButtons from "app-js/frontoffice/components/Snippets/Pagination/index"
 
 import { allProductsCStoreActions } from './store'
+import urls from "../../routes/urls";
+import appConfig from '../../config/index'
+
+
 
 export default
 @connect((state, props) => ({
@@ -18,19 +22,34 @@ export default
 class AllProducts extends React.Component {
 
   componentDidMount(){
-    var url = this.props.match.url ? this.props.match.url : null
-    if(url){
-      var tab_values = url.split("/")
-      var group_slug = tab_values[(tab_values.length - 1)]
-    } 
-    this._fetchProducts()
+    const pathname =  this.props.location.pathname
+    const path_values = pathname.split("/")
+    const catalog = path_values[2]
+    const category = path_values[3]
+
+    const query =  this.props.location.search
+    const query_values = query.split("?sort=")
+    const query_string = query_values[1]
+
+    const params = {
+      catalog: catalog,
+      category: category,
+      queryString: query_string
+    }
+
+    console.log("url params⁼================", params)
+
+    this._fetchProducts(params)
   }
 
-  _fetchProducts(){
+  _fetchProducts(params){
     this.props.dispatch(allProductsCStoreActions.setLoading(true))
+    
+    const service = `products/${params.catalog}/${params.category}?sort=${params.queryString}`
+    const url = `${appConfig.LISTSBASEURL}${service}`
 
     window.axios
-    .get(`/apis/products/`)
+    .get(`${url}`)
     .then(response => {
       var products = response.data 
       

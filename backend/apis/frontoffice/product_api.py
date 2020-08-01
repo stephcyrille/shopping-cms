@@ -55,7 +55,6 @@ class ProductHomeSerializer(serializers.ModelSerializer):
 
     def get_product_url(self, instance):
         product_url = get_upload_host(self.context["request"]) + instance.get_absolute_url()
-        print("URLLLLL product %s" % product_url)
         return product_url
 
     def get_varieties(self, instance):

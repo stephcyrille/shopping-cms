@@ -33,13 +33,13 @@ class MegaNavbar extends React.Component {
                       <div className="row w-100">
                         <div className="col-sm-3">
                           <h3 className="">Parcourir par</h3>
-                          <a title="Mois" href="#" className="dropdown-item">Mois</a>
-                          <a title="Weekend" href="#" className="dropdown-item">Weekend</a>
-                          <a title="Articles d'été" href="#" className="dropdown-item">Articles d'été</a>
-                          <a title="Meilleures ventes" href="#" className="dropdown-item">Meilleures ventes</a>
+                          <a title="Mois" href={`/shop/${'femme'}/${'trending'}?sort=${'month'}`}  className="dropdown-item">Mois</a>
+                          <a title="Weekend" href={`/shop/${'femme'}/${'trending'}?sort=${'weekend'}`} className="dropdown-item">Weekend</a>
+                          <a title="Articles d'été" href={`/shop/${'femme'}/${'trending'}?sort=${'summer_collection'}`} className="dropdown-item">Articles d'été</a>
+                          <a title="Meilleures ventes" href={`/shop/${'femme'}/${'trending'}?sort=${'best_sales'}`} className="dropdown-item">Meilleures ventes</a>
                         </div>
                         <div className="col-sm-9 nav_tendencies">
-                          <h4 className="">Tendence actuelle</h4>
+                          <h4 className="maintitle_actual">Tendance actuelle</h4>
                           <div className="row">
                             <div className="col-sm-3">
                               <a href="" className="">
@@ -49,7 +49,7 @@ class MegaNavbar extends React.Component {
                                 <div className="img_legend">
                                   <h4 className="">Afro YACA DRUM</h4>
                                     <span className="text_legend">
-                                      Robe tailleur Afrik
+                                      25.000 FCFA
                                     </span>
                                 </div>
                               </a>

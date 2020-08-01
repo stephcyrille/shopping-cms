@@ -1,5 +1,5 @@
 const config = {
-    app_name: "School Ever"
+    APPNAME: "MASC CORE"
 }
 
 
