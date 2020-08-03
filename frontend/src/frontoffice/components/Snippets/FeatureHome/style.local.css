@@ -3,7 +3,7 @@
 }
 
 h2.title {
-    color: #FE980F;
+    color: #ddaa44;
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
     font-weight: 700;
@@ -31,7 +31,7 @@ h2.title {
 }
 
 .productinfo h2 {
-    color: #FE980F;
+    color: #ddaa44;
     font-family: 'Roboto', sans-serif;
     font-size: 24px;
     font-weight: 700;
@@ -63,7 +63,7 @@ h2.title {
 }
 
 .product-overlay {
-    background: rgba(254, 152, 15, .8);
+    background: rgba(221, 170, 68, 0.55);
     top: 0;
     display: none;
     height: 0;
@@ -91,7 +91,7 @@ h2.title {
     background: #fff;
     border: 0 none;
     border-radius: 0;
-    color: #FE980F;
+    color: #ddaa44;
     font-family: 'Roboto', sans-serif;
     font-size: 15px;
     margin-bottom: 25px;
@@ -99,7 +99,7 @@ h2.title {
 
 .product-overlay .add-to-cart:hover {
     background: #fff;
-    color: #FE980F;
+    color: #ddaa44;
 }
 
 .product-overlay p {
@@ -120,7 +120,7 @@ h2.title {
 }
 
 .add-to-cart:hover {
-    background: #FE980F;
+    background: #ddaa44;
     border: 0 none;
     border-radius: 0;
     color: #FFFFFF;
@@ -135,7 +135,7 @@ h2.title {
 }
 
 .add-to-cart:hover {
-    background: #FE980F;
+    background: #ddaa44;
     color: #FFFFFF;
 }
 
@@ -161,5 +161,9 @@ h2.title {
 
 .choose ul li a:hover {
     background: none;
-    color: #FE980F;
+    color: #ddaa44;
+}
+
+.tooltip-arrow, .choose ul li a + .tooltip > .tooltip-inner{
+    background-color: #ddaa44 !important;
 }

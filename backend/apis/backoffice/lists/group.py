@@ -1,12 +1,17 @@
 from rest_framework.generics import ListAPIView
 from rest_condition import Or
 from rest_framework import serializers
-from backend.models import Group
+from backend.models import Group, Category
 
 exclude_fields = ["is_archived", "created_by", "modified_by", "created_date", "modified_date"]
 
 
 class GroupSerializer(serializers.ModelSerializer):
+    category = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_category(instance):
+        return instance.category.title
 
     class Meta:
         model = Group

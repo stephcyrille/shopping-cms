@@ -110,7 +110,7 @@ class ProductListByCatalogAPIView(APIView):
         # All new products newly created
         # TODO Write a specific filter for this list
         elif 'femme' == catalog and 'news-products' == category:
-            return Product.objects.filter(catalog__slug=catalog, trending=True)
+            return Product.objects.filter(catalog__slug=catalog)
 
         elif 'femme' == catalog and ('clothings' == category or 'vetements' == category ):
             return Product.objects.filter(catalog__slug=catalog, category__slug=category)

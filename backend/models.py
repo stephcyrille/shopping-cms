@@ -90,6 +90,8 @@ class Collection(CoreTrackedModel):
     title = models.CharField(max_length=50)
     slug = models.SlugField(unique=True)
     picture = models.FileField(upload_to=collection_upload_path, null=True)
+    # This help to know if the collection will be present on the home page, beside mag home cover
+    is_home = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -222,6 +224,7 @@ class Article(CoreTrackedModel):
     articleImage = models.FileField(upload_to=articles_image_path, null=True, blank=True)
     cover = models.BooleanField(default=False)
     mainMenu = models.BooleanField(default=False)
+    home= models.BooleanField(default=False)
 
     def __str__(self):
         return '%s - %s' % (self.title, self.author)
@@ -262,6 +265,8 @@ class Banner(CoreTrackedModel):
     linkUrl = models.TextField()
     active = models.BooleanField(default=False)
     picture = models.FileField(upload_to=banner_pic_upload_path, null=True, blank=True)
+    # Let us know if the banner stay on the home page
+    is_home = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s' % (self.name)

@@ -37,8 +37,6 @@ class AllProducts extends React.Component {
       queryString: query_string
     }
 
-    console.log("url params⁼================", params)
-
     this._fetchProducts(params)
   }
 
@@ -65,6 +63,8 @@ class AllProducts extends React.Component {
       }  
     )
   }
+
+
 
   render() {
 
@@ -108,10 +108,10 @@ class AllProducts extends React.Component {
           <div className="container">
             <div className="row">
               {/* We will set categories of each group */}
-              <CategoryLeftMenu />
-              <div className="col-sm-9 padding-right">
+              {/* <CategoryLeftMenu /> */}
+              <div className="col-sm-12 padding-right" style={{ marginBottom: 20 }}>
                 <FeatureHome products={ products } />
-                <PaginationButtons />
+                { products.length >= 9 && <PaginationButtons />}
               </div>
             </div>
           </div>

@@ -25,7 +25,7 @@ class CartSessionSerializer(serializers.ModelSerializer):
                 "slug": i.variety.product.slug,
                 "title": i.variety.product.title,
                 "price": i.variety.product.price,
-                "color": i.variety.color.name,
+                "color": i.variety.color.title,
                 "selected_quantity": i.quantity
             }
             products.append(product)

@@ -170,6 +170,13 @@ class AddProduct extends React.Component {
 
       varieties: [],
 
+      catalogs_data: [],
+      categories_data: [],
+      types_data: [],
+      collections_data: [],
+      colors_data: [],
+      sizes_data: [],
+
       openModal : false,
       openConfirmModal : false,
 
@@ -182,6 +189,106 @@ class AddProduct extends React.Component {
       snack_message: null,
       snack_color: null,
     }
+  }
+
+  componentWillMount(){
+    // TODO Create an API whose fetch theses value one time, with a query filter due to the paginator
+    this._fetchCatalogs()
+    this._fetchCategories()
+    this._fetchTypes()
+    this._fetchCollections()
+    this._fetchColors()
+    this._fetchSizes()
+  }
+
+  _fetchCatalogs(){
+    const service = "catalog"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        catalogs_data: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+  _fetchCategories(){
+    const service = "category"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        categories_data: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+  _fetchTypes(){
+    const service = "group"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        types_data: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+  _fetchCollections(){
+    const service = "collection"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        collections_data: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+  _fetchColors(){
+    const service = "color"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        colors_data: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+  _fetchSizes(){
+    const service = "size"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        sizes_data: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
   }
 
 
@@ -284,7 +391,7 @@ class AddProduct extends React.Component {
   handleChangeMaterial = (event) => {
     event.preventDefault();
 
-    if(event.target.value.length < 5){
+    if(event.target.value.length < 2){
       this.setState({
         material: {
           value : event.target.value,
@@ -468,18 +575,17 @@ class AddProduct extends React.Component {
   postToApi(form_base_url, data){
     window
     .file_axios.post(`${form_base_url}`, data)
-      .then((response) => {
-          console.log("Success", response)
+      .then(() => {
           this.setState({
             snack_open: true,
             snack_message: "Produit enregistré avec success",
             snack_color: "success"
           })
           this.props.dispatch(push(`${urls.PRODUCT}`, { snack_open: true }));
+          this.props.dispatch(addProductStoreActions.initializeState())
         }
       )
       .catch((error) =>{
-          console.log("Error", error.response)
           let response = error.response.data
           if('slug' in response){
             let text = response.slug
@@ -593,6 +699,7 @@ class AddProduct extends React.Component {
   render() {
     const { classes } = this.props
     const { varieties} = this.props.addProductStore
+    const { catalogs_data, categories_data, types_data, collections_data, colors_data, sizes_data } = this.state
 
 
     
@@ -708,9 +815,13 @@ class AddProduct extends React.Component {
                       onChange={this.handleChangeCatalog.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"1"}>Homme</MenuItem>
-                      <MenuItem value={'2'}>Femme</MenuItem>
-                      <MenuItem value={"3"}>Enfant</MenuItem>
+                      {
+                        catalogs_data.map((val, key) => {
+                          return (
+                            <MenuItem value={val.id} key={key}>{val.title}</MenuItem>
+                          )
+                        })
+                      }
                     </Select>
                     { this.state.catalog.error ? <FormHelperText>{this.state.catalog.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -728,9 +839,13 @@ class AddProduct extends React.Component {
                       onChange={this.handleChangeCategory.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"1"}>Vêtements</MenuItem>
-                      <MenuItem value={'2'}>Sacs</MenuItem>
-                      <MenuItem value={"3"}>Chaussures</MenuItem>
+                      {
+                        categories_data.map((val, key) => {
+                          return (
+                            <MenuItem value={val.id} key={key}>{val.title}</MenuItem>
+                          )
+                        })
+                      }
                     </Select>
                     { this.state.category.error ? <FormHelperText>{this.state.category.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -748,9 +863,13 @@ class AddProduct extends React.Component {
                       onChange={this.handleChangeType.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"1"}>Robe</MenuItem>
-                      <MenuItem value={'2'}>Jupe</MenuItem>
-                      <MenuItem value={"3"}>Chemisier</MenuItem>
+                      {
+                        types_data.map((val, key) => {
+                          return (
+                            <MenuItem value={val.id} key={key}>{val.title}</MenuItem>
+                          )
+                        })
+                      }
                     </Select>
                     { this.state.type.error ? <FormHelperText>{this.state.type.errorMessage}</FormHelperText> : null }
                   </FormControl>
@@ -765,9 +884,13 @@ class AddProduct extends React.Component {
                       onChange={this.handleChangeCollection.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"1"}>Eté</MenuItem>
-                      <MenuItem value={'2'}>Automne</MenuItem>
-                      <MenuItem value={"3"}>Printemp</MenuItem>
+                      {
+                        collections_data.map((val, key) => {
+                          return (
+                            <MenuItem value={val.id} key={key}>{val.title}</MenuItem>
+                          )
+                        })
+                      }
                     </Select>
                   </FormControl>
                 </div>
@@ -846,8 +969,8 @@ class AddProduct extends React.Component {
                             varieties.map((val,key) => 
                             <tr key={key}>
                               <th scope="row">{val.id}</th>
-                              <th scope="row">{val.color}</th>
-                              <td>{val.size}</td>
+                              <th scope="row">{ val.color ? colors_data.find(element => element.id === val.color).title : null }</th>
+                              <td>{ val.size ? sizes_data.find(element => element.id === val.size).name : null }</td>
                               <td>{val.quantity}</td>
                               <td style={{ paddingLeft: 0, paddingTop: 0 }}>
                                 <Button 

@@ -2,6 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { Button, TextField, Paper } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import FormHelperText from '@material-ui/core/FormHelperText'
+import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from "material-table";
 
 import tableIcons from "../../Snippets/EditableTable/TableIcon";
@@ -11,10 +17,21 @@ import Snackbar from '../../Snippets/FlashBagMessage/index'
 import appConfig from '../../../config'
 
 
+const useStyles = theme => ({
+  root: {
+    
+  },
+  formControl: {
+    width: "100%",
+  }
+});
+
+
 
 export default
 @connect((state, props) => ({
 }))
+@withStyles(useStyles)
 class AllSize extends React.Component {
   constructor(props){
     super(props)
@@ -42,7 +59,10 @@ class AllSize extends React.Component {
         errorMessage: null
       },
       dialogOpen: false,
+      
       datas: [],
+      categories_data: [],
+
       snack_open: false,
       snack_message: null,
       snack_color: null,
@@ -51,6 +71,7 @@ class AllSize extends React.Component {
 
   componentWillMount(){
     this._fetchListItems()
+    this._fetchCategories()
   }
 
   _fetchListItems(){
@@ -61,6 +82,21 @@ class AllSize extends React.Component {
     .then(response => {
       this.setState({
         datas: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+  _fetchCategories(){
+    const service = "category"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        categories_data: response.data.results
       })
     })
     .catch(error => {
@@ -190,13 +226,13 @@ class AllSize extends React.Component {
       this.postToApi(formUrl, value)
 
       //  Creating copy of the previous table
-      let newData = [...this.state.datas];
+      // let newData = [...this.state.datas];
       
       // Add item to it 
-      newData.unshift(value)
+      // newData.unshift(value)
       // Set State
       this.setState({
-        datas: newData,
+        // datas: newData,
         category: {
           value: '',
           error: false,
@@ -227,7 +263,7 @@ class AllSize extends React.Component {
     window
     .axios.post(`${form_base_url}`, data)
       .then((response) => {
-          console.log("Success", response)
+          this._fetchListItems()
           this.setState({
             snack_open: true,
             snack_message: "Taille enregistrée avec success",
@@ -281,6 +317,7 @@ class AllSize extends React.Component {
 
 
   render() {
+    const { classes } = this.props
     const columns = [
       { title: 'N°', field: 'id' },
       { title: 'Catégorie', field: 'category' },
@@ -299,6 +336,8 @@ class AllSize extends React.Component {
         },
       },
     ];
+
+    const categories = this.state.categories_data
 
 
     return (
@@ -336,18 +375,31 @@ class AllSize extends React.Component {
         <Dialog title="Ajouter une taille" isOpen={ this.state.dialogOpen } onClose={ this.handleSetDialogClose.bind(this) }>
           <Paper style={{ padding: '2em' }}>
             <div className="row" style={{ marginLeft: 0, marginRight: 0 }}> 
-              <div className="col-4">
-                <TextField 
-                  value={ this.state.category.value } 
+              <div className="col-6">
+                <FormControl 
+                  className={classes.formControl}
                   error={ this.state.category.error && this.state.category.error }
-                  onChange={ this.handleEditCategory.bind(this) } 
-                  label="Catégory" 
-                  helperText={ this.state.category.error ? this.state.category.errorMessage : null }
-                  fullWidth
-                  required
-                />
+                >
+                  <InputLabel id="group-category-select">Categorie</InputLabel>
+                  <Select
+                    labelId="group-category-select"
+                    id="group-category"
+                    value={this.state.category.value}
+                    onChange={this.handleEditCategory.bind(this)}
+                    fullWidth
+                  >
+                    {
+                      categories.map((val, key) => {
+                        return (
+                          <MenuItem value={val.id} key={key}>{val.title}</MenuItem>
+                        )
+                      })
+                    }
+                  </Select>
+                  { this.state.category.error ? <FormHelperText>{this.state.category.errorMessage}</FormHelperText> : null }
+                </FormControl>
               </div>
-              <div className="col-4">
+              <div className="col-6">
                 <TextField 
                   value={ this.state.name.value } 
                   error={ this.state.name.error && this.state.name.error }
@@ -358,7 +410,7 @@ class AllSize extends React.Component {
                   fullWidth
                 />
               </div>
-              <div className="col-4">
+              <div className="col-6" style={{ marginTop: 10 }}>
                 <TextField 
                   value={ this.state.sizeSystem.value } 
                   error={ this.state.sizeSystem.error && this.state.sizeSystem.error }
@@ -369,7 +421,7 @@ class AllSize extends React.Component {
                   fullWidth
                 />
               </div>
-              <div className="col-4" style={{ marginTop: 10 }}>
+              <div className="col-6" style={{ marginTop: 10 }}>
                 <TextField 
                   value={ this.state.quantity.value } 
                   error={ this.state.quantity.error && this.state.quantity.error }

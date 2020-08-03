@@ -7,6 +7,11 @@ exclude_fields = ["is_archived", "created_by", "modified_by", "created_date", "m
 
 
 class SizeSerializer(serializers.ModelSerializer):
+    category = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_category(instance):
+        return instance.category.title
 
     class Meta:
         model = Size

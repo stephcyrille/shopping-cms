@@ -9,7 +9,7 @@ class AddGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ("title", "slug")
+        fields = ("title", "slug", "category")
 
 
 class AddGroupView(APIView):

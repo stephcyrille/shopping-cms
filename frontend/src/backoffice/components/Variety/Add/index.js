@@ -14,7 +14,7 @@ import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 
 
 import { addProductStoreActions } from '../../Product/Add/store'
-
+import appConfig from '../../../config'
 
 
 const useStyles = theme => ({
@@ -145,6 +145,10 @@ class AddVariety extends React.Component {
         errorMessage: null,
         fileInput: React.createRef()
       },
+
+      colors_data: [],
+      sizes_data: [],
+
       formSubmitDisabled: true,
       formValid: false,
       editMode: this.props.editMode,
@@ -153,7 +157,9 @@ class AddVariety extends React.Component {
   }
 
   componentDidMount(){
-    console.log("Value ofs props inititals",  this.props.initialsValues);
+    
+    this._fetchColors()
+    this._fetchSizes()
     
     if(this.state.editMode){
 
@@ -259,6 +265,36 @@ class AddVariety extends React.Component {
         u8arr[n] = bstr.charCodeAt(n);
     }
     return new File([u8arr], filename, {type:mime});
+  }
+
+  _fetchColors(){
+    const service = "color"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        colors_data: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+  _fetchSizes(){
+    const service = "size"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        sizes_data: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
   }
 
 
@@ -402,9 +438,6 @@ class AddVariety extends React.Component {
     // console.log("Form Values", event.target)
     // Make the validation process here
 
-    console.log("EDIT MODEEEEEEEE", this.state.editMode);
-    
-
     if(!this.state.editMode){
       var values = {
         color: this.state.color.value,
@@ -415,8 +448,7 @@ class AddVariety extends React.Component {
         picture3: this.state.picture3.fileInput,
         picture4: this.state.picture4.fileInput,
       }
-
-      console.log("Form Values", values)
+      
       if( !values.color ){
         this.setState({
           color: {
@@ -484,7 +516,6 @@ class AddVariety extends React.Component {
         (values.picture3 instanceof File) === true &&
         (values.picture4 instanceof File) === true
       ){
-        console.log("Data Posted! Greatttt=== Verif new pics====", values)
         // Post form data on server
         // We will use redux for updating the varieties table values
 
@@ -521,7 +552,6 @@ class AddVariety extends React.Component {
         picture4: this.state.picture4.fileInput,
       }
 
-      console.log("Form Values state", this.state)
       if( !values.color ){
         this.setState({
           color: {
@@ -598,7 +628,6 @@ class AddVariety extends React.Component {
       const newArray = [...varieties.filter(item => item.id !== variety.id), variety]
       this.props.dispatch(addProductStoreActions.addVariety(newArray))
 
-      console.log("new array ======", newArray)
       this.props.handleClose()
     }
 
@@ -609,9 +638,7 @@ class AddVariety extends React.Component {
 
   render() {
     const { classes } = this.props
-
-    console.log("Update mode initials values =========", this.state.initial)
-
+    const { colors_data, sizes_data } = this.state
 
 
     return (
@@ -628,27 +655,6 @@ class AddVariety extends React.Component {
             >
               <div className={`${classes.row} row`}>
                 <div className="col-3">
-                  {/* <Autocomplete
-                    id="size-small-standard"
-                    size="small"
-                    options={this.state.top100Films}
-                    getOptionLabel={(option) => option.title}
-                    onChange={this.handleChangeColor.bind(this)}
-                    value={this.state.top100Films[this.state.color.value]}
-                    renderInput={(params) => (
-                      <TextField 
-                        {...params} 
-                        variant="standard" 
-                        label="Selectionner la couleur" 
-                        name="color" 
-                        placeholder="Couleur" 
-                        error={ this.state.color.error && this.state.color.error }
-                        helperText={ this.state.color.error ? this.state.color.errorMessage : null }
-                        required
-                        fullWidth
-                      />
-                    )}
-                  /> */}
                   <FormControl 
                     className={classes.formControl}
                     error={ this.state.color.error && this.state.color.error }
@@ -661,36 +667,18 @@ class AddVariety extends React.Component {
                       onChange={this.handleChangeColor.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"1"}>Rouge</MenuItem>
-                      <MenuItem value={'2'}>Bleu</MenuItem>
-                      <MenuItem value={"3"}>Vert</MenuItem>
-                      <MenuItem value={"4"}>Noir</MenuItem>
+                      {
+                        colors_data.map((val, key) => {
+                          return (
+                            <MenuItem value={val.id} key={key}>{val.title}</MenuItem>
+                          )
+                        })
+                      }
                     </Select>
                     { this.state.color.error ? <FormHelperText>{this.state.color.errorMessage}</FormHelperText> : null }
                   </FormControl>
                 </div>
                 <div className="col-3">
-                  {/* <Autocomplete
-                    id="size-small-standard"
-                    size="small"
-                    options={this.state.top100Films}
-                    getOptionLabel={(option) => option.title}
-                    onChange={this.handleChangeSize.bind(this)}
-                    value={this.state.top100Films[this.state.size.value]}
-                    renderInput={(params) => (
-                      <TextField 
-                        {...params} 
-                        variant="standard" 
-                        label="Selectionner la taille" 
-                        placeholder="Produit" 
-                        name="size" 
-                        error={ this.state.size.error && this.state.size.error }
-                        helperText={ this.state.size.error ? this.state.size.errorMessage : null }
-                        required
-                        fullWidth
-                      />
-                    )}
-                  /> */}
                    <FormControl 
                     className={classes.formControl}
                     error={ this.state.size.error && this.state.size.error }
@@ -703,10 +691,13 @@ class AddVariety extends React.Component {
                       onChange={this.handleChangeSize.bind(this)}
                       fullWidth
                     >
-                      <MenuItem value={"1"}>M</MenuItem>
-                      <MenuItem value={'2'}>S</MenuItem>
-                      <MenuItem value={"3"}>XS</MenuItem>
-                      <MenuItem value={"4"}>XXL</MenuItem>
+                      {
+                        sizes_data.map((val, key) => {
+                          return (
+                            <MenuItem value={val.id} key={key}>{val.name}</MenuItem>
+                          )
+                        })
+                      }
                     </Select>
                     { this.state.size.error ? <FormHelperText>{this.state.size.errorMessage}</FormHelperText> : null }
                   </FormControl>

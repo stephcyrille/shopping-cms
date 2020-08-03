@@ -10,6 +10,13 @@ const actions = { name: "addProductStoreActions" };
 const store = createReducer({}, initialState); // stores are called reducers
 
 
+actions.initializeState = createAction("ADD_PRODUCT__SET_INITIALIZE_STAE");
+store.on(actions.initializeState, (state) => {
+	return {
+		...initialState
+	}
+});
+
 actions.setInitialValues = createAction("ADD_PRODUCT__SET_INITIAL_VALUES");
 store.on(actions.setInitialValues, (state, value) => ({
 	...state,

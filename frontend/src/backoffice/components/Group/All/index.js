@@ -1,7 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button, TextField, Paper } from "@material-ui/core";
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import { Add as AddIcon } from "@material-ui/icons";
+import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from "material-table";
 
 import tableIcons from "../../Snippets/EditableTable/TableIcon";
@@ -12,9 +18,22 @@ import appConfig from '../../../config'
 
 
 
+const useStyles = theme => ({
+  root: {
+    
+  },
+  formControl: {
+    marginTop: 10,
+    width: "100%",
+  }
+});
+
+
+
 export default
 @connect((state, props) => ({
 }))
+@withStyles(useStyles)
 class AllGroup extends React.Component {
   constructor(props){
     super(props)
@@ -31,8 +50,16 @@ class AllGroup extends React.Component {
         error: false,
         errorMessage: null
       },
+      category : {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
       dialogOpen: false,
+
       datas: [],
+      categories_data: [],
+      
       snack_open: false,
       snack_message: null,
       snack_color: null,
@@ -41,6 +68,7 @@ class AllGroup extends React.Component {
 
   componentWillMount(){
     this._fetchListItems()
+    this._fetchCategories()
   }
 
   _fetchListItems(){
@@ -51,6 +79,21 @@ class AllGroup extends React.Component {
     .then(response => {
       this.setState({
         datas: response.data.results
+      })
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+  _fetchCategories(){
+    const service = "category"
+    const url = `${ appConfig.LISTSBASEURL }${service}`
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      this.setState({
+        categories_data: response.data.results
       })
     })
     .catch(error => {
@@ -73,6 +116,10 @@ class AllGroup extends React.Component {
         error: false
       },
       slug: {
+        value: '',
+        error: false
+      },
+      category: {
         value: '',
         error: false
       }
@@ -110,12 +157,22 @@ class AllGroup extends React.Component {
     })
   }
 
+  handleEditCategory(e){    
+    this.setState({
+      category: {
+        value: e.target.value,
+        error: false
+      }
+    })
+  }
+
   handdleAddNewRow(e){
     e.preventDefault()
     // Get the value to add on table
     let value = {
       title: this.state.title.value,
       slug: this.state.slug.value,
+      category: this.state.category.value,
     }
 
     if( !value.title ){
@@ -134,11 +191,20 @@ class AllGroup extends React.Component {
         },
       })
     }
+    if( !value.category ){
+      this.setState({
+        category: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
 
     // Check if everything is valid there
     if(
       (value.title) !== "" &&
-      (value.slug) !== "" 
+      (value.slug) !== "" &&
+      (value.category) !== "" 
     ){
       const service = "group/add"
       const formUrl = `${appConfig.FORMBASEURL}${service}`
@@ -146,19 +212,24 @@ class AllGroup extends React.Component {
       this.postToApi(formUrl, value)
 
       //  Creating copy of the previous table
-      let newData = [...this.state.datas];
+      // let newData = [...this.state.datas];
       
       // Add item to it 
-      newData.unshift(value)
+      // newData.unshift(value)
       // Set State
       this.setState({
-        datas: newData,
+        // datas: newData,
         title: {
           value: '',
           error: false,
           errorMessage: null,
         },
         slug: {
+          value: '',
+          error: false,
+          errorMessage: null,
+        },
+        category: {
           value: '',
           error: false,
           errorMessage: null,
@@ -172,8 +243,8 @@ class AllGroup extends React.Component {
   postToApi(form_base_url, data){
     window
     .axios.post(`${form_base_url}`, data)
-      .then((response) => {
-          console.log("Success", response)
+      .then(() => {
+          this._fetchListItems()
           this.setState({
             snack_open: true,
             snack_message: "Type de produit enregistré avec success",
@@ -221,6 +292,7 @@ class AllGroup extends React.Component {
 
 
   render() {
+    const { classes } = this.props
     const columns = [
       { title: 'N°', field: 'id' },
       { title: 'Titre', field: 'title' },
@@ -239,6 +311,8 @@ class AllGroup extends React.Component {
         },
       },
     ];
+    const categories = this.state.categories_data
+
 
     return (
       <div>
@@ -296,6 +370,30 @@ class AllGroup extends React.Component {
                   disabled 
                   fullWidth
                 />
+              </div>
+              <div className="col-6">
+                <FormControl 
+                  className={classes.formControl}
+                  error={ this.state.category.error && this.state.category.error }
+                >
+                  <InputLabel id="group-category-select">Categorie</InputLabel>
+                  <Select
+                    labelId="group-category-select"
+                    id="group-category"
+                    value={this.state.category.value}
+                    onChange={this.handleEditCategory.bind(this)}
+                    fullWidth
+                  >
+                    {
+                      categories.map((val, key) => {
+                        return (
+                          <MenuItem value={val.id} key={key}>{val.title}</MenuItem>
+                        )
+                      })
+                    }
+                  </Select>
+                  { this.state.category.error ? <FormHelperText>{this.state.category.errorMessage}</FormHelperText> : null }
+                </FormControl>
               </div>
             </div>
             <div className="row" style={{ marginTop: '2em', marginLeft: 0, marginRight: 0 }}>

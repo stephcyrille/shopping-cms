@@ -35,10 +35,10 @@ class CartSerializer(serializers.ModelSerializer):
             item = {
                 "id": i.id,
                 "slug": i.variety.product.slug,
-                "title": "%s - %s" % (i.variety.product.title, i.variety.color.name),
+                "title": "%s - %s" % (i.variety.product.title, i.variety.color.title),
                 "description": i.variety.product.description,
                 "price": i.variety.product.price,
-                "color": i.variety.color.name,
+                "color": i.variety.color.title,
                 "size": i.variety.size.name,
                 "selected_quantity": i.quantity,
                 "line_total": (i.variety.product.price * i.quantity),
