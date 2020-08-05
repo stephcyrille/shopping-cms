@@ -140,6 +140,7 @@ class Product(CoreTrackedModel):
     is_feature = models.BooleanField(default=False)
     is_discount = models.BooleanField(default=False)
     trending = models.BooleanField(default=False)
+    flash_sale = models.BooleanField(default=False)
     # TODO Set currency field here, then create method field for returning price in a specific currency
 
     def __str__(self):
@@ -224,7 +225,8 @@ class Article(CoreTrackedModel):
     articleImage = models.FileField(upload_to=articles_image_path, null=True, blank=True)
     cover = models.BooleanField(default=False)
     mainMenu = models.BooleanField(default=False)
-    home= models.BooleanField(default=False)
+    # Just for knowing if is the home cover magazine
+    is_home = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s - %s' % (self.title, self.author)

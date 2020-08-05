@@ -156,6 +156,12 @@ class AddHomeBanner extends React.Component {
         error: false,
         errorMessage: null
       },
+      home : {
+        value: '',
+        checked: false,
+        error: false,
+        errorMessage: null
+      },
       picture : {
         value: null,
         error: false,
@@ -233,6 +239,16 @@ class AddHomeBanner extends React.Component {
     })
   }
 
+  handleChangeHome(event){
+    this.setState({
+      home: {
+        checked : event.target.checked,
+        error: false,
+        errorMessage: null
+      }
+    })
+  }
+
 
   handlePictureChange = (event, picNber) => {
     event.preventDefault();
@@ -287,6 +303,7 @@ class AddHomeBanner extends React.Component {
       linkText: this.state.linkText.value,
       linkUrl: this.state.linkUrl.value,
       active: this.state.active.checked,
+      home: this.state.home.checked,
       picture: this.state.picture.fileInput,
     }
 
@@ -375,6 +392,7 @@ class AddHomeBanner extends React.Component {
       formData.append("linkUrl", values.linkUrl);
       formData.append("active", this.state.active.checked);
       formData.append("picture", values.picture);
+      formData.append("is_home", values.home);
       // SUBMIT THERE
       this.postToApi(formUrl, formData)
     }
@@ -452,7 +470,7 @@ class AddHomeBanner extends React.Component {
         }
         <section className="container">
           <Paper className={classes.paper}>
-            <h2 style={{ paddingLeft: 20 }}>Ajout bannière accueil</h2>
+            <h2 style={{ paddingLeft: 20 }}>Ajout une bannière</h2>
 						<hr />
             <form className={`${classes.form}`} noValidate autoComplete="off" onSubmit={ this._handleOnSubmit.bind(this) }>
               <div className={`${classes.row} row`}>
@@ -554,6 +572,14 @@ class AddHomeBanner extends React.Component {
                     <FormControlLabel
                       control={<Switch checked={this.state.active.checked} onChange={this.handleChangeActive.bind(this)} name="active" />}
                       label="Banière active ?"
+                    />
+                  </FormGroup>
+                </div>
+                <div className={`col-4 ${classes.switch}`}>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Switch checked={this.state.home.checked} onChange={this.handleChangeHome.bind(this)} name="home" />}
+                      label="Banière page d'accueil"
                     />
                   </FormGroup>
                 </div>

@@ -103,7 +103,7 @@ class ProductListByCatalogAPIView(APIView):
                 return Product.objects.filter(catalog__slug=catalog, collection__title=query, trending=True)
             elif 'best_sales' == query:
                 # TODO create query for searching the most sold product in the catalog
-                return Product.objects.filter(catalog__slug=catalog, trending=True)
+                return Product.objects.filter(catalog__slug=catalog)
             else:
                 return Product.objects.none()
 
@@ -140,5 +140,20 @@ class ProductListByCatalogAPIView(APIView):
         query_string = request.GET.get('sort')
         # Note the use of `get_queryset()` instead of `self.queryset`
         queryset = self.get_queryset(catalog, category, query_string)
+        serializer = TrendingProductSerializer(queryset, many=True, context={"request": request})
+        return Response(serializer.data)
+
+
+class ProductFlashSaleAPIView(APIView):
+    queryset = Product.objects.none()
+    serializer_class = TrendingProductSerializer
+
+    @staticmethod
+    def get_queryset():
+        return Product.objects.filter(is_published=True, flash_sale=True)
+
+    def get(self, request):
+        # Note the use of `get_queryset()` instead of `self.queryset`
+        queryset = self.get_queryset()
         serializer = TrendingProductSerializer(queryset, many=True, context={"request": request})
         return Response(serializer.data)

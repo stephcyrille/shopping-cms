@@ -10,7 +10,6 @@ import FeatureHome from "app-js/frontoffice/components/Snippets/FeatureHome/inde
 import PaginationButtons from "app-js/frontoffice/components/Snippets/Pagination/index"
 
 import { allProductsCStoreActions } from './store'
-import urls from "../../routes/urls";
 import appConfig from '../../config/index'
 
 

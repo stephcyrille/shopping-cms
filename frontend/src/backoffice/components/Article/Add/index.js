@@ -201,6 +201,12 @@ class AddArticle extends React.Component {
         error: false,
         errorMessage: null
       },
+      home : {
+        value: '',
+        checked: false,
+        error: false,
+        errorMessage: null
+      },
       articleImage : {
         value: null,
         error: false,
@@ -376,6 +382,16 @@ class AddArticle extends React.Component {
     })
   }
 
+  handleChangeHome(event){
+    this.setState({
+      home: {
+        checked : event.target.checked,
+        error: false,
+        errorMessage: null
+      }
+    })
+  }
+
 
   handlePictureChange = (event, picNber) => {
     event.preventDefault();
@@ -541,6 +557,7 @@ class AddArticle extends React.Component {
       formData.append("articleImage", values.articleImage);
       formData.append("cover", this.state.cover.checked);
       formData.append("mainMenu", this.state.mainMenu.checked);
+      formData.append("is_home", this.state.home.checked);
       // SUBMIT THERE
       this.postToApi(formUrl, formData)
     }
@@ -822,11 +839,19 @@ class AddArticle extends React.Component {
                     />
                   </FormGroup>
                 </div>
+                <div className={`col-3 ${classes.switch}`}>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Switch checked={this.state.home.checked} onChange={this.handleChangeHome.bind(this)} name="home" />}
+                      label="Affiche page d'accueil"
+                    />
+                  </FormGroup>
+                </div>
               </div>
 
               <div className={`${classes.row} row`}>
                 <div className="col-4" style={{ paddingLeft: 15}}>
-                  <label style={{ marginBottom: 0, fontSize: "1.3em" }}>Photo de couverture*</label>
+                  <label style={{ paddingLeft: 15, marginBottom: 0, fontSize: "1.3em" }}>Photo de couverture*</label>
                   {
                     this.state.coverImage.value ? 
                       (

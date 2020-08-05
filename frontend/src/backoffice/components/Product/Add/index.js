@@ -160,6 +160,12 @@ class AddProduct extends React.Component {
         error: false,
         errorMessage: null
       },
+      flashSale : {
+        value: '',
+        checked: false,
+        error: false,
+        errorMessage: null
+      },
       // for pushing the element on trending mainmenu
       trending : {
         value: '',
@@ -294,12 +300,14 @@ class AddProduct extends React.Component {
 
   handleChangeRef = (event) => {
     event.preventDefault();
-    this.setState({
-      ref: {
-        value: event.target.value,
-        error: false
-      }
-    })
+    if(event.target.value < 13){
+      this.setState({
+        ref: {
+          value: event.target.value,
+          error: false
+        }
+      })
+    }
   }
 
 
@@ -441,6 +449,16 @@ class AddProduct extends React.Component {
       }
     })
   }
+  
+  handleChangeFlashSale(event){
+    this.setState({
+      flashSale: {
+        checked : event.target.checked,
+        error: false,
+        errorMessage: null
+      }
+    })
+  }
 
   _handleOnSubmit(event){
     event.preventDefault();
@@ -560,6 +578,7 @@ class AddProduct extends React.Component {
           "is_feature": values.is_feature,
           "is_discount": values.is_discount,
           "trending": values.trending,
+          "flash_sale": this.state.flashSale.checked,
         },
         "varieties_list": values.varieties,
         "variety_number": values.varieties.length
@@ -911,6 +930,8 @@ class AddProduct extends React.Component {
                     fullWidth
                   />
                 </div>
+              </div>
+              <div className={`row ${classes.row}`} style={{ paddingLeft: 10 }}>
                 <div className={`col-3 ${classes.switch}`}>
                   <FormGroup>
                     <FormControlLabel
@@ -932,6 +953,14 @@ class AddProduct extends React.Component {
                     <FormControlLabel
                       control={<Switch checked={this.state.trending.checked} onChange={this.handleChangeIsTrending.bind(this)} name="trending" />}
                       label="Tendance"
+                    />
+                  </FormGroup>
+                </div>
+                <div className={`col-3 ${classes.switch}`}>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Switch checked={this.state.flashSale.checked} onChange={this.handleChangeFlashSale.bind(this)} name="flash_sale" />}
+                      label="Vente flash"
                     />
                   </FormGroup>
                 </div>

@@ -191,7 +191,7 @@ class Index extends React.Component {
                 to={`${path}${urls.HOMEBANNER}`}
                 className={styles.menu_item}
               >
-                {"Bannière d'accueil"}
+                {"Bannière"}
                 <div className={styles.count_item}>
                   {0}
                 </div>

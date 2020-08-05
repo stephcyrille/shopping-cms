@@ -22,8 +22,8 @@ import AllMenuPicture from "app-js/backoffice/components/MainMenuPic/All";
 import AddMenuPicture from "app-js/backoffice/components/MainMenuPic/Add";
 import SEO from "app-js/backoffice/components/SEO/All";
 import AddSEO from "app-js/backoffice/components/SEO/Add";
-import HomeBanner from "app-js/backoffice/components/HomeBanner/All";
-import AddHomeBanner from "app-js/backoffice/components/HomeBanner/Add";
+import HomeBanner from "app-js/backoffice/components/Banner/All";
+import AddHomeBanner from "app-js/backoffice/components/Banner/Add";
 
 const Routes = props => {
   const { path } = props;

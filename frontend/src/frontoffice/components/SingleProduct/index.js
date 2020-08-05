@@ -51,6 +51,7 @@ class SingleProduct extends React.Component {
 
   _fetchSingleProduct(slug){
     const { variety_id } = this.props.singleProductCStore
+    this.props.dispatch(singleProductCStoreActions.setLoading(true))
 
     window.axios
     .get(`/apis/products/${slug}/`)
@@ -59,6 +60,9 @@ class SingleProduct extends React.Component {
       // console.log("Product single fetched!!!!!!!!!!!!", product)
       this.props.dispatch(singleProductCStoreActions.setSingleProduct(product))
       this.props.dispatch(singleProductCStoreActions.setStockQuantity(product.varieties[variety_id].quantity))
+      setTimeout(() => {
+        this.props.dispatch(singleProductCStoreActions.setLoading(false))
+      }, 2000);
     })
     .catch(
       error => {

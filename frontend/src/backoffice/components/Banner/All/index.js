@@ -71,7 +71,7 @@ class HomeBanner extends React.Component {
 
 
   render() {
-    const title = "Bannières index" 
+    const title = "Bannières" 
     const columns = [
       { title: 'N°', field: 'id' },
       { title: 'Nom', field: 'name' },
@@ -116,7 +116,7 @@ class HomeBanner extends React.Component {
             actions={[
               {
                 icon: 'edit',
-                tooltip: "Modifier la ligne" ,
+                tooltip: "Modifier la bannière" ,
                 onClick: () => this._goToEditHomeBanner() 
               }
             ]}
