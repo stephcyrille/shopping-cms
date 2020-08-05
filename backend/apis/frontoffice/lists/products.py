@@ -69,11 +69,13 @@ class ProductListByCatalogAPIView(APIView):
     def get_queryset(self, catalog, category, query):
         if 'femme' == catalog and 'trending' == category:
             if 'month' == query:
-                return Product.objects.filter(catalog__slug=catalog, trending=True).filter(created_date__gte=one_month_ago)
+                return Product.objects.filter(catalog__slug=catalog, trending=True) \
+                    .filter(created_date__gte=one_month_ago)
             elif 'weekend' == query:
-                return Product.objects.filter(catalog__slug=catalog, trending=True).filter(created_date__gte=one_week_ago)
+                return Product.objects.filter(catalog__slug=catalog, trending=True) \
+                    .filter(created_date__gte=one_week_ago)
             elif 'summer_collection' == query:
-                return Product.objects.filter(catalog__slug=catalog, collection__title=query, trending=True)
+                return Product.objects.filter(catalog__slug=catalog, collection__slug=query, trending=True)
             elif 'best_sales' == query:
                 # TODO create query for searching the most sold product in the catalog
                 return Product.objects.filter(catalog__slug=catalog)
@@ -85,19 +87,35 @@ class ProductListByCatalogAPIView(APIView):
         elif 'femme' == catalog and 'news-products' == category:
             return Product.objects.filter(catalog__slug=catalog)
 
-        elif 'femme' == catalog and ('clothings' == category or 'vetements' == category ):
+        elif 'femme' == catalog and ('clothings' == category or 'vetements' == category):
+            if 'month' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category) \
+                    .filter(created_date__gte=one_month_ago)
+            elif 'weekend' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category) \
+                    .filter(created_date__gte=one_week_ago)
+            elif 'ete' == query or 'summer' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category, collection__slug=query)
+            elif 'best_sales' == query or 'meilleures_ventes' == query:
+                # TODO create query for searching the most sold product in the catalog
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'robes' == query or 'dresses' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category, type__slug=query)
+            elif query is None:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            else:
+                return Product.objects.none()
+
+        elif 'femme' == catalog and ('shoes' == category or 'chaussures' == category):
             return Product.objects.filter(catalog__slug=catalog, category__slug=category)
 
-        elif 'femme' == catalog and ('shoes' == category or 'chaussures' == category ):
+        elif 'femme' == catalog and ('bags' == category or 'sacs' == category):
             return Product.objects.filter(catalog__slug=catalog, category__slug=category)
 
-        elif 'femme' == catalog and ('bags' == category or 'sacs' == category ):
+        elif 'femme' == catalog and ('accessories' == category or 'accessoires' == category):
             return Product.objects.filter(catalog__slug=catalog, category__slug=category)
 
-        elif 'femme' == catalog and ('accessories' == category or 'accessoires' == category ):
-            return Product.objects.filter(catalog__slug=catalog, category__slug=category)
-
-        elif 'femme' == catalog and ('jewelry' == category or 'bijoux' == category ):
+        elif 'femme' == catalog and ('jewelry' == category or 'bijoux' == category):
             return Product.objects.filter(catalog__slug=catalog, category__slug=category)
 
         elif 'femme' == catalog and 'lingeries' == category:

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from backend.apis.utils import get_upload_host
-from backend.models import Banner, Article
+from backend.models import Article
 
 
 class HomeCoverSerializer(serializers.ModelSerializer):
