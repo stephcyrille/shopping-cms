@@ -1,17 +1,67 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withTranslation } from 'react-i18next';
+import _ from "underscore";
 
-import './style.local.css';
+import { megaMenuCStoreActions } from './store'
 import urls from "../../../routes/urls";
+import appConfig from '../../../config/index'
+import './style.local.css';
 
 
-
-@connect((state, props) => ({}))
+export default
+@connect((state, props) => ({
+  megaMenuCStore: state.megaMenuCStore
+}))
 class MegaNavbar extends React.Component {
+
+  componentWillMount(){
+    this._fetchFeatureProducts()
+  }
+
+
+  _fetchFeatureProducts(){
+    
+    const service = `products/${'femme'}/${'news-products'}`
+    const url = `${appConfig.LISTSBASEURL}${service}`
+
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      var products = response.data 
+      
+      this.props.dispatch(megaMenuCStoreActions.setTrendingProducts(products))
+    })
+    .catch(
+      error => {
+        console.error("Errrorr", error)
+      }  
+    )
+  }
+
+
+  randomizeArray(items){
+    var ctr = items.length, temp, index
+    // While there are element in array
+    while(ctr > 0) {
+      //  Pick a random index
+      index = Math.floor(Math.random() * ctr)
+      // Decrease ctr by 1
+      ctr--
+      // And swap the last element with it
+      temp = items[ctr]
+      items[ctr] = items[index]
+      items[index] = temp
+    }
+    
+    return items
+  }
+
+
 
 
   render() {
+
+    const { trending_product } = this.props.megaMenuCStore
 
     return (
       <div>
@@ -41,58 +91,29 @@ class MegaNavbar extends React.Component {
                         <div className="col-sm-9 nav_tendencies">
                           <h4 className="maintitle_actual">Tendance actuelle</h4>
                           <div className="row">
-                            <div className="col-sm-3">
-                              <a href="" className="">
-                                <div className="img_wrapper">
-                                  <img src="/static/images/dress2.png" className="nav_picture" />
-                                </div>
-                                <div className="img_legend">
-                                  <h4 className="">Afro YACA DRUM</h4>
-                                    <span className="text_legend">
-                                      25.000 FCFA
-                                    </span>
-                                </div>
-                              </a>
-                            </div>
-                            <div className="col-sm-3">
-                              <a href="" className="">
-                                <div className="img_wrapper">
-                                  <img src="/static/images/dress2.png" className="nav_picture" />
-                                </div>
-                                <div className="img_legend">
-                                  <h4 className="">Afro YACA DRUM</h4>
-                                    <span className="text_legend">
-                                      Robe tailleur Afrik
-                                    </span>
-                                </div>
-                              </a>
-                            </div>
-                            <div className="col-sm-3">
-                              <a href="" className="">
-                                <div className="img_wrapper">
-                                  <img src="/static/images/dress2.png" className="nav_picture" />
-                                </div>
-                                <div className="img_legend">
-                                  <h4 className="">Afro YACA DRUM</h4>
-                                    <span className="text_legend">
-                                      Robe tailleur Afrik
-                                    </span>
-                                </div>
-                              </a>
-                            </div>
-                            <div className="col-sm-3">
-                              <a href="" className="">
-                                <div className="img_wrapper">
-                                  <img src="/static/images/dress2.png" className="nav_picture" />
-                                </div>
-                                <div className="img_legend">
-                                  <h4 className="">Afro YACA DRUM</h4>
-                                    <span className="text_legend">
-                                      Robe tailleur Afrik
-                                    </span>
-                                </div>
-                              </a>
-                            </div>
+
+                            { !_.isEmpty(trending_product) ? 
+                              this.randomizeArray(trending_product).slice(0,4)
+                                .map((val, key) => {
+                                  return (
+                                    <div className="col-sm-3" key={key}>
+                                      <a href={`/shop/products/${val.slug}`} className="">
+                                        <div className="img_wrapper">
+                                          <img src={`${val.pictures[0]}`} className="nav_picture" />
+                                        </div>
+                                        <div className="img_legend">
+                                          <h4 className="">{val.title}</h4>
+                                            <span className="text_legend">
+                                            {val.price} FCFA
+                                            </span>
+                                        </div>
+                                      </a>
+                                    </div>
+                                  ) 
+                                }) 
+                              : 
+                              null 
+                            }
                           </div>
                         </div>
                       </div>
@@ -797,5 +818,3 @@ class MegaNavbar extends React.Component {
     );
   }
 }
-
-export default withTranslation()(MegaNavbar);

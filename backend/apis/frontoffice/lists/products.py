@@ -15,34 +15,7 @@ one_week_ago = datetime.today() - timedelta(days=7)
 one_month_ago = datetime.today() - timedelta(days=30)
 
 
-class VarietySerializer(serializers.ModelSerializer):
-    pictures = serializers.SerializerMethodField()
-
-    def get_pictures(self, instance):
-        """
-        Get at max 30 pictures for all services composing this pack
-        """
-        pics = []
-        # si le queryset services_of_pack est grand
-        v = instance
-
-        if v.picture1:
-            pics.append(get_upload_host(self.context["request"]) + v.picture1.url)
-        if v.picture2:
-            pics.append(get_upload_host(self.context["request"]) + v.picture2.url)
-        if v.picture3:
-            pics.append(get_upload_host(self.context["request"]) + v.picture3.url)
-        if v.picture4:
-            pics.append(get_upload_host(self.context["request"]) + v.picture4.url)
-
-        return pics
-
-    class Meta:
-        model = Variety
-        fields = ("quantity", "pictures")
-
-
-class TrendingProductSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     product_url = serializers.SerializerMethodField()
     pictures = serializers.SerializerMethodField()
 
@@ -77,7 +50,7 @@ class TrendingProductSerializer(serializers.ModelSerializer):
 
 class TrendingProductListAPIView(ListAPIView):
     queryset = Product.objects.none()
-    serializer_class = TrendingProductSerializer
+    serializer_class = ProductSerializer
 
     def get_queryset(self):
         return Product.objects.filter(is_archived=False)
@@ -85,13 +58,13 @@ class TrendingProductListAPIView(ListAPIView):
     def list(self, request):
         # Note the use of `get_queryset()` instead of `self.queryset`
         queryset = self.get_queryset()
-        serializer = TrendingProductSerializer(queryset, many=True, context={"request": request})
+        serializer = ProductSerializer(queryset, many=True, context={"request": request})
         return self.get_paginated_response(self.paginate_queryset(serializer.data))
 
 
 class ProductListByCatalogAPIView(APIView):
     queryset = Product.objects.none()
-    serializer_class = TrendingProductSerializer
+    serializer_class = ProductSerializer
 
     def get_queryset(self, catalog, category, query):
         if 'femme' == catalog and 'trending' == category:
@@ -140,13 +113,13 @@ class ProductListByCatalogAPIView(APIView):
         query_string = request.GET.get('sort')
         # Note the use of `get_queryset()` instead of `self.queryset`
         queryset = self.get_queryset(catalog, category, query_string)
-        serializer = TrendingProductSerializer(queryset, many=True, context={"request": request})
+        serializer = ProductSerializer(queryset, many=True, context={"request": request})
         return Response(serializer.data)
 
 
 class ProductFlashSaleAPIView(APIView):
     queryset = Product.objects.none()
-    serializer_class = TrendingProductSerializer
+    serializer_class = ProductSerializer
 
     @staticmethod
     def get_queryset():
@@ -155,5 +128,5 @@ class ProductFlashSaleAPIView(APIView):
     def get(self, request):
         # Note the use of `get_queryset()` instead of `self.queryset`
         queryset = self.get_queryset()
-        serializer = TrendingProductSerializer(queryset, many=True, context={"request": request})
+        serializer = ProductSerializer(queryset, many=True, context={"request": request})
         return Response(serializer.data)

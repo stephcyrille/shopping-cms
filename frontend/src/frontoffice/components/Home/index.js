@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withTranslation } from 'react-i18next';
 import {Helmet} from "react-helmet";
 import { PulseLoader } from 'react-spinners';
 import _ from "underscore";
@@ -14,43 +13,26 @@ import Footer from "app-js/frontoffice/components/Snippets/Footer/index"
 import { homeCStoreActions } from './store'
 import appConfig from '../../config/index'
 import './style.local.css';
-import { teal } from "@material-ui/core/colors";
-
 
 
 export default
-@withTranslation()
 @connect((state, props) => ({
   homeCStore: state.homeCStore
 }))
 class Home extends React.Component {
 
-  componentDidMount(){
-    this._fetchProducts()
+  componentWillMount(){
+    this.props.dispatch(homeCStoreActions.setLoading(true))
+
     this._fetchHomeBanner()
     this._fetchHomeCover()
     this._fetchHomeCategories()
     this._fetchFeatureProducts()
     this._fetchProductFlashSale()
-  }
-
-  _fetchProducts(){
-    this.props.dispatch(homeCStoreActions.setLoading(true))
-
-    window.axios
-    .get(`/apis/products/`)
-    .then(response => {
-      var products = response.data 
-      
+    
+    setTimeout(() => {
       this.props.dispatch(homeCStoreActions.setLoading(false))
-      this.props.dispatch(homeCStoreActions.setProducts(products))
-    })
-    .catch(
-      error => {
-        console.error("Errrorr", error)
-        this.props.dispatch(homeCStoreActions.setLoading(false))
-      }  
-    )
+    }, 2000);
   }
 
   _fetchHomeBanner(){    

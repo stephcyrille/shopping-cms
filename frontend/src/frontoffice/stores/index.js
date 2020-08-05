@@ -11,6 +11,7 @@ import { reducer as formReducer } from "redux-form";
 import { singleProductCStore } from '../components/SingleProduct/store'
 import { navBarCartCStore } from '../components/Snippets/MiddleNavBar/store'
 import { homeCStore } from '../components/Home/store'
+import { megaMenuCStore } from '../components/Snippets/MegaNavBar/store'
 import { allProductsCStore } from '../components/AllProducts/store'
 import { cartCStore } from '../components/Cart/store'
 import { editorialCStore } from '../components/Editorial/store'
@@ -41,6 +42,7 @@ const cstore = history =>
     stepperCStore: stepperCStore,
     step3CStore: step3CStore,
     registrationCStore: registrationCStore,
+    megaMenuCStore: megaMenuCStore,
   });
 
 export default function configureStore(preloadedState) {
