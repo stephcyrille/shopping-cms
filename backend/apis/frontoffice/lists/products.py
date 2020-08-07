@@ -107,13 +107,63 @@ class ProductListByCatalogAPIView(APIView):
                 return Product.objects.none()
 
         elif 'femme' == catalog and ('shoes' == category or 'chaussures' == category):
-            return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            if 'nouveautes' == query or 'news' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category) \
+                    .filter(created_date__gte=one_week_ago)
+            elif 'tendances' == query or 'trendings' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category, trending=True)
+            elif 'essentiels' == query or 'essentials' == query:
+                # TODO Create a new field essential and write a query for search it
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'mariages' == query or 'weddings' == query:
+                # TODO Create a new field wedding and write a query for search it
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'best_sales' == query or 'meilleures_ventes' == query:
+                # TODO create query for searching the most sold product in the catalog
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'escarpins' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category, type__slug=query)
+            elif query is None:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            else:
+                return Product.objects.none()
 
         elif 'femme' == catalog and ('bags' == category or 'sacs' == category):
-            return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            if 'nouveautes' == query or 'news' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category) \
+                    .filter(created_date__gte=one_week_ago)
+            elif 'classiques' == query or 'classics' == query:
+                # TODO Create maybe a new field classic and write a query for search it
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'ete' == query or 'summer' == query:
+                # TODO create query for searching product between june an august on the current year in the catalog
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'best_sales' == query or 'meilleures_ventes' == query:
+                # TODO create query for searching the most sold product in the catalog
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'sac-a-main' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category, type__slug=query)
+            elif query is None:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            else:
+                return Product.objects.none()
 
         elif 'femme' == catalog and ('accessories' == category or 'accessoires' == category):
-            return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            if 'nouveautes' == query or 'news' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category) \
+                    .filter(created_date__gte=one_week_ago)
+            elif 'cartes_cadeau' == query or 'gifts_card' == query:
+                # TODO Create maybe a new field gift card and write a query for search it
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'ete' == query or 'summer' == query:
+                # TODO create query for searching product between june an august on the current year in the catalog
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'echarpes' == query or 'porte-monnaie' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category, type__slug=query)
+            elif query is None:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            else:
+                return Product.objects.none()
 
         elif 'femme' == catalog and ('jewelry' == category or 'bijoux' == category):
             return Product.objects.filter(catalog__slug=catalog, category__slug=category)

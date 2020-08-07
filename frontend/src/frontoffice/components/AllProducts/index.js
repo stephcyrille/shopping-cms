@@ -68,7 +68,7 @@ class AllProducts extends React.Component {
   render() {
 
     const baseUrl = "https://google.com"
-    const pagetitle = "All products | Shop"
+    const pagetitle = "Tous les produits | Shop"
     const description = "Tous les produits"
     const siteImage = "/static/images/logo.png"
 

@@ -300,7 +300,7 @@ class AddProduct extends React.Component {
 
   handleChangeRef = (event) => {
     event.preventDefault();
-    if(event.target.value < 13){
+    if(event.target.value){
       this.setState({
         ref: {
           value: event.target.value,
@@ -719,6 +719,9 @@ class AddProduct extends React.Component {
     const { classes } = this.props
     const { varieties} = this.props.addProductStore
     const { catalogs_data, categories_data, types_data, collections_data, colors_data, sizes_data } = this.state
+
+    console.log("VARIETIES THERES", varieties);
+    
 
 
     

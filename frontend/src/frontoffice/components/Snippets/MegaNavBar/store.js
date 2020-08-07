@@ -6,6 +6,8 @@ const initialState = {
     clothing_types: [],
     nav_pictures: [],
     shoes_types: [],
+    bags_types: [],
+    accessories_types: [],
     loading: false,
 };
 
@@ -17,6 +19,11 @@ actions.setInitialValues = createAction("MEGA_NAV__SET_INITIAL_VALUES");
 store.on(actions.setInitialValues, (state, value) => ({
 	...state,
 	initial_values: value
+}));
+
+actions.setLoading = createAction("MEGA_NAV__SET_LOADING");
+store.on(actions.setLoading, (state, value) => ({
+  ...state, loading: value
 }));
 
 actions.setTrendingProducts = createAction("MEGA_NAV__SET_TRENDING_PRODUCTS");
@@ -39,9 +46,15 @@ store.on(actions.setShoesTypes, (state, value) => ({
   ...state, shoes_types: value  
 }));  
 
-actions.setLoading = createAction("MEGA_NAV__SET_LOADING");
-store.on(actions.setLoading, (state, value) => ({
-  ...state, loading: value
-}));
+actions.setBagTypes = createAction("MEGA_NAV__SET_BAGS_TYPE");
+store.on(actions.setBagTypes, (state, value) => ({
+  ...state, bags_types: value  
+}));  
+
+actions.setAccessoryTypes = createAction("MEGA_NAV__SET_ACCESSORIES_TYPE");
+store.on(actions.setAccessoryTypes, (state, value) => ({
+  ...state, accessories_types: value  
+}));  
+
 
 export { store as megaMenuCStore, actions as megaMenuCStoreActions };
