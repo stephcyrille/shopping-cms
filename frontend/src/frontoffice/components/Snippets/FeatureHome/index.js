@@ -222,7 +222,7 @@ class FeatureHome extends React.Component {
                 >
                   <i className="far fa-check-circle fa-4x text-success" style={{ display: "block", textAlign: "center", marginBottom: 20 }}></i>
                   <h4 className="text-center" style={{ marginBottom: 20 }}>
-                  { quantity } { this.state.product ? this.state.product.title : "" }  a bien été ajouté au panier!</h4>
+                  { quantity } { this.state.product ? this.state.product.title : "" }  bien ajouté au panier!</h4>
                   <div className={` mr-auto mx-auto`} style={{ textAlign: "center", marginTop: 20 }}>
                     <Button 
                       onClick={ this.handleGotoCart.bind(this) }

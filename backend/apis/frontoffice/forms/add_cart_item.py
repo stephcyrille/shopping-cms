@@ -17,7 +17,7 @@ class CartItemPostSerializer(serializers.ModelSerializer):
 
 class AddCartItemAPIView(APIView):
 
-    def post(self, request, format=None):
+    def post(self, request):
         serializer = CartItemPostSerializer(data=request.data['data'])
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

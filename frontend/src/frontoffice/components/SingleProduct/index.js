@@ -15,6 +15,9 @@ import {
   WhatsappIcon
 } from "react-share";
 import { reduxForm, Field, propTypes as reduxFormPropTypes } from "redux-form";
+import { Button, TextField, Paper } from "@material-ui/core";
+import Grow from '@material-ui/core/Grow';
+import Dialog from '../Snippets/MyDialog'
 
 import { getSession, saveCartSession } from '../../utils/session_utils'
 import Navbar from "app-js/frontoffice/components/Snippets/Navbar/index"
@@ -39,6 +42,15 @@ export default
 }))
 @reduxForm({ form: "addToCartForm", enableReinitialize: true })
 class SingleProduct extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      dialogOpen: false,
+      quantity: 0,
+      product: {}, // Product pass to model when with click onaddToCart button
+    }
+  }
+
 
   UNSAFE_componentWillMount(){
     var slug = this.props.match.params.slug
@@ -81,6 +93,8 @@ class SingleProduct extends React.Component {
     const { stock_quantity, single_product, variety_id , product_slug } = this.props.singleProductCStore
     var result = stock_quantity - formValues.quantity
 
+    this.handleSetDialogOpen(single_product, formValues.quantity)
+
     this.props.dispatch(singleProductCStoreActions.setStockQuantity(result))
 
     if (result < 0){
@@ -111,7 +125,7 @@ class SingleProduct extends React.Component {
       })
       .catch(err => {
         this.props.dispatch(singleProductCStoreActions.setLoading(false))
-        console.error("Error when adding item to cart")
+        console.error("Error when adding item to cart", err)
       })
 
       this.props.change('quantity', 1);
@@ -151,7 +165,6 @@ class SingleProduct extends React.Component {
   }
 
   _handleAddQuantity(){
-    console.log("Augmentation!!!!!!!!!!!!")
     var qty = this.props.singleProductCStore.quantity + 1
     
     this.props.change('quantity', qty);
@@ -159,7 +172,6 @@ class SingleProduct extends React.Component {
   }
 
   _handleRemoveQuantity(){
-    console.log("Decrease!!!!!!!!!!!!")
     if(this.props.singleProductCStore.quantity > 1 ){
       var qty = this.props.singleProductCStore.quantity - 1
       
@@ -188,8 +200,31 @@ class SingleProduct extends React.Component {
   }
 
 
+  handleSetDialogOpen(element, qty){
+    this.setState({
+      dialogOpen: true,
+      product: element,
+      quantity: qty,
+    })
+  }
+
+  handleSetDialogClose(){
+    this.setState({
+      dialogOpen: false,
+      product: {},
+      quantity: 0,
+    })
+  }
+
+  handleGotoCart(){
+    this.handleSetDialogClose()
+    window.location.href = `${urls.CART}`; 
+  }
+
+
+
+
   render() {
-    const { t, i18n } = this.props
     const { quantity, stock_quantity, loading, single_product, variety_id, pic_loading, thumbnail_picture_key } = this.props.singleProductCStore
 
     const baseUrl = "https://google.com"
@@ -197,6 +232,8 @@ class SingleProduct extends React.Component {
     const description = "Mon produit est Ok"
     const siteImage = "/static/images/logo.png"
 
+    const prodQuantity = this.state.quantity
+    const success = true
 
 
     return (
@@ -379,11 +416,11 @@ class SingleProduct extends React.Component {
                           <button 
                             type="button" 
                             className="btn btn-fefault cart full-cart"
-                            onClick={this.props.handleSubmit(this._handleAddToCart.bind(this))}
+                            onClick={this.props.handleSubmit( this._handleAddToCart.bind(this))}
                             disabled={ stock_quantity < 1 ?true:false }
                           >
                             <i className="fa fa-shopping-cart"></i>
-                            Add to cart
+                            &nbsp; Ajouter au panier
                           </button>
                         </div>
                         <div style={{ paddingTop: "20px" }}>
@@ -431,6 +468,48 @@ class SingleProduct extends React.Component {
           </div>
         </div>
         <Footer />
+
+        <Dialog 
+          title={ "" } 
+          isOpen={ this.state.dialogOpen } 
+          onClose={ this.handleSetDialogClose.bind(this) } 
+          style={{ width: "350px" }}
+        >
+          <Paper style={{ padding: '2em' }}>
+              <Grow 
+                in={success}
+              >
+                <div
+                  style={{ transformOrigin: '0 0 0', width: 544 }}
+                  {...(success ? { timeout: 1500 } : {})}
+                >
+                  <i className="far fa-check-circle fa-4x text-success" style={{ display: "block", textAlign: "center", marginBottom: 20 }}></i>
+                  <h4 className="text-center" style={{ marginBottom: 20 }}>
+                  { prodQuantity } { this.state.product ? this.state.product.title : "" }  bien ajouté au panier!</h4>
+                  <div className={` mr-auto mx-auto`} style={{ textAlign: "center", marginTop: 20 }}>
+                    <Button 
+                      onClick={ this.handleGotoCart.bind(this) }
+                      className=""
+                      variant="outlined"
+                    >
+                      Aller au panier
+                    </Button>
+                    &nbsp;
+                    &nbsp;
+                    <Button 
+                      onClick={ this.handleSetDialogClose.bind(this) }
+                      className=""
+                      variant="outlined"
+                      color="primary"
+                    >
+                      continuer vos achats
+                    </Button>
+                  </div>
+                </div>
+              </Grow>
+            
+          </Paper>
+        </Dialog>
       </div>
     );
   }

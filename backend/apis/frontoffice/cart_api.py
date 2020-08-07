@@ -51,9 +51,6 @@ class CartSerializer(serializers.ModelSerializer):
     def get_cart_price(instance):
         total_price = 0
         cart_items = CartItem.objects.filter(cart=instance, is_archived=False)
-        print("\n\n")
-        print(cart_items.count())
-        print("\n\n")
         for i in cart_items:
             quantity = i.quantity
             product_price = i.variety.product.price
