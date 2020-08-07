@@ -97,13 +97,16 @@ class FeatureHome extends React.Component {
                             <h2>{val.price} {'FCFA'}</h2>
                             <p style={{ textTransform: "uppercase", fontWeight: "bold" }}>{val.title}</p>
                           </div>
-                          <div className="product-overlay">
+                          <a 
+                            href={`/shop/products/${val.slug}`}
+                            className="product-overlay"
+                          >
                             <div className="overlay-content">
                               <h2>{val.price} {'FCFA'}</h2>
                               {/* <p>{val.title}</p> */}
                               <a href={`/shop/products/${val.slug}`} className="btn btn-default add-to-cart"><i className="fa fa-eye"></i>Details</a>
                             </div>
-                          </div>
+                          </a>
                       </div>
                       <div className="choose">
                         <ul className="nav nav-pills nav-justified">
