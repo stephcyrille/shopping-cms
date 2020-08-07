@@ -317,21 +317,17 @@ class SingleProduct extends React.Component {
                                   return (
                                     <div key={key} style={{ display: "inline-block" }}>
                                       <a 
-                                        className="" 
+                                        href="#"
                                         onClick={this._handleChangeVariety.bind(this, key, val.quantity)}
-                                        style={{ 
-                                                  width: "10px", 
-                                                  height: "10px", 
-                                                  backgroundColor: val.color.code, 
-                                                  color: val.color.code, 
-                                                  padding: "5px", 
-                                                  marginRight: "5px",
-                                                  border: `2px solid ${val.code}`,
-                                                  borderRadius: "5px"
-                                        }}
-                                        data-toggle="tooltip" data-placement="bottom" title={val.color.name}
+                                        data-toggle="tooltip" data-placement="bottom" title={val.color.title}
+                                        style={{ paddingRight: 5 }}
                                       >
-                                        00
+                                        <img 
+                                          src={`${val.color.picture ? val.color.picture : null}`} 
+                                          width="30" 
+                                          height="30" 
+                                          style={{ borderRadius: 5 }}
+                                        />
                                       </a>
                                     </div>
                                   )
