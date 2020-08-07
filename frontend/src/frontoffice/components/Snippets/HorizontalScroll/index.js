@@ -90,7 +90,7 @@ class HorizontalScroll extends React.Component {
   }
 
   buildItems() {
-    var products = this.props.products
+    var products = this.props.products ? this.props.products : []
 
     return products.map((val, key) => {
       return (

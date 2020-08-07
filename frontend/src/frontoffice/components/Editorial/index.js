@@ -51,7 +51,7 @@ const useStyles = () => ({
   cover_text_wrapper: {
     margin: 0,
     position: "absolute",
-    bottom: "10%",
+    top: "40%",
     right: "13%",
     width: "100%",
   },

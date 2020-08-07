@@ -518,17 +518,15 @@ class MegaNavbar extends React.Component {
                         <div className="col-sm-2">
                           <h3 className="">Editorial</h3>
                           <a title="Mois" href="#" className="dropdown-item">Nouveautés</a>
-                          <a title="Tendance" href="#" className="dropdown-item">Tendance</a>
-                          <a title="Beauté" href="#" className="dropdown-item">Beauté</a>
-                          <a title="Afro YACA Drum" href="#" className="dropdown-item">Afro YACA Drum</a>
-                          <a title="Grand titre" href="#" className="dropdown-item">Grand titre</a>
-                          <a title="Femmes influentes" href="#" className="dropdown-item">Femmes influentes</a>
-                          <a title="Mode de vie" href="#" className="dropdown-item">Mode de vie</a>
-                          <a title="Video" href="#" className="dropdown-item">Video</a>
+                          <a title="Femmes influentes" href={`${urls.EDITORIAL}`} className="dropdown-item">Femmes influentes</a>
+                          <a title="Grand titre" href={`${urls.EDITORIAL}`} className="dropdown-item">Grand titre</a>
+                          <a title="Mode de vie" href={`${urls.EDITORIAL}`} className="dropdown-item">Mode de vie</a>
+                          <a title="Tendance" href={`${urls.EDITORIAL}`} className="dropdown-item">Tendance</a>
+                          <a title="Beauté" href={`${urls.EDITORIAL}`} className="dropdown-item">Beauté</a>
                         </div>
                         <div className="col-sm-3 nav_cover">
                           <h5 className="">A l'affiche</h5> 
-                          <a href="" className="">
+                          <a href="" className={`${urls.EDITORIAL}`}>
                             <div className="edito_img_wrapper">
                               <img src="/static/images/cover1.jpg" className="edito_picture" />
                             </div>
@@ -545,7 +543,7 @@ class MegaNavbar extends React.Component {
                         </div>
                         <div className="col-sm-4 nav_cover">
                           <h5 className="">Parue aujourd'hui</h5> 
-                          <a href="">
+                          <a href={`${urls.EDITORIAL}`}>
                             <div className="row">
                               <div className="col-sm-5">
                                 <div className="today_edito_img_wrapper_1">
@@ -558,7 +556,7 @@ class MegaNavbar extends React.Component {
                               </div>
                             </div>
                           </a>
-                          <a href="">
+                          <a href={`${urls.EDITORIAL}`}>
                             <div className="row">
                               <div className="col-sm-5">
                                 <div className="today_edito_img_wrapper">
@@ -584,66 +582,36 @@ class MegaNavbar extends React.Component {
                       <div className="row w-100">
                         <div className="col-sm-3">
                           <h3 className="">Parcourir par</h3>
-                          <a title="Mois" href="#" className="dropdown-item">Mois</a>
-                          <a title="Weekend" href="#" className="dropdown-item">Weekend</a>
-                          <a title="Articles d'été" href="#" className="dropdown-item">Articles d'été</a>
-                          <a title="Meilleures ventes" href="#" className="dropdown-item">Meilleures ventes</a>
+                          <a title="Mois" href={`/shop/${'femme'}/${'trending'}?sort=${'month'}`}  className="dropdown-item">Mois</a>
+                          <a title="Weekend" href={`/shop/${'femme'}/${'trending'}?sort=${'weekend'}`} className="dropdown-item">Weekend</a>
+                          <a title="Articles d'été" href={`/shop/${'femme'}/${'trending'}?sort=${'summer_collection'}`} className="dropdown-item">Articles d'été</a>
+                          <a title="Meilleures ventes" href={`/shop/${'femme'}/${'trending'}?sort=${'best_sales'}`} className="dropdown-item">Meilleures ventes</a>
                         </div>
                         <div className="col-sm-9 nav_tendencies">
                           <h4 className="">Ce qu'il faut porter aujourd'hui</h4>
                           <div className="row">
-                            <div className="col-sm-3">
-                              <a href="" className="">
-                                <div className="img_wrapper">
-                                  <img src="/static/images/dress2.png" className="nav_picture" />
-                                </div>
-                                <div className="img_legend">
-                                  <h4 className="">Afro YACA DRUM</h4>
-                                    <span className="text_legend">
-                                      Robe tailleur Afrik
-                                    </span>
-                                </div>
-                              </a>
-                            </div>
-                            <div className="col-sm-3">
-                              <a href="" className="">
-                                <div className="img_wrapper">
-                                  <img src="/static/images/dress2.png" className="nav_picture" />
-                                </div>
-                                <div className="img_legend">
-                                  <h4 className="">Afro YACA DRUM</h4>
-                                    <span className="text_legend">
-                                      Robe tailleur Afrik
-                                    </span>
-                                </div>
-                              </a>
-                            </div>
-                            <div className="col-sm-3">
-                              <a href="" className="">
-                                <div className="img_wrapper">
-                                  <img src="/static/images/dress2.png" className="nav_picture" />
-                                </div>
-                                <div className="img_legend">
-                                  <h4 className="">Afro YACA DRUM</h4>
-                                    <span className="text_legend">
-                                      Robe tailleur Afrik
-                                    </span>
-                                </div>
-                              </a>
-                            </div>
-                            <div className="col-sm-3">
-                              <a href="" className="">
-                                <div className="img_wrapper">
-                                  <img src="/static/images/dress2.png" className="nav_picture" />
-                                </div>
-                                <div className="img_legend">
-                                  <h4 className="">Afro YACA DRUM</h4>
-                                    <span className="text_legend">
-                                      Robe tailleur Afrik
-                                    </span>
-                                </div>
-                              </a>
-                            </div>
+                            { !_.isEmpty(trending_product) ? 
+                              this.randomizeArray(trending_product).slice(0,4)
+                                .map((val, key) => {
+                                  return (
+                                    <div className="col-sm-3" key={key}>
+                                      <a href={`/shop/products/${val.slug}`} className="">
+                                        <div className="img_wrapper">
+                                          <img src={`${val.pictures[0]}`} className="nav_picture" />
+                                        </div>
+                                        <div className="img_legend">
+                                          <h4 className="">{val.title}</h4>
+                                            <span className="text_legend">
+                                            {val.price} FCFA
+                                            </span>
+                                        </div>
+                                      </a>
+                                    </div>
+                                  ) 
+                                }) 
+                              : 
+                              null 
+                            }
                           </div>
                         </div>
                       </div>
