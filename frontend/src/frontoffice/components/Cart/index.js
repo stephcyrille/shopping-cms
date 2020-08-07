@@ -53,7 +53,6 @@ class Cart extends React.Component {
 
 
   _handleRemoveItem(cart_item_id){
-    console.log('Remove cart item with id', cart_item_id)
      var body = {
       cart_id : getSession().cart_id,
       cart_item_id: cart_item_id
@@ -79,7 +78,6 @@ class Cart extends React.Component {
 
 
   update_cart_session(cart_id){
-    console.log('===================PAAAAAAAAAAAAAMMMMMMMMMMMMMMMMMMMMMMMMMM')
     window.axios
     .get(`/apis/core/session/carts/update/${cart_id}/`)
       .then(response => {
@@ -96,10 +94,6 @@ class Cart extends React.Component {
 
         saveCartSession(JSON.stringify(cart_session))
         this.props.dispatch(navBarCartCStoreActions.setItem(total_items))
-        
-        console.log('===================POOOOOOOOO')
-
-
       })
       .catch(err => {
         console.error('Error on updating cart session', err)
@@ -275,23 +269,12 @@ class Cart extends React.Component {
                   </div>
                 </div>
 
-                <div className="row">
-                  <div className="checkout-button">
-                    <a
-                      href="#"
-                      className="btn btn-secondary"
-                    >
-                      Commander en tant box
-                    </a>
-                  </div>
-                </div>
-
                 <br />
                 
                 <div className="row">
                   <div className="checkout-button continue_shop">
                     <a 
-                      href={`${urls.HOME}`}
+                      href={`/shop/${'femme'}/${'news-products'}`}
                       className="btn btn-outline-secondary"
                     >
                       Continuer vos achats
