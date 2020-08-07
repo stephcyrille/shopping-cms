@@ -21,6 +21,8 @@ class MegaNavbar extends React.Component {
     this._fetchTypesByCategory('chaussures', megaMenuCStoreActions.setShoesTypes)
     this._fetchTypesByCategory('sacs', megaMenuCStoreActions.setBagTypes)
     this._fetchTypesByCategory('accessoires', megaMenuCStoreActions.setAccessoryTypes)
+    this._fetchTypesByCategory('bijoux', megaMenuCStoreActions.setJewleryTypes)
+    this._fetchTypesByCategory('beautes', megaMenuCStoreActions.setBeautyTypes)
   }
 
 
@@ -103,7 +105,7 @@ class MegaNavbar extends React.Component {
 
   render() {
 
-    const { trending_product, nav_pictures, clothing_types, shoes_types, bags_types, accessories_types } = this.props.megaMenuCStore
+    const { trending_product, nav_pictures, clothing_types, shoes_types, bags_types, accessories_types, jewleries_types, beauties_types } = this.props.megaMenuCStore
     
 
     return (
@@ -377,12 +379,12 @@ class MegaNavbar extends React.Component {
                       <div className="row w-100 designers">
                         <div className="col-sm-3">
                           <h4 className="">Filtrer par</h4>
-                          <a title="Nouveautés" href="#" className="dropdown-item">Nouveautés</a>
-                          <a title="Excliusivités" href="#" className="dropdown-item">Exclusivités</a>
-                          <a title="Bijoux Afro YACA" href="#" className="dropdown-item">Bijoux Afro YACA</a>
-                          <a title="Bijoux d'évènements" href="#" className="dropdown-item">Bijoux d'évènement</a>
-                          <a title="Bijoux du quotidien" href="#" className="dropdown-item">Bijoux du quotidien</a>
-                          <a title="Cadeaux" href="#" className="dropdown-item">Cadeaux</a>
+                          <a title="Nouveautés" href={`/shop/${'femme'}/${'bijoux'}?sort=nouveautes`} className="dropdown-item">Nouveautés</a>
+                          <a title="Excliusivités" href={`/shop/${'femme'}/${'bijoux'}?sort=exclusivites`} className="dropdown-item">Exclusivités</a>
+                          <a title="Bijoux Afro YACA" href="{`/shop/${'femme'}/${'bijoux'}?sort=afro_yaca_drum`}" className="dropdown-item">Bijoux Afro YACA</a>
+                          <a title="Bijoux d'évènements" href={`/shop/${'femme'}/${'bijoux'}?sort=evenements`} className="dropdown-item">Bijoux d'évènement</a>
+                          <a title="Bijoux du quotidien" href="{`/shop/${'femme'}/${'bijoux'}?sort=quotidien`}" className="dropdown-item">Bijoux du quotidien</a>
+                          <a title="Cadeaux" href="{`/shop/${'femme'}/${'bijoux'}?sort=cadeaux`}" className="dropdown-item">Cadeaux</a>
                         </div>
                         <div className="col-sm-9">
                           <div className="row">
@@ -390,46 +392,30 @@ class MegaNavbar extends React.Component {
                               <h4 className="">Bijoux</h4>
                               <ul className="feature_designer">
                                 <li>
-                                  <a href="">
-                                    Tous les bijoux
+                                  <a href={`/shop/${'femme'}/${'bijoux'}`}>
+                                    Tous
                                   </a>
                                 </li>
-                                <li>
-                                  <a href="">
-                                    Bijoux rafinés
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Bijoux tendances
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Coliers
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Bracelets
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Montres
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Bagues
-                                  </a>
-                                </li>
+                                { !_.isEmpty(jewleries_types) ? 
+                                  jewleries_types
+                                    .map((val, key) => {
+                                      return (
+                                        <li key={key}>
+                                          <a href={`/shop/${'femme'}/${'bijoux'}?sort=${val.slug}`}>
+                                            { val.title }
+                                          </a>
+                                        </li>
+                                      )
+                                    }) 
+                                  : 
+                                  null
+                                }
                               </ul>
                             </div>
                             <div className="col-sm-6">
                               <a href="" className="">
                                 <div className="designer_img_wrapper">
-                                  <img src="/static/images/jewellery.jpg" className="designer_picture" />
+                                  <img src={`${ nav_pictures ? nav_pictures.jewelery : null }`} className="designer_picture" />
                                 </div>
                               </a>
                             </div>
@@ -439,7 +425,7 @@ class MegaNavbar extends React.Component {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown position-static">
+                {/* <li className="nav-item dropdown position-static">
                   <a title="Lingerie" href={`/shop/${'femme'}/${'lingeries'}`} className="nav-link dropdown-toggle">Lingerie</a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
                     <div className="container">
@@ -461,21 +447,6 @@ class MegaNavbar extends React.Component {
                                     Tous lingéries
                                   </a>
                                 </li>
-                                <li>
-                                  <a href="">
-                                    Tenue de lounge
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Camisoles et chemisers
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Nuisettes
-                                  </a>
-                                </li>
                               </ul>
                             </div>
                             <div className="col-sm-6">
@@ -490,7 +461,7 @@ class MegaNavbar extends React.Component {
                       </div>
                     </div>
                   </div>
-                </li>
+                </li> */}
                 <li className="nav-item dropdown position-static">
                   <a title="Beauté" href={`/shop/${'femme'}/${'beautes'}`} className="nav-link dropdown-toggle">Beauté</a>
                   <div className="dropdown-menu w-100 top-auto catalogue_menu">
@@ -498,11 +469,8 @@ class MegaNavbar extends React.Component {
                       <div className="row w-100 designers">
                         <div className="col-sm-3">
                           <h4 className="">Filtrer par</h4>
-                          <a title="Nouveautés" href="#" className="dropdown-item">Nouveautés</a>
-                          <a title="Meilleures ventes" href="#" className="dropdown-item">Meilleures ventes</a>
-                          <a title="Lotions corporelle" href="#" className="dropdown-item">Lotion corporelle</a>
-                          <a title="Soins à domicile" href="#" className="dropdown-item">Soins à domicile</a>
-                          <a title="Produits néttoyants" href="#" className="dropdown-item">Produits néttoyants</a>
+                          <a title="Nouveautés" href={`/shop/${'femme'}/${'beauties'}?sort=nouveautes`} className="dropdown-item">Nouveautés</a>
+                          <a title="Meilleures ventes" href={`/shop/${'femme'}/${'beauties'}?sort=meilleures_ventes`} className="dropdown-item">Meilleures ventes</a>
                         </div>
                         <div className="col-sm-9">
                           <div className="row">
@@ -511,55 +479,29 @@ class MegaNavbar extends React.Component {
                               <ul className="feature_designer">
                                 <li>
                                   <a href="">
-                                    Tous les produits beauté
+                                    Tous
                                   </a>
                                 </li>
-                                <li>
-                                  <a href="">
-                                    Toilette et beauté
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Collection de beauté
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Boujies
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Parfums
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Soins de cheveux
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Makeup
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Soin de peau
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="">
-                                    Outils et appareils
-                                  </a>
-                                </li>
+                                { !_.isEmpty(beauties_types) ? 
+                                  beauties_types
+                                    .map((val, key) => {
+                                      return (
+                                        <li key={key}>
+                                          <a href={`/shop/${'femme'}/${'beauties'}?sort=${val.slug}`}>
+                                            { val.title }
+                                          </a>
+                                        </li>
+                                      )
+                                    }) 
+                                  : 
+                                  null
+                                }
                               </ul>
                             </div>
                             <div className="col-sm-6">
                               <a href="" className="">
                                 <div className="designer_img_wrapper">
-                                  <img src="/static/images/jewellery.jpg" className="designer_picture" />
+                                  <img src={`${ nav_pictures ? nav_pictures.beauty : null }`} className="designer_picture" />
                                 </div>
                               </a>
                             </div>
@@ -574,7 +516,7 @@ class MegaNavbar extends React.Component {
                     <div className="container">
                       <div className="row w-100">
                         <div className="col-sm-2">
-                          <h3 className="">Editorial AYD</h3>
+                          <h3 className="">Editorial</h3>
                           <a title="Mois" href="#" className="dropdown-item">Nouveautés</a>
                           <a title="Tendance" href="#" className="dropdown-item">Tendance</a>
                           <a title="Beauté" href="#" className="dropdown-item">Beauté</a>

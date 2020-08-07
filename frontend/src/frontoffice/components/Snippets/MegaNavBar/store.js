@@ -8,6 +8,8 @@ const initialState = {
     shoes_types: [],
     bags_types: [],
     accessories_types: [],
+    jewleries_types: [],
+    beauties_types: [],
     loading: false,
 };
 
@@ -54,6 +56,16 @@ store.on(actions.setBagTypes, (state, value) => ({
 actions.setAccessoryTypes = createAction("MEGA_NAV__SET_ACCESSORIES_TYPE");
 store.on(actions.setAccessoryTypes, (state, value) => ({
   ...state, accessories_types: value  
+}));  
+
+actions.setJewleryTypes = createAction("MEGA_NAV__SET_JEWLERIES_TYPE");
+store.on(actions.setJewleryTypes, (state, value) => ({
+  ...state, jewleries_types: value  
+}));  
+
+actions.setBeautyTypes = createAction("MEGA_NAV__SET_BEAUTIES_TYPE");
+store.on(actions.setBeautyTypes, (state, value) => ({
+  ...state, beauties_types: value  
 }));  
 
 

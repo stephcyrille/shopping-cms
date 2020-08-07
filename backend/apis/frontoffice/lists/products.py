@@ -166,7 +166,29 @@ class ProductListByCatalogAPIView(APIView):
                 return Product.objects.none()
 
         elif 'femme' == catalog and ('jewelry' == category or 'bijoux' == category):
-            return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            if 'nouveautes' == query or 'news' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category) \
+                    .filter(created_date__gte=one_week_ago)
+            elif 'exclusivites' == query or 'exclusivities' == query:
+                # TODO Create maybe a new field exclusivity and write a query for search it
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'evenements' == query or 'events' == query:
+                # TODO create maybe a new field event and write a query for search it
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'quotidien' == query or 'daily' == query:
+                # TODO create maybe a new field daily and write a query for search it
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'cadeaux' == query or 'gifts' == query:
+                # TODO create maybe a new field gift and write a query for search it
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'afro_yaca_drum' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            elif 'bracelets' == query:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category, type__slug=query)
+            elif query is None:
+                return Product.objects.filter(catalog__slug=catalog, category__slug=category)
+            else:
+                return Product.objects.none()
 
         elif 'femme' == catalog and 'lingeries' == category:
             return Product.objects.filter(catalog__slug=catalog, category__slug=category)

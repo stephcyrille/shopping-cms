@@ -95,11 +95,17 @@ class AddProduct extends React.Component {
   constructor(props){
     super(props)
     document.title = 'Ajouter un produit | Afro Yaca Drum'
+    let date = new Date().toISOString()
+    let ref_part1 = date.slice(2,10).replace(/-/g,"")
+    let ref_part2 = date.slice(12,19).replace(/:/g,"")
+    let ref_val = 'P' + ref_part1 + ref_part2
 
+
+  
     this.state = {
       ref : {
-        textmask: 'REF-2020',
-        value: 'REF-2020',
+        textmask: 'P2001',
+        value: ref_val,
         error: false,
         errorMessage: null
       },
@@ -587,6 +593,7 @@ class AddProduct extends React.Component {
       const formData = objectToFormData(data)
       // SUBMIT THERE
       this.postToApi(formUrl, formData)
+      this.props.dispatch(addProductStoreActions.initializeState())
     }
   }
 
@@ -601,7 +608,6 @@ class AddProduct extends React.Component {
             snack_color: "success"
           })
           this.props.dispatch(push(`${urls.PRODUCT}`, { snack_open: true }));
-          this.props.dispatch(addProductStoreActions.initializeState())
         }
       )
       .catch((error) =>{
@@ -754,6 +760,7 @@ class AddProduct extends React.Component {
                     helperText={ this.state.ref.error ? this.state.ref.errorMessage : null }
                     required
                     fullWidth
+                    disabled
                   />
                 </div>
                 <div className="col-4">
