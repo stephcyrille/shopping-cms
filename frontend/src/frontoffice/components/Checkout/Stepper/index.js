@@ -5,11 +5,10 @@ import { Stepper, Step, StepLabel, Button, Paper } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import StepConnector from "@material-ui/core/StepConnector";
 
-import FormLabel from '@material-ui/core/FormLabel';
+
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import Step3 from './Snippeds/Step3/index'
@@ -18,6 +17,15 @@ import clsx from "clsx";
 
 import './style.local.css';
 import { stepperCStoreActions } from './store'
+
+import ScrollButton from "../../Snippets/ScrollToTop"
+
+
+
+
+
+
+
 
 // Checknbox properties
 const useStyles = makeStyles((theme) => ({
@@ -119,6 +127,7 @@ class StepperComponent extends React.Component {
     this.state = {
       activeStep: 1,
       steps: [],
+      intervalId: 0,
     };
   }
 
@@ -145,12 +154,15 @@ class StepperComponent extends React.Component {
    // } else {
    //   alert("Form has errors.");
    // }
+   this.scrollToTop()
   };
 
   handleBack = () => {
     this.setState({
       activeStep: this.state.activeStep - 1,
     });
+    
+    this.scrollToTop()
   };
 
   _handleHomePage(){
@@ -279,6 +291,19 @@ class StepperComponent extends React.Component {
   };
 
 
+  scrollStep(scrollStepInPx="50" ) {
+    if (window.pageYOffset === 0) {
+        clearInterval(this.state.intervalId);
+    }
+    window.scroll(0, window.pageYOffset - scrollStepInPx);
+  }
+  
+  scrollToTop(delayInMs="16.66") {
+    let intervalId = setInterval(this.scrollStep.bind(this), delayInMs);
+    this.setState({ intervalId: intervalId });
+  }
+
+
 
   render() {
     const { activeStep, steps } = this.state;
@@ -395,6 +420,8 @@ class StepperComponent extends React.Component {
             >
               Retour
             </Button>
+            &nbsp;
+            &nbsp;
             <Button
               variant="contained"
               onClick={activeStep === steps.length - 1 ? this._handleHomePage : this.handleNext}
