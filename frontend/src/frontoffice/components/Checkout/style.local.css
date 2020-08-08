@@ -6,16 +6,20 @@
     text-transform: uppercase;
 }
 
-.address_bloc{
+.address_bloc, .address_bloc_new{
     height: 200px;
-    width: 300px;
     border: 1px solid lightgray;
     padding: 20px;
     margin-top: 20px;
 }
-.address_bloc:hover{
+.address_bloc_new:hover{
     border: 1px solid black;
     cursor: pointer;
+}
+
+.plus_box i:hover{
+    cursor: pointer;
+    font-weight: bolder;
 }
 
 

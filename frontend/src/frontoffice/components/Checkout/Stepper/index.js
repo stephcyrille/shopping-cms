@@ -16,6 +16,7 @@ import { stepperCStoreActions } from './store'
 import Step3 from './Snippeds/Step3/index'
 import './style.local.css';
 import { getSession } from '../../../utils/session_utils'
+import appConfig from '../../../config'
 
 
 // Checknbox properties
@@ -120,6 +121,11 @@ class StepperComponent extends React.Component {
       steps: [],
       intervalId: 0,
       dialogOpen: false,
+      addressList: [],
+      // For express delivery
+      express_delivery_cost: 0,
+      standard: true,
+      express: false,
 
       // Add address form val
       surname: {
@@ -143,7 +149,7 @@ class StepperComponent extends React.Component {
         errorMessage: null
       },
       country: {
-        value: '',
+        value: 'Cameroun',
         error: false,
         errorMessage: null
       },
@@ -313,8 +319,27 @@ class StepperComponent extends React.Component {
 
   };
 
+  handleChangeDelivery(){
+    if(this.state.standard==true){
+      this.setState({
+        standard: false,
+        express: true,
+        express_delivery_cost: appConfig.EXPRESSDELIVERYCOST
+      })
+    }
+    else{
+      this.setState({
+        standard: true,
+        express: false,
+        express_delivery_cost: 0,
+      })
+    }
+  }
+
 
   getStepContent = (stepIndex) => {
+    const { standard, express } = this.state
+
     switch (stepIndex) {
       case 0:
         return (
@@ -333,17 +358,37 @@ class StepperComponent extends React.Component {
                   Saisissez votre adresse de livraison pour connaître les options de livraison et les délais. 
                   Les restrictions de livraison appliquées peuvent nous contraindre à refuser votre commande.
                 </p>
-                <div className="address_bloc" onClick={ this.handleSetDialogOpen.bind(this) }>
-                  <div className="add_address_bloc">
-                    <h6>Nouvelle adresse</h6>
+                <div className="row" style={{ marginRight: 0, marginLeft: 0 }}>
+                  <div className="col-6" style={{ paddingLeft: 0}}>
+                    <div className="address_bloc">
+                      <div className="add_address_bloc">
+                        <h5>MEBENGA ATANGA STEPHANE</h5>
+                        <h5>Douala, Cameroun</h5>
+                        <h6>PK 17, Entrée Chefferie</h6>
+                        <h6>Tél: (+237) 693 458 540</h6>
+                      </div>
+                      <div className="plus_box">
+                        <i className="fa fa-pen" onClick={ this.handleSetDialogOpen.bind(this) }></i>
+                      </div>
+                    </div>
                   </div>
-                  <div className="plus_box">
-                    <i className="fa fa-plus"></i>
+                  <div className="col-6" style={{ paddingRight: 0}}>
+                    <div className="address_bloc_new" onClick={ this.handleSetDialogOpen.bind(this) }>
+                      <div className=".address_bloc_new">
+                        <h6>Nouvelle adresse</h6>
+                      </div>
+                      <div className="plus_box">
+                        <i className="fa fa-plus"></i>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="place_delivery_choice">
                   <h2>Obtenir votre commande</h2> 
-                  <div className="delivery_method active standard_delivery">
+                  <div 
+                    className={`delivery_method standard_delivery ${standard ? 'active' : null }`}
+                    onClick={ this.handleChangeDelivery.bind(this) }
+                  >
                     <h6>D'ici Samedi 25 Juillet </h6>
                     <p>
                       <i className="fas fa-truck" style={{ marginRight: 10 }}></i>
@@ -354,7 +399,10 @@ class StepperComponent extends React.Component {
                     </p>
                   </div>
                   
-                  <div className="delivery_method fast_delivery">
+                  <div 
+                    className={`delivery_method fast_delivery ${express ? 'active' : null }`}
+                    onClick={ this.handleChangeDelivery.bind(this) }
+                  >
                     <h6>D'ici Samedi 25 Juillet </h6>
                     <p>
                       <i className="fas fa-shipping-fast" style={{ marginRight: 10 }}></i>
@@ -526,12 +574,17 @@ class StepperComponent extends React.Component {
         },
       })
     }
+
+    value["address_precision"] = this.state.address_precision.value
+    value["country"] = this.state.country.value
+
+    console.log("FORM VALUE THERE::", value)
   }
 
 
 
   render() {
-    const { activeStep, steps } = this.state;
+    const { activeStep, steps, express_delivery_cost } = this.state;
     const { loading, cart_sub_total, cart_delivery_price, cart_total, cart } = this.props.stepperCStore;
 
 
@@ -586,6 +639,10 @@ class StepperComponent extends React.Component {
                         <div className="col-sm-6"><h6 className="">Livraison</h6></div>
                         <div className="col-sm-6"><p className="">{ cart_delivery_price ? cart_delivery_price : 0 } FCFA</p></div>
                       </div>
+                      { express_delivery_cost != 0 && <div className="row">
+                        <div className="col-sm-6"><h6 className="">Livraison express</h6></div>
+                        <div className="col-sm-6"><p className=""> { express_delivery_cost } FCFA</p></div>
+                      </div>}
                       <div className="row">
                         <div className="col-sm-6"><h6 className="">Réduction</h6></div>
                         <div className="col-sm-6"><p className=""> { '0 %' } </p></div>
@@ -597,7 +654,7 @@ class StepperComponent extends React.Component {
                     </div>
                     <div className="row line-total">
                       <div className="col-sm-6"><h5 className="">Montant Total</h5></div>
-                      <div className="col-sm-6"><h5 className="price-total">{ cart_total ? cart_total : 0 } FCFA</h5></div>
+                      <div className="col-sm-6"><h5 className="price-total">{ cart_total ? (express_delivery_cost != 0 ? express_delivery_cost + cart_total : cart_total) : 0 } FCFA</h5></div>
                     </div>
                   </div>
                 </div>
