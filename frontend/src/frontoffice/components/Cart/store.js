@@ -2,11 +2,11 @@ import { createAction, createReducer } from "redux-act";
 
 const initialState = {
 	initial_values:{},
-    cart: {},
-    cart_sub_total: 0,
-    cart_total: 0,
-    cart_delivery_price: 0,
-    loading: false,
+  cart: {},
+  cart_sub_total: 0,
+  cart_total: 0,
+  cart_delivery_price: 0,
+  loading: false,
 };
 
 const actions = { name: "cartCStoreActions" };
@@ -19,7 +19,7 @@ store.on(actions.setInitialValues, (state, value) => ({
 	initial_values: value
 }));
 
-actions.setCart = createAction("CART__SET_PRODUCT_QUANTITY");
+actions.setCart = createAction("CART__SET_CART");
 store.on(actions.setCart, (state, value) => ({
   ...state, cart: value
 }));
@@ -43,8 +43,6 @@ actions.setLoading = createAction("CART__SET_LOADING");
 store.on(actions.setLoading, (state, value) => ({
   ...state, loading: value
 }));
-
-
 
 
 export { store as cartCStore, actions as cartCStoreActions };

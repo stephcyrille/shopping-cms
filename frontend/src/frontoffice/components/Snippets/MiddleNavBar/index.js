@@ -25,7 +25,6 @@ class MiddleNavbar extends React.Component {
     window.axios
     .get(`/apis/core/session/carts/update/${cart_id}/`)
       .then(response => {
-        console.log('Upadting session cart', response.data)
         var products = response.data.products
         var total_items = response.data.cart_quantity
         

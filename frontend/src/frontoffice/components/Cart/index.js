@@ -104,7 +104,6 @@ class Cart extends React.Component {
 
   render() {
     const { loading, cart } = this.props.cartCStore
-    const delevery_price = 2000
     const baseUrl = "https://google.com"
     const pagetitle = "Cart | Shop"
     const description = "Votre panier d'achat"

@@ -1,30 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-
+import { PulseLoader } from 'react-spinners';
+import clsx from "clsx";
 import { Stepper, Step, StepLabel, Button, Paper } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import StepConnector from "@material-ui/core/StepConnector";
-
-
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import Step3 from './Snippeds/Step3/index'
-
-import clsx from "clsx";
-
-import './style.local.css';
+import _ from "underscore";
 import { stepperCStoreActions } from './store'
-
-import ScrollButton from "../../Snippets/ScrollToTop"
-
-
-
-
-
-
+import Step3 from './Snippeds/Step3/index'
+import './style.local.css';
+import { getSession } from '../../../utils/session_utils'
 
 
 // Checknbox properties
@@ -132,36 +122,67 @@ class StepperComponent extends React.Component {
   }
 
   componentDidMount = async () => {
+    var cart_id = getSession().cart_id
+    this._fetchCartItems(cart_id)
+
     const steps = this.getSteps();
     this.setState({
       steps,
     });
   };
 
+
+  _fetchCartItems(cart_id){
+    this.props.dispatch(stepperCStoreActions.setLoading(true))
+
+    window.axios
+    .get(`/apis/cart/${cart_id}/`)
+    .then(response => {
+      var cart = response.data
+      
+      this.props.dispatch(stepperCStoreActions.setLoading(false))
+      this.props.dispatch(stepperCStoreActions.setCart(cart))
+      this.props.dispatch(stepperCStoreActions.setCartSubTotal(cart.total))
+      this.props.dispatch(stepperCStoreActions.setCartTotal(cart.total + cart.delivery_price))
+      this.props.dispatch(stepperCStoreActions.setCartDeliveryPrice(cart.delivery_price))
+    })
+    .catch(
+      error => {
+        console.error("Errrorr", error)
+        this.props.dispatch(stepperCStoreActions.setLoading(false))
+      }  
+    )
+  }
+
+
   getSteps = () => {
     return ["cartStep", "deliveryStep", "paymentStep", "completeStep"];
   };
 
   handleNext = () => {
-    // if (this.handleValidation()) {
-      if (this.state.activeStep === 3) {
-        // this.handlSaveNewShoppiing();
-      } else {
-        this.setState({
-          activeStep: this.state.activeStep + 1,
-        });
-      }
-   // } else {
-   //   alert("Form has errors.");
-   // }
-   this.scrollToTop()
+    this.props.dispatch(stepperCStoreActions.setLoading(true))
+    setTimeout(()=> {
+       // if (this.handleValidation()) {
+        if (this.state.activeStep === 3) {
+          // this.handlSaveNewShoppiing();
+        } else {
+          this.setState({
+            activeStep: this.state.activeStep + 1,
+          });
+        }
+      // } else {
+      //   alert("Form has errors.");
+      // }
+      this.scrollToTop()
+      this.props.dispatch(stepperCStoreActions.setLoading(false))
+    }, 500)
   };
 
   handleBack = () => {
     this.setState({
       activeStep: this.state.activeStep - 1,
     });
-    
+
     this.scrollToTop()
   };
 
@@ -307,9 +328,22 @@ class StepperComponent extends React.Component {
 
   render() {
     const { activeStep, steps } = this.state;
+    const { loading, cart_sub_total, cart_delivery_price, cart_total, cart } = this.props.stepperCStore;
+
 
     return (
       <div>
+        { loading ? ( 
+            <div className='home-loading'>
+              <div className='reverse-spinner'>
+                <PulseLoader
+                  color={'#FE980F'} 
+                  loading={loading} 
+                />
+              </div>
+            </div>)
+          : ''
+        }
         <div className="container-fluid card" style={{ marginTop: 20, marginBottom: 20 }}>
           <div className="col-md-12" style={{ margin: "auto" }}>
             <Stepper
@@ -321,7 +355,6 @@ class StepperComponent extends React.Component {
               {steps.map((label) => (
                 <Step key={label}>
                   <StepLabel StepIconComponent={ColorlibStepIcon} style={{ display: "flex", alignItems: "normal"}}>
-                    {/* {label} */}
                   </StepLabel>
                 </Step>
               ))}
@@ -343,70 +376,64 @@ class StepperComponent extends React.Component {
                     <div className="command-total-group">
                       <div className="row">
                         <div className="col-sm-6"><h6 className="">Sous total</h6></div>
-                        <div className="col-sm-6"><p className="">{ 20000 } FCFA</p></div>
-                      </div>
-                      <div className="row">
-                        <div className="col-sm-6"><h6 className="">4 Produits</h6></div>
-                        <div className="col-sm-6"><p className="">{ 0 == 0 ? 20000 : cart_delivery_price } FCFA</p></div>
+                        <div className="col-sm-6"><p className="">{ cart_sub_total ? cart_sub_total : 0 } FCFA</p></div>
                       </div>
                       <div className="row">
                         <div className="col-sm-6"><h6 className="">Livraison</h6></div>
-                        <div className="col-sm-6"><p className="">{ 0 == 0 ? 0 : cart_delivery_price } FCFA</p></div>
+                        <div className="col-sm-6"><p className="">{ cart_delivery_price ? cart_delivery_price : 0 } FCFA</p></div>
+                      </div>
+                      <div className="row">
+                        <div className="col-sm-6"><h6 className="">Réduction</h6></div>
+                        <div className="col-sm-6"><p className=""> { '0 %' } </p></div>
+                      </div>
+                      <div className="row">
+                        <div className="col-sm-6"><h6 className="">Taxe total</h6></div>
+                        <div className="col-sm-6"><p className=""> { 0 } FCFA</p></div>
                       </div>
                     </div>
                     <div className="row line-total">
                       <div className="col-sm-6"><h5 className="">Montant Total</h5></div>
-                      <div className="col-sm-6"><h5 className="price-total">{ 0 == 0 ? 20000 : cart_total } FCFA</h5></div>
+                      <div className="col-sm-6"><h5 className="price-total">{ cart_total ? cart_total : 0 } FCFA</h5></div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="command-product-wrapper row" style={{ width: '100%', marginRight: 0, marginLeft: 0 }}>
-                <h5 className="">Articles</h5>
-                <div className="row product-row">
-                  <div className="col-sm-6 command-picture-box">
-                    <div className="command-img-wrapper">
-                      {/* <a href={`/shop/products/${val.slug}`} className=""> */}
-                      <a href={`/shop/products/test`} className="">
-                        {/* <img className="img-fluid" src={ val.pictures ? val.pictures[0] : null } /> */}
-                        <img className="img-fluid" src="/static/images/product1.jpg" />
-                      </a>
-                    </div>
-                  </div>
-                  <div className="col-sm-6 command-picture-summary">
-                    <h6 className="">Nom du produit</h6>
-                    <p className="">
-                      <span className="">couleur</span> <br />
-                      <span className="">Taille : couleur</span> <br />
-                      <span className="">Quantité : 4</span> <br />
-                      <span className="">3000 FCFA</span> <br />
-                    </p>
-                  </div>
+              { activeStep == '1' && 
+                <div className="command-product-wrapper row" style={{ width: '100%', marginRight: 0, marginLeft: 0 }}>
+                  <h5 className="">Articles</h5>
+                  { !_.isEmpty(cart.cart_items) ? 
+                    cart.cart_items
+                      .map((val, key) => {
+                        return (
+                          <div className="row product-row" key={key}>
+                            <div className="col-sm-6 command-picture-box">
+                              <div className="command-img-wrapper">
+                                <a href={`/shop/products/${val.slug}`} className="">
+                                  <img className="img-fluid" src={ val.pictures ? val.pictures[0] : null } />
+                                </a>
+                              </div>
+                            </div>
+                            <div className="col-sm-6 command-picture-summary">
+                              <h6 className="" style={{ textAlign: "justify" }} >{ val.title }</h6>
+                              <p className="">
+                                <span className="">{ val.color }</span> <br />
+                                <span className="">Taille : { val.size }</span> <br />
+                                <span className="">Quantité : { val.selected_quantity }</span> <br />
+                                <span className="">{ val.line_total } FCFA</span> <br />
+                              </p>
+                            </div>
+                          </div>
+                        )}) : 
+                        null 
+                  }
                 </div>
+              }
 
-                <div className="row product-row">
-                  <div className="col-sm-6 command-picture-box">
-                    <div className="command-img-wrapper">
-                      {/* <a href={`/shop/products/${val.slug}`} className=""> */}
-                      <a href={`/shop/products/test`} className="">
-                        {/* <img className="img-fluid" src={ val.pictures ? val.pictures[0] : null } /> */}
-                        <img className="img-fluid" src="/static/images/product2.jpg" />
-                      </a>
-                    </div>
-                  </div>
-                  <div className="col-sm-6 command-picture-summary">
-                    <h6 className="">Nom du produit</h6>
-                    <p className="">
-                      <span className="">couleur</span> <br />
-                      <span className="">Taille : couleur</span> <br />
-                      <span className="">Quantité : 4</span> <br />
-                      <span className="">5000 FCFA</span> <br />
-                    </p>
-                  </div>
+              { activeStep == '2' && 
+                <div className="command-product-wrapper row" style={{ width: '100%', marginRight: 0, marginLeft: 0 }}>
                 </div>
-
-              </div>
+              }
 
             </div>
           </div>
