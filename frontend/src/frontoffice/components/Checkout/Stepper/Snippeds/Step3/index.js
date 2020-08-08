@@ -105,7 +105,7 @@ class Step3 extends React.Component {
               </Panel>
 
 
-              <Panel header={ this.renderIconWithTitle('far fa-credit-card', 'Paiement par carte bancaire') } key="3">
+              {/* <Panel header={ this.renderIconWithTitle('far fa-credit-card', 'Paiement par carte bancaire') } key="3">
                 <div>
                   <div>
                     <FormControlLabel value="cart" control={<Radio />} label="Payer par carte bancaire." />
@@ -145,7 +145,7 @@ class Step3 extends React.Component {
                     </Grid>
                   </Grid>
                 </div>
-              </Panel>
+              </Panel> */}
 
           </Collapse>
         </RadioGroup>

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { PulseLoader } from 'react-spinners';
 import clsx from "clsx";
-import { Stepper, Step, StepLabel, Button, Paper } from "@material-ui/core";
+import { Stepper, Step, StepLabel, Button, Paper, TextField } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import StepConnector from "@material-ui/core/StepConnector";
 import FormControl from '@material-ui/core/FormControl';
@@ -10,6 +10,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import Dialog from '../../Snippets/MyDialog'
 import _ from "underscore";
 import { stepperCStoreActions } from './store'
 import Step3 from './Snippeds/Step3/index'
@@ -118,10 +119,48 @@ class StepperComponent extends React.Component {
       activeStep: 1,
       steps: [],
       intervalId: 0,
+      dialogOpen: false,
+
+      // Add address form val
+      surname: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      name: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      address: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      address_precision: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      country: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      city: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      phone: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
     };
   }
 
-  componentDidMount = async () => {
+  UNSAFE_componentWillMount = async () => {
     var cart_id = getSession().cart_id
     this._fetchCartItems(cart_id)
 
@@ -152,6 +191,70 @@ class StepperComponent extends React.Component {
         this.props.dispatch(stepperCStoreActions.setLoading(false))
       }  
     )
+  }
+
+
+  handleChangeSurname(e){    
+    this.setState({
+      surname: {
+        value: e.target.value,
+        error: false
+      }
+    })
+  }
+
+  handleChangeName(e){    
+    this.setState({
+      name: {
+        value: e.target.value,
+        error: false
+      }
+    })
+  }
+
+  handleChangeAddress(e){    
+    this.setState({
+      address: {
+        value: e.target.value,
+        error: false
+      }
+    })
+  }
+
+  handleChangeAddressPrecision(e){    
+    this.setState({
+      address_precision: {
+        value: e.target.value,
+        error: false
+      }
+    })
+  }
+
+  handleChangeCountry(e){    
+    this.setState({
+      country: {
+        value: e.target.value,
+        error: false
+      }
+    })
+  }
+
+  handleChangeCity(e){    
+    this.setState({
+      city: {
+        value: e.target.value,
+        error: false
+      }
+    })
+  }
+
+  handleChangePhone(e){    
+    this.setState({
+      phone: {
+        value: e.target.value,
+        error: false
+      }
+    })
   }
 
 
@@ -230,7 +333,7 @@ class StepperComponent extends React.Component {
                   Saisissez votre adresse de livraison pour connaître les options de livraison et les délais. 
                   Les restrictions de livraison appliquées peuvent nous contraindre à refuser votre commande.
                 </p>
-                <div className="address_bloc">
+                <div className="address_bloc" onClick={ this.handleSetDialogOpen.bind(this) }>
                   <div className="add_address_bloc">
                     <h6>Nouvelle adresse</h6>
                   </div>
@@ -322,6 +425,107 @@ class StepperComponent extends React.Component {
   scrollToTop(delayInMs="16.66") {
     let intervalId = setInterval(this.scrollStep.bind(this), delayInMs);
     this.setState({ intervalId: intervalId });
+  }
+
+  handleSetDialogOpen(element, qty){
+    this.setState({
+      dialogOpen: true,
+    })
+  }
+
+  handleSetDialogClose(){
+    this.setState({
+      dialogOpen: false,
+
+      surname: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      name: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      address: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      address_precision: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      country: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      city: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+      phone: {
+        value: '',
+        error: false,
+        errorMessage: null
+      },
+    })
+  }
+
+  handleOnSubmit(e){
+    e.preventDefault()
+    console.log("Form Submitted====", e.target)
+    const value = {
+      surname: this.state.surname.value,
+      name: this.state.name.value,
+      address: this.state.address.value,
+      city: this.state.city.value,
+      phone: this.state.phone.value,
+    }
+
+    if( !value.surname ){
+      this.setState({
+        surname: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !value.name ){
+      this.setState({
+        name: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !value.address ){
+      this.setState({
+        address: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !value.city ){
+      this.setState({
+        city: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
+    if( !value.phone ){
+      this.setState({
+        phone: {
+          error: true,
+          errorMessage: "Le champ ne doit pas être vide"
+        },
+      })
+    }
   }
 
 
@@ -457,7 +661,127 @@ class StepperComponent extends React.Component {
             </Button>
           </div>
         </div>
-
+        
+        <Dialog title="Ajouter une adresse" isOpen={ this.state.dialogOpen } onClose={ this.handleSetDialogClose.bind(this) }>
+          <Paper style={{ padding: '2em' }}>
+            <form className="" onSubmit={ this.handleOnSubmit.bind(this) }> 
+              <div className="row" style={{ marginLeft: 0, marginRight: 0}}> 
+                <div className="col-6">
+                  <TextField 
+                    value={ this.state.surname.value } 
+                    error={ this.state.surname.error && this.state.surname.error }
+                    onChange={ this.handleChangeSurname.bind(this) } 
+                    label="Prénom" 
+                    name="surname"
+                    helperText={ this.state.surname.error ? this.state.surname.errorMessage : null }
+                    fullWidth
+                    required
+                  />
+                </div>
+                <div className="col-6">
+                  <TextField 
+                    value={ this.state.name.value } 
+                    error={ this.state.name.error && this.state.name.error }
+                    onChange={ this.handleChangeName.bind(this) } 
+                    label="Nom" 
+                    name="name"
+                    helperText={ this.state.name.error ? this.state.name.errorMessage : null }
+                    fullWidth
+                    required
+                  />
+                </div>
+              </div>
+              <div className="row" style={{ marginLeft: 0, marginRight: 0, paddingTop: 10 }}> 
+                <div className="col-12">
+                  <TextField 
+                    value={ this.state.address.value } 
+                    error={ this.state.address.error && this.state.address.error }
+                    onChange={ this.handleChangeAddress.bind(this) } 
+                    label="Adresse" 
+                    name="address"
+                    helperText={ this.state.address.error ? this.state.address.errorMessage : null }
+                    fullWidth
+                    required
+                  />
+                </div>
+              </div>
+              <div className="row" style={{ marginLeft: 0, marginRight: 0, paddingTop: 10 }}> 
+                <div className="col-12">
+                  <TextField 
+                    value={ this.state.address_precision.value } 
+                    error={ this.state.address_precision.error && this.state.address_precision.error }
+                    onChange={ this.handleChangeAddressPrecision.bind(this) } 
+                    label="Complément d'adresse (Appartement, Société, Poste)" 
+                    name="address_precision"
+                    helperText={ this.state.address_precision.error ? this.state.address_precision.errorMessage : null }
+                    fullWidth
+                  />
+                </div>
+              </div>
+              <div className="row" style={{ marginLeft: 0, marginRight: 0, paddingTop: 10 }}> 
+                <div className="col-6">
+                  <TextField 
+                    // value={ this.state.country.value } 
+                    error={ this.state.country.error && this.state.country.error }
+                    onChange={ this.handleChangeCountry.bind(this) } 
+                    defaultValue={"Cameroun"}
+                    label="Pays" 
+                    name="country"
+                    helperText={ this.state.country.error ? this.state.country.errorMessage : null }
+                    fullWidth
+                    required
+                    disabled
+                  />
+                </div>
+                <div className="col-6">
+                  <TextField 
+                    value={ this.state.city.value } 
+                    error={ this.state.city.error && this.state.city.error }
+                    onChange={ this.handleChangeCity.bind(this) } 
+                    label="Ville" 
+                    name="city"
+                    helperText={ this.state.city.error ? this.state.city.errorMessage : null }
+                    fullWidth
+                    required
+                  />
+                </div>
+              </div>
+              <div className="row" style={{ marginLeft: 0, marginRight: 0, paddingTop: 10 }}> 
+                <div className="col-6">
+                  <TextField 
+                    value={ this.state.phone.value } 
+                    error={ this.state.phone.error && this.state.phone.error }
+                    onChange={ this.handleChangePhone.bind(this) } 
+                    label="N° de téléphone" 
+                    name="phone"
+                    helperText={ this.state.phone.error ? this.state.phone.errorMessage : null }
+                    fullWidth
+                    required
+                  />
+                </div>
+              </div>
+              
+              <div className="row" style={{ marginTop: '2em', marginLeft: 0, marginRight: 0 }}>
+                <Button 
+                  type="submit"
+                  className="ml-auto"
+                  variant="contained"
+                  color="primary"
+                >
+                  Enregistrer
+                </Button>
+                &nbsp;
+                &nbsp;
+                <Button 
+                  onClick={ this.handleSetDialogClose.bind(this) }
+                  className="mr-auto"
+                >
+                  Annuler
+                </Button>
+              </div> 
+            </form> 
+          </Paper>
+        </Dialog>
       </div>
     )
   }
