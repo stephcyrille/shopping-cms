@@ -1,5 +1,14 @@
 .leftMenu{
-    padding-left: 100px;
-    padding-right: 50px;
+  padding-left: 100px;
+  padding-right: 50px;
+  background-color: #fff;
+}
+
+
+@media (max-width: 767px) {
+  .leftMenu{
+    padding-left: 20px;
+    padding-right: 0px;
     background-color: #fff;
+  }
 }

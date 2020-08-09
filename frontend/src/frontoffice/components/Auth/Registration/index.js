@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-
+import {Helmet} from "react-helmet";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,43 +8,23 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Radio from '@material-ui/core/Radio';
-import FormLabel from '@material-ui/core/FormLabel';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import {Helmet} from "react-helmet";
-
-
 import Navbar from "app-js/frontoffice/components/Snippets/Navbar/index"
 import Footer from "app-js/frontoffice/components/Snippets/Footer/index"
 
-import { step3CStoreActions } from './store';
-
+import { getToken } from '../../../utils/auth_utils'
+import appConfig from '../../../config'
+import urls from "../../../routes/urls";
 import './style.local.css'
 
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = theme => ({
   body: {
@@ -53,7 +33,7 @@ const useStyles = theme => ({
   },
   paper: {
     // marginTop: theme.spacing(8),
-    paddingTop: 10,
+    paddingTop: 20,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -65,6 +45,7 @@ const useStyles = theme => ({
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
+    paddingBottom: 50,
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -76,7 +57,15 @@ const useStyles = theme => ({
   },
   checkboxSouscription: {
     paddingTop: 25,
-  }
+  },
+  image: {
+    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor:
+      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
 });
 
 
@@ -87,10 +76,67 @@ export default
 @withStyles(useStyles)
 class RegistrationPage extends React.Component {
 
+  componentWillMount(){
+    var token = getToken()
+    if(token){
+      window.axios
+      .get("/auth/user/", {
+        headers: { Authorization: `Token ${token}` }
+      })
+        .then(response => {
+          if(response.status == 200){
+            window.location.href = `${urls.HOME}`; 
+          }
+        })
+        .catch(err => {
+          console.error('User informations', err)
+        })
+    }
+  }
+
   _handleCheckBoxChange(e){
     console.log("Targettttttt", e.target.value)
     this.props.dispatch(registrationCStoreActions.setChangeBoxValue(e.target.value))
   }
+
+  handleSUbmitForm(e){
+    e.preventDefault()
+
+    const values = {
+      username: e.target.email.value,
+      first_name: e.target.first_name.value,
+      last_name: e.target.last_name.value,
+      email: e.target.email.value,
+      password1: e.target.password1.value,
+      password2: e.target.password2.value,
+      gender: e.target.gender.value,
+      country: e.target.country.value,
+      address: e.target.address.value,
+      city: e.target.city.value,
+      phone_number: e.target.phone_number.value,
+      newsletter: e.target.newsletter.checked,
+      birth_date: e.target.birth_date.value,
+    }
+
+    this._singUpAPI(values)
+  }
+
+  _singUpAPI(params){
+    const url = `${appConfig.SINGUP}`
+
+    window.axios
+    .post(`${url}`, params )
+    .then(response => {
+      console.log("SIGNUP DATA", response.data)
+    })
+    .catch(
+      error => {
+        console.error("Errrorr", error)
+      }  
+    )
+  }
+
+
 
   render(){
     
@@ -99,7 +145,7 @@ class RegistrationPage extends React.Component {
     const pagetitle = "Registration | Shop"
     const description = "Ma description du site"
     const siteImage = "/static/images/logo.png"
-    const { gender } = this.props.registrationCStore
+    
 
   	return (
       <div className="">
@@ -114,19 +160,21 @@ class RegistrationPage extends React.Component {
             <meta property="og:image" content={siteImage} />
         </Helmet>
 
-        <Navbar topNav={true} middleNav={true} megaNav={false} middleRightShow={true} />
+        <Navbar topNav={true} middleNav={true} megaNav={true} middleRightShow={true} />
 
-        <div className="" className={classes.body}>
+
+        <div className="">
+        <Grid container component="main" className={classes.root}>
           <CssBaseline />
-          <Container component="main" maxWidth="xs">
+          <Grid item xs={12} sm={8} md={6} elevation={6} square className="leftMenu">
             <div className={classes.paper}>
               <Avatar className={classes.avatar}>
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Creation de compte
+                S'inscrire
               </Typography>
-              <form className={`${classes.form}`} noValidate>
+              <form className={`${classes.form}`} noValidate onSubmit={ this.handleSUbmitForm.bind(this) }>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
                     <TextField
@@ -169,6 +217,22 @@ class RegistrationPage extends React.Component {
                   autoComplete="email"
                   size='small'
                 />
+
+                <TextField
+                  style={{ marginTop: 10 }}
+                  variant="outlined"
+                  id="date"
+                  label="Date de naissance"
+                  type="date"
+                  name="birth_date"
+                  defaultValue="1990-01-01"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  required
+                  fullWidth
+                />
+
                 <TextField
                   variant="outlined"
                   margin="normal"
@@ -199,8 +263,9 @@ class RegistrationPage extends React.Component {
                     <Select
                       labelId="gender"
                       id="gender"
-                      value="gender"
-                      // onChange={handleChange}
+                      name="gender"
+                      defaultValue="female"
+                      // onChange={this.handleChangeGender.bind(this)}
                     >
                       <MenuItem value={"female"}>Femme</MenuItem>
                       <MenuItem value={"male"}>Homme</MenuItem>
@@ -215,8 +280,9 @@ class RegistrationPage extends React.Component {
                       <Select
                         labelId="country"
                         id="country"
-                        value="country"
-                        // onChange={handleChange}
+                        name="country"
+                        defaultValue="cameroun"
+                        // onChange={this.handleChangeCountry.bind(this)}
                       >
                         <MenuItem value={"cameroun"}>Cameroun</MenuItem>
                         <MenuItem value={"nigeria"}>Nigeria</MenuItem>
@@ -232,8 +298,9 @@ class RegistrationPage extends React.Component {
                       <Select
                         labelId="city"
                         id="city"
-                        value="city"
-                        // onChange={handleChange}
+                        name="city"
+                        defaultValue="douala"
+                        // onChange={this.handleChangeCity.bind(this)}
                       >
                         <MenuItem value={"yaounde"}>Yaoundé</MenuItem>
                         <MenuItem value={"douala"}>Douala</MenuItem>
@@ -249,6 +316,17 @@ class RegistrationPage extends React.Component {
                   margin="normal"
                   required
                   fullWidth
+                  id="address"
+                  label="Adresse de résidence"
+                  name="address"
+                  size='small'
+                />
+
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
                   id="phone_number"
                   label="Numéro de téléphone"
                   name="phone_number"
@@ -256,8 +334,9 @@ class RegistrationPage extends React.Component {
                 />
                   
                 <FormControlLabel
+                  style={{ textAlign: "justify" }}
                   className={classes.checkboxSouscription}
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  control={<Checkbox name="newsletter" value="allowExtraEmails" color="primary" />}
                   label="Je veux recevoir les annonces sur les campagnes et offres publicitaires que Afro Yaca Drum offre."
                 />
                 <Button
@@ -269,12 +348,21 @@ class RegistrationPage extends React.Component {
                 >
                   S'inscrire
                 </Button>
+                <Grid container>
+                  <Grid item>
+                    <a href={`${urls.LOGIN}`}>
+                      {"Ou se connecter"}
+                    </a>
+                  </Grid>
+                </Grid>
               </form>
             </div>
-          </Container>
-        </div>
+          </Grid>
+          <Grid item xs={false} sm={4} md={6} className={classes.image} />
+        </Grid>
+  		</div>
 
-        <Footer />
+      <Footer />
     </div>
   	)
   }

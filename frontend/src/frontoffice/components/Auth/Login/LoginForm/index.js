@@ -8,27 +8,16 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+
+import appConfig from '../../../../config'
+import { saveToken, getToken } from '../../../../utils/auth_utils'
 import urls from "../../../../routes/urls";
 
 
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = theme => ({
   root: {
@@ -74,13 +63,48 @@ class LoginForm extends React.Component {
     }
   }
 
-  handleSubmit(event){
-    console.log(`
-      Email: ${this.state.email}
-      Password: ${this.state.password}
-    `);
+  componentWillMount(){
+    var token = getToken()
+    if(token){
+      window.axios
+      .get("/auth/user/", {
+        headers: { Authorization: `Token ${token}` }
+      })
+        .then(response => {
+          if(response.status == 200){
+            window.location.href = `${urls.HOME}`; 
+          }
+        })
+        .catch(err => {
+          console.error('User informations', err)
+        })
+    }
+  }
 
+  handleSubmit(event){
     event.preventDefault();
+    const params = {
+      username: this.state.email,
+      password: this.state.password,
+    }
+    this._loginAPI(params)
+  }
+
+  _loginAPI(params){
+    const url = `${appConfig.LOGIN}`
+
+    window.axios
+    .post(`${url}`, { username: params.username, password: params.password })
+    .then(response => {
+      console.log("LOGIN DATA", response.data)
+      saveToken(response.data.key);
+      window.location.href = `${urls.HOME}`; 
+    })
+    .catch(
+      error => {
+        console.error("Errrorr", error)
+      }  
+    )
   }
 
   _handleEmailChange(e){
@@ -103,13 +127,13 @@ class LoginForm extends React.Component {
   		<div className="">
         <Grid container component="main" className={classes.root}>
           <CssBaseline />
-          <Grid item xs={12} sm={8} md={6} elevation={6} square className="leftMenu">
+          <Grid item xs={12} sm={8} md={6} elevation={6} square className={`${classes.left_menu} leftMenu`} >
             <div className={classes.paper}>
               <Avatar className={classes.avatar}>
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Sign in
+                Se connecter
               </Typography>
               <form className={classes.form} onSubmit={ this.handleSubmit.bind(this) }>
                 <TextField
@@ -118,9 +142,8 @@ class LoginForm extends React.Component {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email"
                   name="email"
-                  autoComplete="email"
                   autoFocus
                   value={this.state.email}
                   onChange={ this._handleEmailChange.bind(this) }
@@ -131,16 +154,15 @@ class LoginForm extends React.Component {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Mot de passe"
                   type="password"
                   id="password"
-                  autoComplete="current-password"
                   value={this.state.password}
                   onChange={ this._handlePasswordChange.bind(this) }
                 />
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
+                  label="Se souvenir de moi"
                 />
                 <Button
                   type="submit"
@@ -149,23 +171,20 @@ class LoginForm extends React.Component {
                   color="primary"
                   className={classes.submit}
                 >
-                  Sign In
+                  se connecter
                 </Button>
                 <Grid container>
                   <Grid item xs>
                     <Link href="#" variant="body2">
-                      Forgot password?
+                      Mot de passe oublier?
                     </Link>
                   </Grid>
                   <Grid item>
                     <a href={`${urls.REGISTRATION}`} variant="body2">
-                      {"Don't have an account? Sign Up"}
+                      {"Vous n'avez pas de compte? S'inscrire"}
                     </a>
                   </Grid>
                 </Grid>
-                <Box mt={5}>
-                  <Copyright />
-                </Box>
               </form>
             </div>
           </Grid>

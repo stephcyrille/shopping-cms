@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import urls from '../.././../routes/urls'
 import './style.local.css';
 import { getSession } from '../../../utils/session_utils'
+import { getToken } from '../../../utils/auth_utils'
 import { navBarCartCStoreActions } from './store'
 
 
@@ -17,6 +18,21 @@ class MiddleNavbar extends React.Component {
   componentWillMount(){
     if(getSession()){
       this.update_cart_session(getSession().cart_id)
+    }
+    var token = getToken()
+    if(token){
+      window.axios
+      .get("/auth/user/", {
+        headers: { Authorization: `Token ${token}` }
+      })
+        .then(response => {
+          if(response.status == 200){
+            this.props.dispatch(navBarCartCStoreActions.setLoggedIn(true))
+          }
+        })
+        .catch(err => {
+          console.error('User informations', err)
+        })
     }
   }
 
@@ -37,8 +53,9 @@ class MiddleNavbar extends React.Component {
 
 
   render() {
-    const { item_quantity } = this.props.navBarCartCStore
+    const { item_quantity, loggedIn } = this.props.navBarCartCStore
     var new_item = false
+
 
     return (
       <div className="header-middle">
@@ -157,7 +174,40 @@ class MiddleNavbar extends React.Component {
                     </div> */}
                   </li>
                   {/* <li><a href="login.html"><i className="fa fa-lock"></i> Login</a></li> */}
-                  <li><a href={`${urls.LOGIN}`}><i className="fa fa-user fa-2x"></i> </a></li>
+                  {/* <li><a href={`${urls.LOGIN}`}><i className="fa fa-user fa-2x"></i> </a></li> */}
+                  <li>
+                    { loggedIn ? 
+                      ( 
+                        <div className="logged_in_bloc">
+                          <span className="dropdown-toggle user_middle_nav" data-toggle="dropdown">
+                            <i className="fa fa-user fa-2x"></i> 
+                          </span>
+                          <ul className="dropdown-menu" style={{ zIndex : 2000 }}>
+                            <li 
+                              className="user_middle_nav_li" 
+                              style={{ borderBottom: "1px solid lightgrey", paddingBottom: 10 }}
+                            >
+                              <a href="">Mes commandes</a>
+                            </li>
+                            <li 
+                              className="user_middle_nav_li"
+                              style={{ paddingTop: 10, paddingBottom: 10, borderBottom: "1px solid lightgrey" }}
+                            >
+                              <a href="">Préférences</a>
+                            </li>
+                            <li 
+                              className="user_middle_nav_li"
+                              style={{ paddingTop: 10 }}
+                            >
+                              <a href="">Se déconnecter</a>
+                            </li>
+                          </ul>
+                        </div> 
+                      )
+                    :
+                      <a href={`${urls.LOGIN}`}><i className="fa fa-sign-in-alt fa-2x"></i> </a>
+                    }
+                  </li>
                 </ul>
               </div>):null
               }

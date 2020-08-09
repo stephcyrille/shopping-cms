@@ -176,10 +176,20 @@ REST_FRAMEWORK = {
 OLD_PASSWORD_FIELD_ENABLED = True
 LOGOUT_ON_PASSWORD_CHANGE = False
 
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+
 # DJANGO REST FRAMEWORK AUTH CUSTOMS SERIALIZERS
 REST_AUTH_REGISTER_SERIALIZERS = {
         'REGISTER_SERIALIZER': 'backend.apis.utils.auth.custom_registration.CustomRegistrationSerializer',
 }
+
+AUTHENTICATION_BACKENDS = (
+    # default
+    'django.contrib.auth.backends.ModelBackend',
+    # email login
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 #REST_AUTH_SERIALIZERS = {
 #    'USER_DETAILS_SERIALIZER': 'backend.apis.utils.auth.CustomUserDetailsSerializer',
@@ -190,4 +200,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'emails_sent')
 
 # WEBSITE URL CONFIG 
-WEBSITE_NAME = "myhto.org"
+WEBSITE_NAME = "example.cm"

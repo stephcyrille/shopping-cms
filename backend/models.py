@@ -30,7 +30,6 @@ def articles_image_path(instance, filename):
 class UserProfile(models.Model):
     gender = models.CharField(max_length=10)
     user = models.OneToOneField(User, null=True, blank=False, related_name="userprofile", on_delete=models.SET_NULL)
-    title = models.CharField(max_length=4, null=True, blank=True)  # Mr, Mrs. Miss.
     phone_number = models.CharField(max_length=50, blank=True, null=True)
     first_name = models.CharField(null=True, blank=True, max_length=100)
     last_name = models.CharField(null=True, blank=True, max_length=100)

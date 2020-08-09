@@ -76,6 +76,25 @@
     margin-right: 3px;
 }
 
+.user_middle_nav:hover{
+    cursor: pointer;
+}
+
+.user_middle_nav_li{
+    display: block !important;
+}
+.user_middle_nav i{
+    color: #696763;
+}
+.user_middle_nav i:hover, .user_middle_nav i:active{
+    color: #f7d026;
+    background: #fff;
+}
+.user_middle_nav i.active{
+    color: #f7d026;
+    background: #fff;
+}
+
 .navbar-dark .navbar-nav .nav-link{
     font-size: 0.75rem !important;
     text-transform: uppercase;
