@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import urls from '../.././../routes/urls'
 import './style.local.css';
 import { getSession } from '../../../utils/session_utils'
-import { getToken } from '../../../utils/auth_utils'
+import { getToken, clearToken } from '../../../utils/auth_utils'
 import { navBarCartCStoreActions } from './store'
 
 
@@ -41,13 +41,26 @@ class MiddleNavbar extends React.Component {
     window.axios
     .get(`/apis/core/session/carts/update/${cart_id}/`)
       .then(response => {
-        var products = response.data.products
         var total_items = response.data.cart_quantity
         
         this.props.dispatch(navBarCartCStoreActions.setItem(total_items))
       })
       .catch(err => {
         console.error('Error on updating cart session', err)
+      })
+  }
+
+  _logoutAPI(e) {
+    e.preventDefault()
+
+    window.axios
+    .post(`/auth/logout/`)
+      .then( () => {
+        clearToken()
+        window.location.href = `${urls.HOME}`; 
+      })
+      .catch(err => {
+        console.error('Error login out', err)
       })
   }
 
@@ -199,7 +212,7 @@ class MiddleNavbar extends React.Component {
                               className="user_middle_nav_li"
                               style={{ paddingTop: 10 }}
                             >
-                              <a href="">Se déconnecter</a>
+                              <a href="#" onClick={ this._logoutAPI.bind(this) }>Se déconnecter</a>
                             </li>
                           </ul>
                         </div> 
