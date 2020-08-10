@@ -191,9 +191,9 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-#REST_AUTH_SERIALIZERS = {
-#    'USER_DETAILS_SERIALIZER': 'backend.apis.utils.auth.CustomUserDetailsSerializer',
-#}
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'backend.apis.utils.auth.CustomUserDetailsSerializer',
+}
 
 # EMAIL CONFIGURATION, THIS FOR DEBUG ENVIRONMENT
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'

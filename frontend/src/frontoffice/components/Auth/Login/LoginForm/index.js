@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 import appConfig from '../../../../config'
-import { saveToken, getToken } from '../../../../utils/auth_utils'
+import { saveToken, getToken, saveUser } from '../../../../utils/auth_utils'
 import urls from "../../../../routes/urls";
 
 
@@ -52,14 +52,15 @@ const useStyles = theme => ({
 
 
 export default
-@connect((state, props) => ({}))
+@connect((state, props) => ({
+}))
 @withStyles(useStyles)
 class LoginForm extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      email: "test",
-      password: "test",
+      email: "",
+      password: "",
     }
   }
 
@@ -98,7 +99,19 @@ class LoginForm extends React.Component {
     .then(response => {
       console.log("LOGIN DATA", response.data)
       saveToken(response.data.key);
-      window.location.href = `${urls.HOME}`; 
+      window.axios
+        .get("/auth/user/", {
+          headers: { Authorization: `Token ${response.data.key}` }
+        })
+        .then(response => {
+          // Save loggedIn user on localStorage
+          saveUser(JSON.stringify(response.data));
+          window.location.href = `${urls.HOME}`;
+
+        })
+        .catch(error => {
+          console.log("Error on userprofile", error);
+        }); 
     })
     .catch(
       error => {
@@ -120,8 +133,8 @@ class LoginForm extends React.Component {
   }
 
   render(){
-    
     const { classes } = this.props;
+
 
   	return (
   		<div className="">
@@ -135,7 +148,7 @@ class LoginForm extends React.Component {
               <Typography component="h1" variant="h5">
                 Se connecter
               </Typography>
-              <form className={classes.form} onSubmit={ this.handleSubmit.bind(this) }>
+              <form className={classes.form} noValidate autoComplete="off" onSubmit={ this.handleSubmit.bind(this) }>
                 <TextField
                   variant="outlined"
                   margin="normal"
@@ -144,7 +157,6 @@ class LoginForm extends React.Component {
                   id="email"
                   label="Email"
                   name="email"
-                  autoFocus
                   value={this.state.email}
                   onChange={ this._handleEmailChange.bind(this) }
                 />

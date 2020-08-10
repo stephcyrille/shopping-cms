@@ -16,7 +16,9 @@ import { stepperCStoreActions } from './store'
 import Step3 from './Snippeds/Step3/index'
 import './style.local.css';
 import { getSession } from '../../../utils/session_utils'
+import { getUser } from '../../../utils/auth_utils'
 import appConfig from '../../../config'
+import urls from '../../../routes/urls'
 
 
 // Checknbox properties
@@ -111,7 +113,8 @@ function ColorlibStepIcon(props) {
 
 export default
 @connect((state, props) => ({
-  stepperCStore: state.stepperCStore
+  stepperCStore: state.stepperCStore,
+  navBarCartCStore: state.navBarCartCStore,
 }))
 class StepperComponent extends React.Component {
   constructor(props) {
@@ -168,7 +171,29 @@ class StepperComponent extends React.Component {
 
   UNSAFE_componentWillMount = async () => {
     var cart_id = getSession().cart_id
+    
     this._fetchCartItems(cart_id)
+
+    const user = getUser()
+    console.log("USER FROM LOCALHOST", user);
+    
+
+    if(user){
+      this.setState({
+        name: {
+          value: user.userprofile.first_name,
+          error: false
+        },
+        surname: {
+          value: user.userprofile.last_name,
+          error: false
+        }
+      })
+    }
+
+    else(
+      window.location.href = `${urls.HOME}`
+    )
 
     const steps = this.getSteps();
     this.setState({

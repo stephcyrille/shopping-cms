@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import urls from '../.././../routes/urls'
 import './style.local.css';
 import { getSession } from '../../../utils/session_utils'
-import { getToken, clearToken } from '../../../utils/auth_utils'
+import { getToken, clearToken, clearUser } from '../../../utils/auth_utils'
 import { navBarCartCStoreActions } from './store'
 
 
@@ -57,6 +57,7 @@ class MiddleNavbar extends React.Component {
     .post(`/auth/logout/`)
       .then( () => {
         clearToken()
+        clearUser()
         window.location.href = `${urls.HOME}`; 
       })
       .catch(err => {

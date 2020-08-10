@@ -1,4 +1,4 @@
-from datetime import datetime
+
 
 from allauth.account.utils import setup_user_email
 from rest_auth.registration.serializers import RegisterSerializer
