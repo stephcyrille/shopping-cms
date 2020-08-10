@@ -270,4 +270,18 @@ class Banner(CoreTrackedModel):
     is_home = models.BooleanField(default=False)
 
     def __str__(self):
-        return '%s' % (self.name)
+        return '%s' % self.name
+
+
+class Contact(CoreTrackedModel):
+    profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, blank=True)
+    address = models.CharField(max_length=200)
+    address_supplement = models.CharField(max_length=200)
+    country = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+    # One user can have many addresses but he must choose a specific by default
+    main = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "Contact: %s %s" % (self.profile.first_name, self.profile.last_name)

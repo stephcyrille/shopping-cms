@@ -719,12 +719,13 @@ class StepperComponent extends React.Component {
           </div>
         </div>
         
-        <Dialog title="Ajouter une adresse" isOpen={ this.state.dialogOpen } onClose={ this.handleSetDialogClose.bind(this) }>
+        <Dialog title={(<h4 style={{ textTransform: "uppercase", textAlign: "center" }}>Ajouter une adresse</h4>)} isOpen={ this.state.dialogOpen } onClose={ this.handleSetDialogClose.bind(this) }>
           <Paper style={{ padding: '2em' }}>
             <form className="" onSubmit={ this.handleOnSubmit.bind(this) }> 
               <div className="row" style={{ marginLeft: 0, marginRight: 0}}> 
                 <div className="col-6">
                   <TextField 
+                    variant="outlined"
                     value={ this.state.surname.value } 
                     error={ this.state.surname.error && this.state.surname.error }
                     onChange={ this.handleChangeSurname.bind(this) } 
@@ -737,6 +738,7 @@ class StepperComponent extends React.Component {
                 </div>
                 <div className="col-6">
                   <TextField 
+                    variant="outlined"
                     value={ this.state.name.value } 
                     error={ this.state.name.error && this.state.name.error }
                     onChange={ this.handleChangeName.bind(this) } 
@@ -751,6 +753,7 @@ class StepperComponent extends React.Component {
               <div className="row" style={{ marginLeft: 0, marginRight: 0, paddingTop: 10 }}> 
                 <div className="col-12">
                   <TextField 
+                    variant="outlined"
                     value={ this.state.address.value } 
                     error={ this.state.address.error && this.state.address.error }
                     onChange={ this.handleChangeAddress.bind(this) } 
@@ -765,6 +768,7 @@ class StepperComponent extends React.Component {
               <div className="row" style={{ marginLeft: 0, marginRight: 0, paddingTop: 10 }}> 
                 <div className="col-12">
                   <TextField 
+                    variant="outlined"
                     value={ this.state.address_precision.value } 
                     error={ this.state.address_precision.error && this.state.address_precision.error }
                     onChange={ this.handleChangeAddressPrecision.bind(this) } 
@@ -778,6 +782,7 @@ class StepperComponent extends React.Component {
               <div className="row" style={{ marginLeft: 0, marginRight: 0, paddingTop: 10 }}> 
                 <div className="col-6">
                   <TextField 
+                    variant="outlined"
                     // value={ this.state.country.value } 
                     error={ this.state.country.error && this.state.country.error }
                     onChange={ this.handleChangeCountry.bind(this) } 
@@ -792,6 +797,7 @@ class StepperComponent extends React.Component {
                 </div>
                 <div className="col-6">
                   <TextField 
+                    variant="outlined"
                     value={ this.state.city.value } 
                     error={ this.state.city.error && this.state.city.error }
                     onChange={ this.handleChangeCity.bind(this) } 
@@ -806,6 +812,7 @@ class StepperComponent extends React.Component {
               <div className="row" style={{ marginLeft: 0, marginRight: 0, paddingTop: 10 }}> 
                 <div className="col-6">
                   <TextField 
+                    variant="outlined"
                     value={ this.state.phone.value } 
                     error={ this.state.phone.error && this.state.phone.error }
                     onChange={ this.handleChangePhone.bind(this) } 
