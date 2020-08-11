@@ -114,6 +114,7 @@ function ColorlibStepIcon(props) {
 export default
 @connect((state, props) => ({
   stepperCStore: state.stepperCStore,
+  step3CStore: state.step3CStore,
   navBarCartCStore: state.navBarCartCStore,
 }))
 class StepperComponent extends React.Component {
@@ -128,6 +129,7 @@ class StepperComponent extends React.Component {
       // For express delivery
       express_delivery_cost: 0,
       standard: true,
+      // I express delivery
       express: false,
 
       // Add address form val
@@ -165,7 +167,12 @@ class StepperComponent extends React.Component {
         value: '',
         error: false,
         errorMessage: null
-      },
+      },  
+      
+      MAX_CONTACT_NUMBER: 2,
+      contact_list: [],
+      is_selected: false,
+      selected_contact: null,
     };
   }
 
@@ -173,10 +180,9 @@ class StepperComponent extends React.Component {
     var cart_id = getSession().cart_id
     
     this._fetchCartItems(cart_id)
+    this._fetchContacts()
 
-    const user = getUser()
-    console.log("USER FROM LOCALHOST", user);
-    
+    const user = getUser()    
 
     if(user){
       this.setState({
@@ -220,6 +226,29 @@ class StepperComponent extends React.Component {
       error => {
         console.error("Errrorr", error)
         this.props.dispatch(stepperCStoreActions.setLoading(false))
+      }  
+    )
+  }
+
+
+  _fetchContacts(){
+    
+    const service = `contacts`
+    const url = `${appConfig.LISTSBASEURL}${service}`
+
+    window.axios
+    .get(`${url}`)
+    .then(response => {
+      if(response.data.length != 0){
+        var contacts = response.data 
+        this.setState(() => ({
+          contact_list: contacts
+        }))
+      }
+    })
+    .catch(
+      error => {
+        console.error("Errrorr", error)
       }  
     )
   }
@@ -320,9 +349,33 @@ class StepperComponent extends React.Component {
     this.scrollToTop()
   };
 
-  _handleHomePage(){
+  _handleAchieveOrder(){
     window.location.href = "/shop/"; 
   }
+
+  _handleProcessOrder(){
+    const { cart_sub_total, cart_delivery_price, cart_total } = this.props.stepperCStore;
+    const { box_value } = this.props.step3CStore
+
+    const values = {
+      express_delivery: this.state.express,
+      // ID of selected contact
+      contact: this.state.selected_contact,
+      cart: getSession().cart_id,
+      payment_method: box_value, 
+      sub_total: cart_sub_total, 
+      delivery_fees: cart_delivery_price, 
+      final_total: cart_total
+    }
+
+    console.log("VALUES TO PROCESS PAYMENT======", values)
+
+    
+    const service = "order/add"
+    const formUrl = `${appConfig.FORMBASEURL}${service}`
+    this.postToApi(formUrl, values, this.handleNext)
+  }
+
 
   handleReset = () => {
     this.setState({
@@ -344,15 +397,43 @@ class StepperComponent extends React.Component {
 
   };
 
+  handleChangeAddress(id){
+    if(this.state.standard==true){
+      this.setState({
+        is_selected: true,
+        selected_contact: id
+      })
+    }
+    else{
+      this.setState({
+        is_selected: false,
+        selected_contact: id
+      })
+    }
+  }
+
   handleChangeDelivery(){
+    const { cart_delivery_price } = this.props.stepperCStore;
+
     if(this.state.standard==true){
       this.setState({
         standard: false,
         express: true,
         express_delivery_cost: appConfig.EXPRESSDELIVERYCOST
       })
+
+      var delivery_price = cart_delivery_price + appConfig.EXPRESSDELIVERYCOST
+      this.props.dispatch(stepperCStoreActions.setCartDeliveryPrice(delivery_price))
     }
     else{
+      // Fetch newly cart there to get default delivery price, then add to app.config price, then update
+      var delivery_price = 0
+      // Rainitialize delivery price
+      if(cart_delivery_price == 7000){
+        delivery_price = 2000
+        this.props.dispatch(stepperCStoreActions.setCartDeliveryPrice(delivery_price))
+      }
+
       this.setState({
         standard: true,
         express: false,
@@ -363,7 +444,8 @@ class StepperComponent extends React.Component {
 
 
   getStepContent = (stepIndex) => {
-    const { standard, express } = this.state
+    const { standard, express, contact_list, is_selected } = this.state
+    const user = getUser()    
 
     switch (stepIndex) {
       case 0:
@@ -384,29 +466,43 @@ class StepperComponent extends React.Component {
                   Les restrictions de livraison appliquées peuvent nous contraindre à refuser votre commande.
                 </p>
                 <div className="row" style={{ marginRight: 0, marginLeft: 0 }}>
-                  <div className="col-6" style={{ paddingLeft: 0}}>
-                    <div className="address_bloc">
-                      <div className="add_address_bloc">
-                        <h5>MEBENGA ATANGA STEPHANE</h5>
-                        <h5>Douala, Cameroun</h5>
-                        <h6>PK 17, Entrée Chefferie</h6>
-                        <h6>Tél: (+237) 693 458 540</h6>
-                      </div>
-                      <div className="plus_box">
-                        <i className="fa fa-pen" onClick={ this.handleSetDialogOpen.bind(this) }></i>
+                  { !_.isEmpty(contact_list) ? 
+                      contact_list
+                        .map((val, key) => {
+
+                          return (
+                            <div className="col-6" style={{ paddingLeft: 0}} key={key}>
+                              <div 
+                                className={`address_bloc ${ is_selected ? 'active' : null }`}
+                                onClick={ this.handleChangeAddress.bind(this, val.id) }
+                              >
+                                <div className="add_address_bloc">
+                                  <h5 style={{ textTransform: "uppercase" }}>{ user ? `${user.userprofile.first_name} ${user.userprofile.last_name}` : null }</h5>
+                                  <h5>{`${val.city}, ${val.country}`}</h5>
+                                  <h6>{`${val.address}, ${val.address_precision}`}</h6>
+                                  <h6>Tél: {`${val.phone}`}</h6>
+                                </div>
+                                {/* <div className="plus_box">
+                                  <i className="fa fa-pen" onClick={ this.handleSetDialogOpen.bind(this) }></i>
+                                </div> */}
+                              </div>
+                            </div>
+                          ) })
+                    :
+                    null
+                  }
+                  { contact_list.length < 2 &&
+                    <div className="col-6" style={{ paddingRight: 0}}>
+                      <div className="address_bloc_new" onClick={ this.handleSetDialogOpen.bind(this) }>
+                        <div className=".address_bloc_new">
+                          <h6>Nouvelle adresse</h6>
+                        </div>
+                        <div className="plus_box">
+                          <i className="fa fa-plus"></i>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col-6" style={{ paddingRight: 0}}>
-                    <div className="address_bloc_new" onClick={ this.handleSetDialogOpen.bind(this) }>
-                      <div className=".address_bloc_new">
-                        <h6>Nouvelle adresse</h6>
-                      </div>
-                      <div className="plus_box">
-                        <i className="fa fa-plus"></i>
-                      </div>
-                    </div>
-                  </div>
+                  }
                 </div>
                 <div className="place_delivery_choice">
                   <h2>Obtenir votre commande</h2> 
@@ -414,6 +510,7 @@ class StepperComponent extends React.Component {
                     className={`delivery_method standard_delivery ${standard ? 'active' : null }`}
                     onClick={ this.handleChangeDelivery.bind(this) }
                   >
+                    {/* Calculate Opens days without weekends */}
                     <h6>D'ici Samedi 25 Juillet </h6>
                     <p>
                       <i className="fas fa-truck" style={{ marginRight: 10 }}></i>
@@ -428,6 +525,7 @@ class StepperComponent extends React.Component {
                     className={`delivery_method fast_delivery ${express ? 'active' : null }`}
                     onClick={ this.handleChangeDelivery.bind(this) }
                   >
+                    {/* Calculate Opens days without weekends */}
                     <h6>D'ici Samedi 25 Juillet </h6>
                     <p>
                       <i className="fas fa-shipping-fast" style={{ marginRight: 10 }}></i>
@@ -447,14 +545,14 @@ class StepperComponent extends React.Component {
                         control={<Checkbox checked={same_info} color="default" onChange={this.handleChange} name="same_info" />}
                         label={"Mes informations de livraison et de facturation sont les mêmes."}
                       />
-                      <FormControlLabel
+                      {/* <FormControlLabel
                         control={<Checkbox checked={major} color="default" onChange={this.handleChange} name="major" />}
                         label={"J'ai plus de 16 ans Pourquoi est-ce important?"}
                       />
                       <FormControlLabel
                         control={<Checkbox checked={newsletter} color="default" onChange={this.handleChange} name="newsletter" />}
                         label={"Je communique mes coordonnées afin qu'adidas m'informe des produits et services de Afro qui peuvent me correspondre. Je sais que je peux demander à adidas de cesser toute communication avec moi à tout moment. J'accepte de recevoir des messages personnalisés de marketing via le courrier électronique de la part des Responsables de traitements (« Afro Yaca »). COMMENT?"}
-                      />
+                      /> */}
                     </FormGroup>
                   </FormControl>
                 </div>
@@ -602,8 +700,32 @@ class StepperComponent extends React.Component {
 
     value["address_precision"] = this.state.address_precision.value
     value["country"] = this.state.country.value
+    
 
-    console.log("FORM VALUE THERE::", value)
+    const user = getUser() 
+    const profile = user.userprofile.id
+    value["profile"] = profile
+
+    const service = "contact/add"
+    const formUrl = `${appConfig.FORMBASEURL}${service}`
+    this.postToApi(formUrl, value)
+  }
+
+
+  postToApi(form_base_url, data, next=null){
+    window
+    .axios.post(`${form_base_url}`, data)
+      .then(() => {
+        this._fetchContacts()
+        this.handleSetDialogClose()
+        if(next){
+          next()
+        }
+      })
+      .catch((error) =>{
+          console.error(error);
+        }
+      )
   }
 
 
@@ -691,6 +813,7 @@ class StepperComponent extends React.Component {
                   { !_.isEmpty(cart.cart_items) ? 
                     cart.cart_items
                       .map((val, key) => {
+                        
                         return (
                           <div className="row product-row" key={key}>
                             <div className="col-sm-6 command-picture-box">
@@ -728,19 +851,44 @@ class StepperComponent extends React.Component {
         <div className="card" style={{ marginTop: 20, marginBottom: 20 }}>
           <div style={{ padding: 20, textAlign: "center" }}>
             <Button
-              disabled={activeStep === 1}
+              disabled={activeStep === 1 || activeStep === 3 }
               onClick={this.handleBack}
             >
               Retour
             </Button>
             &nbsp;
             &nbsp;
-            <Button
-              variant="contained"
-              onClick={activeStep === steps.length - 1 ? this._handleHomePage : this.handleNext}
-            >
-              {activeStep === steps.length - 1 ? "Continuer achats" : "Suivant"}
-            </Button>
+            
+            {
+              activeStep == '1' && 
+                <Button
+                  variant="contained"
+                  onClick={this.handleNext}
+                >
+                  {"Suivant"}
+                </Button>
+            }
+            
+            {
+              activeStep == '2' && 
+                <Button
+                  variant="contained"
+                  onClick={this._handleProcessOrder.bind(this)}
+                >
+                  {"Procéder au paiement"}
+                </Button>
+              
+            }
+
+            {
+              activeStep == '3' && 
+                <Button
+                  variant="contained"
+                  onClick={this._handleAchieveOrder.bind(this)}
+                >
+                  {"Continuer achats"}
+                </Button>
+            }
           </div>
         </div>
         

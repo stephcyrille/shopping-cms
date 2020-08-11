@@ -53,6 +53,7 @@ class Step3 extends React.Component {
 
   render() {
     const { expandIconPosition } = this.state;
+    const { box_value } = this.props.step3CStore
 
     
     return (
@@ -70,7 +71,7 @@ class Step3 extends React.Component {
             </span> 
           </p> 
         </div> 
-        <RadioGroup aria-label="payment" name="payment" onChange={ this._handleCheckBoxChange.bind(this) }>
+        <RadioGroup aria-label="payment" name="payment" onChange={ this._handleCheckBoxChange.bind(this) } defaultValue={box_value}>
           <Collapse
             defaultActiveKey={['1']}
             expandIconPosition={expandIconPosition}

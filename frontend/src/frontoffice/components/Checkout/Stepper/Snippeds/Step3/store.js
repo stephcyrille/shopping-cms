@@ -2,7 +2,7 @@ import { createAction, createReducer } from "redux-act";
 
 const initialState = {
 	initial_values:{},
-    box_value: 'pay_to_go',
+	box_value: 'pay_to_go',
 };
 
 const actions = { name: "step3CStoreActions" };

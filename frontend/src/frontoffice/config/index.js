@@ -6,6 +6,7 @@ const appConfig = {
     SINGUP: 'auth/registration/',
     LISTSBASEURL: 'apis/core/frontoffice/lists/',
     SINGLEBASEURL: 'apis/core/frontoffice/single/',
+    FORMBASEURL: 'apis/core/frontoffice/forms/',
 
     EXPRESSDELIVERYCOST: 5000,
   }

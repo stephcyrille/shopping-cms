@@ -17,6 +17,15 @@
     cursor: pointer;
 }
 
+.address_bloc:hover{
+    border: 1px solid black;
+    cursor: pointer;
+}
+.address_bloc.active{
+    border: 1px solid black;
+    cursor: pointer;
+}
+
 .plus_box i:hover{
     cursor: pointer;
     font-weight: bolder;
