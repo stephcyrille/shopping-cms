@@ -93,6 +93,7 @@ function Row(props) {
                   <TableRow>
                     <TableCell>Ref.</TableCell>
                     <TableCell>Nom du produit</TableCell>
+                    <TableCell align="right">P.U</TableCell>
                     <TableCell align="right">Quantité</TableCell>
                     <TableCell align="right">Prix total (FCFA)</TableCell>
                   </TableRow>
