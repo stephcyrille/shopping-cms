@@ -16,6 +16,7 @@ import { allProductsCStore } from '../components/AllProducts/store'
 import { cartCStore } from '../components/Cart/store'
 import { editorialCStore } from '../components/Editorial/store'
 import { checkoutCStore } from '../components/Checkout/store'
+import { orderCStore } from '../components/Order/store'
 import { stepperCStore } from '../components/Checkout/Stepper/store'
 import { step3CStore } from '../components/Checkout/Stepper/Snippeds/Step3/store'
 import { registrationCStore } from '../components/Auth/Registration/store'
@@ -43,6 +44,7 @@ const cstore = history =>
     step3CStore: step3CStore,
     registrationCStore: registrationCStore,
     megaMenuCStore: megaMenuCStore,
+    orderCStore: orderCStore,
   });
 
 export default function configureStore(preloadedState) {

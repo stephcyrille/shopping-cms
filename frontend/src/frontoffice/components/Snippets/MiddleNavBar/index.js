@@ -225,7 +225,13 @@ class MiddleNavbar extends React.Component {
                         </div> 
                       )
                     :
-                      <a href={`${urls.LOGIN}`}><i className="fa fa-sign-in-alt fa-2x"></i> </a>
+                      <a href={`${urls.LOGIN}`}>
+                        <img 
+                          src="/static/images/icons/login.png" 
+                          alt="Icon login" 
+                          style={{ width: 30, marginBottom: 15 }}
+                        /> 
+                      </a>
                     }
                   </li>
                 </ul>

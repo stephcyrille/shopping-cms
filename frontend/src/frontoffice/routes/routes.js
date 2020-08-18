@@ -20,6 +20,7 @@ import NotFound from "app-js/frontoffice/components/404"
 import AllProducts from "app-js/frontoffice/components/AllProducts"
 import Editorial from "app-js/frontoffice/components/Editorial"
 import Service from "app-js/frontoffice/components/Services"
+import MyOrder from "app-js/frontoffice/components/Order"
 
 
 @withRouter
@@ -37,6 +38,7 @@ class Routes extends Component {
         <Route path={urls.REGISTRATION} component={RegistrationPage} />
         <Route path={urls.LOGIN} component={LoginPage} />
         <Route path={urls.SERVICE} component={Service} />
+        <Route path={urls.ORDERS} component={MyOrder} />
 
         <Route path={urls.NEWS_PRODUCTS} component={AllProducts} />
         <Route path={urls.DESIGNER} component={AllProducts} />
