@@ -10,15 +10,16 @@ import {
 import urls from "./urls";
 
 
-import Home from "app-js/frontoffice/components/Home/index.js";
-import SingleProduct from "app-js/frontoffice/components/SingleProduct/index.js";
-import Cart from "app-js/frontoffice/components/Cart/index.js";
-import Checkout from "app-js/frontoffice/components/Checkout/index.js";
-import LoginPage from "app-js/frontoffice/components/Auth/Login/index.js";
-import RegistrationPage from "app-js/frontoffice/components/Auth/Registration/index";
-import NotFound from "app-js/frontoffice/components/404/index"
-import AllProducts from "app-js/frontoffice/components/AllProducts/index"
-import Editorial from "app-js/frontoffice/components/Editorial/index"
+import Home from "app-js/frontoffice/components/Home";
+import SingleProduct from "app-js/frontoffice/components/SingleProduct";
+import Cart from "app-js/frontoffice/components/Cart";
+import Checkout from "app-js/frontoffice/components/Checkout";
+import LoginPage from "app-js/frontoffice/components/Auth/Login";
+import RegistrationPage from "app-js/frontoffice/components/Auth/Registration";
+import NotFound from "app-js/frontoffice/components/404"
+import AllProducts from "app-js/frontoffice/components/AllProducts"
+import Editorial from "app-js/frontoffice/components/Editorial"
+import Service from "app-js/frontoffice/components/Services"
 
 
 @withRouter
@@ -35,6 +36,7 @@ class Routes extends Component {
         <Route path={urls.CHECKOUT} component={Checkout} />
         <Route path={urls.REGISTRATION} component={RegistrationPage} />
         <Route path={urls.LOGIN} component={LoginPage} />
+        <Route path={urls.SERVICE} component={Service} />
 
         <Route path={urls.NEWS_PRODUCTS} component={AllProducts} />
         <Route path={urls.DESIGNER} component={AllProducts} />
@@ -48,7 +50,6 @@ class Routes extends Component {
         <Route path={urls.TO_WARE} component={AllProducts} />
 
         <Route path={urls.ALL_PRODUCT} component={AllProducts} />
-        <Route path={urls.SERVICE} component={NotFound} />
         <Route path={urls.NOTFOUND} component={NotFound} />
         <Redirect to={urls.NOTFOUND} />
       </Switch>
