@@ -201,13 +201,19 @@ class MiddleNavbar extends React.Component {
                               className="user_middle_nav_li" 
                               style={{ borderBottom: "1px solid lightgrey", paddingBottom: 10 }}
                             >
-                              <a href="">Mes commandes</a>
+                              <a href={`${urls.ORDERS}`}>Mes commandes</a>
                             </li>
                             <li 
                               className="user_middle_nav_li"
                               style={{ paddingTop: 10, paddingBottom: 10, borderBottom: "1px solid lightgrey" }}
                             >
-                              <a href="">Préférences</a>
+                              <a href={`${urls.MYBOX}`}>Ma Box</a>
+                            </li>
+                            <li 
+                              className="user_middle_nav_li"
+                              style={{ paddingTop: 10, paddingBottom: 10, borderBottom: "1px solid lightgrey" }}
+                            >
+                              <a href="#">Préférences</a>
                             </li>
                             <li 
                               className="user_middle_nav_li"

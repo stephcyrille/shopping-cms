@@ -15,6 +15,9 @@ const urls = {
   LINGERIE: "/shop/catalog/lingerie",
   BEAUTY: "/shop/catalog/lingerie",
   TO_WARE: "/shop/catalog/what-to-ware",
+
+  ORDERS: "/shop/my-orders",
+  MYBOX: "/shop/my-box",
   
   SINGLE_PRODUCT: "/shop/products/:slug", // We will change this url like that /category/product-name or /collection/product-name
   CART: "/shop/sopping-cart",
