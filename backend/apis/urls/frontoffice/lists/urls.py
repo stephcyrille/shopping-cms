@@ -12,4 +12,5 @@ urlpatterns = [
     path('products/flash_sale', ProductFlashSaleAPIView.as_view(), name='front_office_product_flash_sale'),
     path('categories', HomeCategoryAPIView.as_view(), name='front_office_category_list'),
     path('contacts', ContactListAPIView.as_view(), name='front_office_contact_list'),
+    path('orders', ContactListAPIView.as_view(), name='front_office_orders_list'),
 ]
