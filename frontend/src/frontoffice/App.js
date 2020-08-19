@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import Routes from "./routes/routes";
 
-import { clearUser, initAxios } from "./utils/auth_utils";
+import { clearUser, initAxios, getUser } from "./utils/auth_utils";
 import { getSession, saveSession, sessionExpired, clearSession, saveCartSession } from "./utils/session_utils";
 
 // import "url"
@@ -42,8 +42,9 @@ class App extends Component {
     window.axios
     .post(`/apis/core/session/create`, {})
     .then(response => {
-
+      // var user = getUser()
       var session = {
+        id: response.data.id,
         uuid: response.data.uuid,
         start_at: response.data.created_date,
         expire_at: response.data.expiration_date,

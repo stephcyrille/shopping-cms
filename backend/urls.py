@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from core_session.apis import CoreSessionAPIView, GetSessionCartAPIView
+from core_session.apis import CoreSessionAPIView, GetSessionCartAPIView, EditCoreSessionAPIView
 from .apis.frontoffice import CategoryAPIView, ProductsAPIView, ProductSingleAPIView, \
     CartAPIView, DeleteCartItemAPIView, GroupAPIView, GroupSingleAPIView
 from .apis.frontoffice.forms import AddCartItemAPIView
@@ -11,6 +11,7 @@ urlpatterns = [
 
     # TODO Redefine all these route with the new synthax
     path('core/session/create', CoreSessionAPIView.as_view(), name='create_session'),
+    path('core/session/update', EditCoreSessionAPIView.as_view(), name='update_session'),
     path('core/session/carts/update/<int:id>/', GetSessionCartAPIView.as_view(), name='update_session_cart'),
 
     path('categories/', CategoryAPIView.as_view(), name='categories'),

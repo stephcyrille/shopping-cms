@@ -15,7 +15,7 @@ import _ from "underscore";
 import { stepperCStoreActions } from './store'
 import Step3 from './Snippeds/Step3/index'
 import './style.local.css';
-import { getSession } from '../../../utils/session_utils'
+import { getSession, clearCartSession, saveSession } from '../../../utils/session_utils'
 import { getUser } from '../../../utils/auth_utils'
 import appConfig from '../../../config'
 import urls from '../../../routes/urls'
@@ -356,8 +356,10 @@ class StepperComponent extends React.Component {
   _handleProcessOrder(){
     const { cart_sub_total, cart_delivery_price, cart_total } = this.props.stepperCStore;
     const { box_value } = this.props.step3CStore
+    const user = getUser()
 
     const values = {
+      user: user ? user.userprofile.id : null,
       express_delivery: this.state.express,
       // ID of selected contact
       contact: this.state.selected_contact,
@@ -365,7 +367,8 @@ class StepperComponent extends React.Component {
       payment_method: box_value, 
       sub_total: cart_sub_total, 
       delivery_fees: cart_delivery_price, 
-      final_total: cart_total
+      final_total: cart_total,
+      status: "initialized",
     }
 
     console.log("VALUES TO PROCESS PAYMENT======", values)
@@ -719,6 +722,9 @@ class StepperComponent extends React.Component {
         this._fetchContacts()
         this.handleSetDialogClose()
         if(next){
+          var session_id = getSession().id
+          console.log("SESSION ID=========", session_id)
+          this.updateSession(session_id)
           next()
         }
       })
@@ -726,6 +732,25 @@ class StepperComponent extends React.Component {
           console.error(error);
         }
       )
+  }
+
+  updateSession(session_id){
+    window.axios
+    .post(`/apis/core/session/update`, {session_id})
+    .then(response => {
+      var session = {
+        id: response.data.id,
+        uuid: response.data.uuid,
+        start_at: response.data.created_date,
+        expire_at: response.data.expiration_date,
+        user_id: response.data.profile,
+        cart_id: response.data.cart,
+      }
+      console.log('Session response-------', session),
+      clearCartSession()
+      saveSession(JSON.stringify(session))
+      
+    })
   }
 
 

@@ -286,18 +286,19 @@ class Contact(CoreTrackedModel):
     def __str__(self):
         return "Contact: %s %s" % (self.profile.first_name, self.profile.last_name)
 
-#
-# class Order(CoreTrackedModel):
-#     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True, blank=True)
-#     contact = models.ForeignKey(Contact, on_delete=models.CASCADE, null=True, blank=True)
-#     # Pending, delivered, canceled
-#     status = models.CharField(max_length=200)
-#     sub_total = models.IntegerField()
-#     tax_total = models.IntegerField(default=0)
-#     delivery_fees = models.IntegerField(default=0)
-#     final_total = models.IntegerField(default=0)
-#     payment_method = models.CharField(max_length=200)
-#     express_delivery = models.BooleanField(default=False)
-#
-#     def __str__(self):
-#         return "Order: %s" % self.id
+
+class Order(CoreTrackedModel):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, blank=True)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True, blank=True)
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE, null=True, blank=True)
+    # initialized, Pending, delivered, canceled
+    status = models.CharField(max_length=200)
+    sub_total = models.IntegerField()
+    tax_total = models.IntegerField(default=0)
+    delivery_fees = models.IntegerField(default=0)
+    final_total = models.IntegerField(default=0)
+    payment_method = models.CharField(max_length=200)
+    express_delivery = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "Order: %s" % self.id
