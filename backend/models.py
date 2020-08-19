@@ -299,6 +299,7 @@ class Order(CoreTrackedModel):
     final_total = models.IntegerField(default=0)
     payment_method = models.CharField(max_length=200)
     express_delivery = models.BooleanField(default=False)
+    delivery_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return "Order: %s" % self.id
