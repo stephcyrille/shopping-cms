@@ -30,22 +30,6 @@ import './style.local.css';
 
 
 
-function createData(name, calories, fat, carbs, protein, price) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    products: [
-      { ref: 'P20080702750', title: 'Guess Seductive Femme 50ml', amount: 2, price: 24000 },
-      { ref: 'P20080793126', title: 'Bracelet La Guesser', amount: 4, price: 4000 },
-    ],
-  };
-}
-
-
 const useRowStyles = makeStyles({
   root: {
     '& > *': {
@@ -69,15 +53,15 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          Commande#{row.id}
         </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
+        <TableCell align="right">{row.created_date ? new Date(row.created_date).toLocaleDateString() : null}</TableCell>
+        <TableCell align="right">{row.delivery_date ? new Date(row.delivery_date).toLocaleDateString() : null}</TableCell>
+        <TableCell align="right">{row.contact}</TableCell>
         <TableCell align="right">
           <span 
-            className={`badge ${row.protein == 'livré' && 'badge-success'} ${row.protein == 'non livré' && 'badge-warning'} ${row.protein == 'annulé' && 'badge-danger'}`}>
-            {row.protein}
+            className={`badge ${row.status == 'initialized' && 'badge-primary'} ${row.status == 'delivered' && 'badge-success'} ${row.status == 'pending' && 'badge-warning'} ${row.status == 'canceled' && 'badge-danger'}`}>
+            {row.status}
           </span>
         </TableCell>
       </TableRow>
@@ -85,7 +69,7 @@ function Row(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
-              <Typography variant="h6" gutterBottom component="div">
+              <Typography variant="h6" gutterBottom component="div" style={{ paddingLeft: 20 }}>
                 Contenu de la commande
               </Typography>
               <Table size="small" aria-label="purchases">
@@ -106,9 +90,9 @@ function Row(props) {
                       </TableCell>
                       <TableCell>{productRow.title}</TableCell>
                       <TableCell align="right">{productRow.price}</TableCell>
-                      <TableCell align="right">{productRow.amount}</TableCell>
+                      <TableCell align="right">{productRow.quantity}</TableCell>
                       <TableCell align="right">
-                        {Math.round(productRow.amount * productRow.price * 100) / 100}
+                        {Math.round(productRow.quantity * productRow.price * 100) / 100}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -150,10 +134,6 @@ const useStyles = theme => ({
   },
 });
 
-const rows = [
-  createData('order#55491', '2020-02-08', '2020-07-08', 'Mobile Ominsport - Yaoundé', 'livré'),
-  createData('order#41090', '2020-15-08', '2020-22-08', 'Odza, Auberge Bleu - Yaoundé', 'non livré'),
-];
 
 
 
@@ -167,7 +147,7 @@ class Home extends React.Component {
   componentWillMount(){
     this.props.dispatch(orderCStoreActions.setLoading(true))
 
-    // this._fetchUserOrders()
+    this._fetchUserOrders()
     
     setTimeout(() => {
       this.props.dispatch(orderCStoreActions.setLoading(false))
@@ -175,14 +155,14 @@ class Home extends React.Component {
   }
 
   _fetchUserOrders(){    
-    const service = `banner/home`
-    const url = `${appConfig.SINGLEBASEURL}${service}`
+    const service = `orders`
+    const url = `${appConfig.LISTSBASEURL}${service}`
 
     window.axios
     .get(`${url}`)
     .then(response => {
-      var banner = response.data 
-      this.props.dispatch(orderCStoreActions.setHomeBanner(banner))
+      var orders = response.data 
+      this.props.dispatch(orderCStoreActions.setOrders(orders))
     })
     .catch(
       error => {
@@ -252,8 +232,8 @@ class Home extends React.Component {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows.map((row) => (
-                      <Row key={row.name} row={row} />
+                    {orders.map((row, key) => (
+                      <Row key={key} row={row} />
                     ))}
                   </TableBody>
                 </Table>
