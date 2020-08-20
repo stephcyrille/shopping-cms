@@ -25,6 +25,7 @@ import Drawer from "app-js/frontoffice/components/Snippets/Drawer/index"
 import Footer from "app-js/frontoffice/components/Snippets/Footer/index"
 
 import { orderCStoreActions } from './store'
+import { getUser } from '../../utils/auth_utils'
 import appConfig from '../../config/index'
 import './style.local.css';
 
@@ -155,7 +156,8 @@ class Home extends React.Component {
   }
 
   _fetchUserOrders(){    
-    const service = `orders`
+    const user_id = getUser() ? getUser().userprofile.id : null
+    const service = `orders?user=${user_id}`
     const url = `${appConfig.LISTSBASEURL}${service}`
 
     window.axios
