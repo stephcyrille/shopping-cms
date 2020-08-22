@@ -180,7 +180,7 @@ class Home extends React.Component {
           <Drawer />
         </div>
         
-        <section>
+        <section style={{ backgroundColor: "white" }}>
           <div className="container">
             {/* Main Banner home */}
             <HomeBanner banner={ banner } />

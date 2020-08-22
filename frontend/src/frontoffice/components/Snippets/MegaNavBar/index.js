@@ -469,8 +469,8 @@ class MegaNavbar extends React.Component {
                       <div className="row w-100 designers">
                         <div className="col-sm-3">
                           <h4 className="">Filtrer par</h4>
-                          <a title="Nouveautés" href={`/shop/${'femme'}/${'beauties'}?sort=nouveautes`} className="dropdown-item">Nouveautés</a>
-                          <a title="Meilleures ventes" href={`/shop/${'femme'}/${'beauties'}?sort=meilleures_ventes`} className="dropdown-item">Meilleures ventes</a>
+                          <a title="Nouveautés" href={`/shop/${'femme'}/${'beautes'}?sort=nouveautes`} className="dropdown-item">Nouveautés</a>
+                          <a title="Meilleures ventes" href={`/shop/${'femme'}/${'beautes'}?sort=meilleures_ventes`} className="dropdown-item">Meilleures ventes</a>
                         </div>
                         <div className="col-sm-9">
                           <div className="row">
@@ -487,7 +487,7 @@ class MegaNavbar extends React.Component {
                                     .map((val, key) => {
                                       return (
                                         <li key={key}>
-                                          <a href={`/shop/${'femme'}/${'beauties'}?sort=${val.slug}`}>
+                                          <a href={`/shop/${'femme'}/${'beautes'}?sort=${val.slug}`}>
                                             { val.title }
                                           </a>
                                         </li>

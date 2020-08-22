@@ -191,37 +191,24 @@ export default function PersistentDrawerLeft() {
               (<Collapse in={true} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItem button className={classes.nested}>
-                    <ListItemText primary="Mois" />
+                    <ListItemText>
+                      <a title="Mois" href={`/shop/${'femme'}/${'trending'}?sort=${'month'}`}  className={classes.list_link}>Mois</a>
+                    </ListItemText>
                   </ListItem>
                   <ListItem button className={classes.nested}>
-                    <ListItemText primary="Weekend" />
+                    <ListItemText>
+                      <a title="Weekend" href={`/shop/${'femme'}/${'trending'}?sort=${'weekend'}`}  className={classes.list_link}>Weekend</a>
+                    </ListItemText>
                   </ListItem>
                   <ListItem button className={classes.nested}>
-                    <ListItemText primary="Aricles été" />
+                    <ListItemText>
+                      <a title="Articles d'été" href={`/shop/${'femme'}/${'trending'}?sort=${'summer_collection'}`}  className={classes.list_link}>Articles d'été</a>
+                    </ListItemText>
                   </ListItem>
                   <ListItem button className={classes.nested}>
-                    <ListItemText primary="Meilleures ventes" />
-                  </ListItem>
-                </List>
-              </Collapse>
-              ) :
-              null
-            }
-            <ListItem 
-              button 
-              className={ `${ selectedIndex == 2 ? classes.li_active : null } ${classes.divider}` }
-              selected={selectedIndex === 2}
-              onClick={(event) => handleListItemClick(event, 2)}
-            >
-              <ListItemText primary="Designers" />
-              {selectedIndex==2 ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            {
-              selectedIndex == 2 ?
-              (<Collapse in={true} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItem button className={classes.nested}>
-                    <ListItemText primary="Meilleures ventes" />
+                    <ListItemText>
+                      <a title="Meilleures ventes" href={`/shop/${'femme'}/${'trending'}?sort=${'best_sales'}`}  className={classes.list_link}>Meilleures ventes</a>
+                    </ListItemText>
                   </ListItem>
                 </List>
               </Collapse>
@@ -242,7 +229,24 @@ export default function PersistentDrawerLeft() {
               (<Collapse in={true} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItem button className={classes.nested}>
-                    <ListItemText primary="Meilleures ventes" />
+                    <ListItemText>
+                      <a title="Mois" href={`/shop/${'femme'}/${'vetements'}?sort=${'month'}`}  className={classes.list_link}>Mois</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Weekend" href={`/shop/${'femme'}/${'vetements'}?sort=${'weekend'}`}  className={classes.list_link}>Weekend</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Articles d'été" href={`/shop/${'femme'}/${'vetements'}?sort=${'ete'}`}  className={classes.list_link}>Articles d'été</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Meilleures ventes" href={`/shop/${'femme'}/${'vetements'}?sort=${'best_sales'}`}  className={classes.list_link}>Meilleures ventes</a>
+                    </ListItemText>
                   </ListItem>
                 </List>
               </Collapse>
@@ -263,7 +267,29 @@ export default function PersistentDrawerLeft() {
               (<Collapse in={true} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItem button className={classes.nested}>
-                    <ListItemText primary="Meilleures ventes" />
+                    <ListItemText>
+                      <a title="Nouveautés" href={`/shop/${'femme'}/${'chaussures'}?sort=${'nouveautes'}`}  className={classes.list_link}>Nouveautés</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Tendence" href={`/shop/${'femme'}/${'chaussures'}?sort=${'tendances'}`}  className={classes.list_link}>Tendence</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Essentiel" href={`/shop/${'femme'}/${'chaussures'}?sort=${'essentiels'}`}  className={classes.list_link}>Essentiel</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Mariage" href={`/shop/${'femme'}/${'chaussures'}?sort=${'mariages'}`}  className={classes.list_link}>Mariage</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Meilleures ventes" href={`/shop/${'femme'}/${'chaussures'}?sort=${'meilleures_ventes'}`}  className={classes.list_link}>Meilleures ventes</a>
+                    </ListItemText>
                   </ListItem>
                 </List>
               </Collapse>
@@ -284,7 +310,24 @@ export default function PersistentDrawerLeft() {
               (<Collapse in={true} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItem button className={classes.nested}>
-                    <ListItemText primary="Meilleures ventes" />
+                    <ListItemText>
+                      <a title="Nouveautés" href={`/shop/${'femme'}/${'sacs'}?sort=${'nouveautes'}`}  className={classes.list_link}>Nouveautés</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Classiques" href={`/shop/${'femme'}/${'sacs'}?sort=${'classiques'}`}  className={classes.list_link}>Classiques</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Sacs d'été" href={`/shop/${'femme'}/${'sacs'}?sort=${'ete'}`}  className={classes.list_link}>Sacs d'été</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Meilleures ventes" href={`/shop/${'femme'}/${'sacs'}?sort=${'best_sales'}`}  className={classes.list_link}>Meilleures ventes</a>
+                    </ListItemText>
                   </ListItem>
                 </List>
               </Collapse>
@@ -305,7 +348,19 @@ export default function PersistentDrawerLeft() {
               (<Collapse in={true} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItem button className={classes.nested}>
-                    <ListItemText primary="Meilleures ventes" />
+                    <ListItemText>
+                      <a title="Nouveautés" href={`/shop/${'femme'}/${'accessoires'}?sort=${'nouveautes'}`}  className={classes.list_link}>Nouveautés</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Cartes cadeau" href={`/shop/${'femme'}/${'accessoires'}?sort=${'cartes_cadeau'}`}  className={classes.list_link}>Cartes cadeau</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Accessoire d'été" href={`/shop/${'femme'}/${'accessoires'}?sort=${'ete'}`}  className={classes.list_link}>Accessoires d'été</a>
+                    </ListItemText>
                   </ListItem>
                 </List>
               </Collapse>
@@ -326,7 +381,34 @@ export default function PersistentDrawerLeft() {
               (<Collapse in={true} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItem button className={classes.nested}>
-                    <ListItemText primary="Meilleures ventes" />
+                    <ListItemText>
+                      <a title="Nouveautés" href={`/shop/${'femme'}/${'bijoux'}?sort=${'nouveautes'}`}  className={classes.list_link}>Nouveautés</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Exclusivités" href={`/shop/${'femme'}/${'bijoux'}?sort=${'exclusivite'}`}  className={classes.list_link}>Exclusivités</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Bijoux Afro YACA" href={`/shop/${'femme'}/${'bijoux'}?sort=${'afro_yaca_drum'}`}  className={classes.list_link}>Bijoux Afro YACA</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Bijoux d'évènement" href={`/shop/${'femme'}/${'bijoux'}?sort=${'evenements'}`}  className={classes.list_link}>Bijoux d'évènement</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Bijoux du quotidien" href={`/shop/${'femme'}/${'bijoux'}?sort=${'quotidien'}`}  className={classes.list_link}>Bijoux du quotidien</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Cadeaux" href={`/shop/${'femme'}/${'bijoux'}?sort=${'cadeaux'}`}  className={classes.list_link}>Cadeaux</a>
+                    </ListItemText>
                   </ListItem>
                 </List>
               </Collapse>
@@ -339,7 +421,7 @@ export default function PersistentDrawerLeft() {
               selected={selectedIndex === 8}
               onClick={(event) => handleListItemClick(event, 8)}
             >
-              <ListItemText primary="Lingerie" />
+              <ListItemText primary="Beauté" />
               {selectedIndex==8 ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             {
@@ -347,35 +429,21 @@ export default function PersistentDrawerLeft() {
               (<Collapse in={true} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItem button className={classes.nested}>
-                    <ListItemText primary="Meilleures ventes" />
+                    <ListItemText>
+                      <a title="Nouveautés" href={`/shop/${'femme'}/${'beautes'}?sort=${'nouveautes'}`}  className={classes.list_link}>Nouveautés</a>
+                    </ListItemText>
                   </ListItem>
-                </List>
-              </Collapse>
-              ) :
-              null
-            }
-            <ListItem 
-              button 
-              className={ `${ selectedIndex == 9 ? classes.li_active : null } ${classes.divider}` }
-              selected={selectedIndex === 9}
-              onClick={(event) => handleListItemClick(event, 9)}
-            >
-              <ListItemText primary="Beauté" />
-              {selectedIndex==9 ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            {
-              selectedIndex == 9 ?
-              (<Collapse in={true} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
                   <ListItem button className={classes.nested}>
-                    <ListItemText primary="Meilleures ventes" />
+                    <ListItemText>
+                      <a title="Meilleures ventes" href={`/shop/${'femme'}/${'beautes'}?sort=${'best_sales'}`}  className={classes.list_link}>Meilleures ventes</a>
+                    </ListItemText>
                   </ListItem>
                 </List>
               </Collapse>
               ) :
               null
             }
-            <ListItem 
+            {/* <ListItem 
               button 
               className={ `${ selectedIndex == 10 ? classes.li_active : null } ${classes.divider}` }
               selected={selectedIndex === 10}
@@ -395,7 +463,17 @@ export default function PersistentDrawerLeft() {
               </Collapse>
               ) :
               null
-            }
+            } */}
+            <ListItem 
+              button 
+              className={ `${ selectedIndex == 10 ? classes.li_active : null } ${classes.divider}` }
+              selected={selectedIndex === 10}
+              onClick={(event) => handleListItemClick(event, 10)}
+            >
+              <ListItemText>
+                <a title="Magazine" href={`${urls.EDITORIAL}`} className={classes.list_link}>Magazine</a>
+              </ListItemText>
+            </ListItem>
             <ListItem 
               button 
               className={ `${ selectedIndex == 11 ? classes.li_active : null } ${classes.divider_end}` }
@@ -410,14 +488,31 @@ export default function PersistentDrawerLeft() {
               (<Collapse in={true} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItem button className={classes.nested}>
-                    <ListItemText primary="Meilleures ventes" />
+                    <ListItemText>
+                      <a title="Mois" href={`/shop/${'femme'}/${'trending'}?sort=${'month'}`}  className={classes.list_link}>Mois</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Weekend" href={`/shop/${'femme'}/${'trending'}?sort=${'weekend'}`}  className={classes.list_link}>Weekend</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Articles d'été" href={`/shop/${'femme'}/${'trending'}?sort=${'summer_collection'}`}  className={classes.list_link}>Articles d'été</a>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText>
+                      <a title="Meilleures ventes" href={`/shop/${'femme'}/${'trending'}?sort=${'best_sales'}`}  className={classes.list_link}>Meilleures ventes</a>
+                    </ListItemText>
                   </ListItem>
                 </List>
               </Collapse>
               ) :
               null
             }
-            <ListItem 
+            {/* <ListItem 
               button 
               className={ `${ selectedIndex == 12 ? classes.li_active : null } ${classes.divider_end}` }
               selected={selectedIndex === 12}
@@ -439,8 +534,18 @@ export default function PersistentDrawerLeft() {
                 </List>
               </Collapse>
               ) :
-              null
-            }
+              null 
+            }*/}
+            <ListItem 
+              button 
+              className={ `${ selectedIndex == 12 ? classes.li_active : null } ${classes.divider}` }
+              selected={selectedIndex === 12}
+              onClick={(event) => handleListItemClick(event, 12)}
+            >
+              <ListItemText>
+                <a title="Oh! My Box" href={`${urls.SERVICE}`} className={classes.list_link}>Oh! My Box</a>
+              </ListItemText>
+            </ListItem>
         </List>
       </Drawer>
     </div>
