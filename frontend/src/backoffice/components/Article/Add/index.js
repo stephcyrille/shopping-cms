@@ -902,7 +902,7 @@ class AddArticle extends React.Component {
                       </div>
                   }
                 </div>
-                <div className="col-4" style={{ paddingLeft: 15 }}>
+                <div className="col-5" style={{ paddingLeft: 15 }}>
                   <label style={{ paddingLeft: 15, marginBottom: 0,  fontSize: "1.3em" }}>Photo de l'article*</label>
                   {
                     this.state.articleImage.value ? 
