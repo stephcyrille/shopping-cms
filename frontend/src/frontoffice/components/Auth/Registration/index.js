@@ -127,7 +127,7 @@ class RegistrationPage extends React.Component {
     window.axios
     .post(`${url}`, params )
     .then(response => {
-      console.log("SIGNUP DATA", response.data)
+      window.location.href = `${urls.REGISTRATIONSUCCESS}`
     })
     .catch(
       error => {
