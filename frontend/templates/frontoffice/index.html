@@ -58,8 +58,8 @@
       $('[data-toggle="tooltip"]').tooltip()
     })
   </script>
-  {% comment %} {% render_bundle 'frontoffice' 'js' %} {% endcomment %}
+  {% render_bundle 'frontoffice' 'js' %}
 
-  <script type="text/javascript" src="/static/dist/production/front.js"></script> 
+  {% comment %} <script type="text/javascript" src="/static/dist/production/front.js"></script>{% endcomment %}
 
 </html>

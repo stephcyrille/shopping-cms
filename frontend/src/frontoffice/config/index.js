@@ -1,4 +1,5 @@
 const appConfig = {
+    APPNAME: "Afro Yaca Drum",
     BASE_URL: 'localhost',
     BASE_PORT: 8000,
     LOGIN: 'auth/login/',

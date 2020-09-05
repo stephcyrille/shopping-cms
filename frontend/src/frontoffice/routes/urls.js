@@ -3,6 +3,7 @@ const urls = {
   HOME: "/shop",
   LOGIN: "/shop/login",
   REGISTRATION: "/shop/registration",
+  REGISTRATIONSUCCESS: "/shop/registration-success",
   NOTFOUND: "/shop/404",
   
   // EACH CATALOG GROUO CORRESPOND OF BACKEND GROUP

@@ -16,6 +16,7 @@ import Cart from "app-js/frontoffice/components/Cart";
 import Checkout from "app-js/frontoffice/components/Checkout";
 import LoginPage from "app-js/frontoffice/components/Auth/Login";
 import RegistrationPage from "app-js/frontoffice/components/Auth/Registration";
+import RegistrationSucces from "app-js/frontoffice/components/Auth/Registration/Success";
 import NotFound from "app-js/frontoffice/components/404"
 import AllProducts from "app-js/frontoffice/components/AllProducts"
 import Editorial from "app-js/frontoffice/components/Editorial"
@@ -36,6 +37,7 @@ class Routes extends Component {
         <Route path={urls.CART} component={Cart} />
         <Route path={urls.CHECKOUT} component={Checkout} />
         <Route path={urls.REGISTRATION} component={RegistrationPage} />
+        <Route path={urls.REGISTRATIONSUCCESS} component={RegistrationSucces} />
         <Route path={urls.LOGIN} component={LoginPage} />
         <Route path={urls.SERVICE} component={Service} />
         <Route path={urls.ORDERS} component={MyOrder} />
