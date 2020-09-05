@@ -303,3 +303,19 @@ class Order(CoreTrackedModel):
 
     def __str__(self):
         return "Order: %s" % self.id
+
+
+class Operation(CoreTrackedModel):
+    trans_ref = models.CharField(max_length=50)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, blank=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True)
+    # initialized, Success, Pending, Failed
+    status = models.CharField(max_length=200)
+    amount = models.IntegerField()
+    buyer_account = models.CharField(max_length=50)
+    seller_account = models.CharField(max_length=50)
+    vendor = models.CharField(max_length=100)
+    trans_date = models.DateTimeField()
+
+    def __str__(self):
+        return "Operation: %s" % self.trans_ref
