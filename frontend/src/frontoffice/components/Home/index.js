@@ -192,7 +192,7 @@ class Home extends React.Component {
                   <a href="#" className='home-cover-wrapper'> 
                     <div
                       style={{  
-                        backgroundImage: `url(${cover ? cover.coverImage : null})`, 
+                        backgroundImage: `url(${cover ? `${cover.coverImage}` : null})`, 
                         width: '100%', 
                         height: "100%", 
                         backgroundSize: 'contain',
@@ -205,7 +205,7 @@ class Home extends React.Component {
 
                 {/* Next magazine cover row (two pics with legend) */}
                 <h5 className='latest-articles-title'>Les nouveautés</h5>
-              <div className="row latest-row" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
+                <div className="row latest-row" style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
                   { !_.isEmpty(feature_products) ? 
                     this.randomizeArray(feature_products).slice(0,2)
                       .map((val, key) => {

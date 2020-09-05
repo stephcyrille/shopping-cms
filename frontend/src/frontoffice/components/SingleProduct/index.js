@@ -271,7 +271,7 @@ class SingleProduct extends React.Component {
           <Drawer />
         </div>
         
-        <div className="container single-product">
+        <div className="container single-product" style={{ backgroundColor: "white" }}>
           <div className="row">
           <div className="col-xs-12 col-sm-12">
             {
