@@ -3,11 +3,15 @@
 """
 
 from django.contrib import admin
+from django.conf.urls import url
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic import RedirectView
+
 
 urlpatterns = [
+    url(r'^$', RedirectView.as_view(url='shop/', permanent=True)),
     path('admin/', admin.site.urls),
     path('apis/', include('backend.urls')),
     path('auth/', include('rest_auth.urls')),
