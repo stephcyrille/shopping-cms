@@ -187,11 +187,11 @@ class StepperComponent extends React.Component {
     if(user){
       this.setState({
         name: {
-          value: user.userprofile.first_name,
+          value: user.userprofile ? user.userprofile.first_name : "",
           error: false
         },
         surname: {
-          value: user.userprofile.last_name,
+          value: user.userprofile ? user.userprofile.last_name : "",
           error: false
         }
       })
@@ -272,7 +272,7 @@ class StepperComponent extends React.Component {
     })
   }
 
-  handleChangeAddress(e){    
+  handleChangeFormAddress(e){    
     this.setState({
       address: {
         value: e.target.value,
@@ -917,7 +917,7 @@ class StepperComponent extends React.Component {
           </div>
         </div>
         
-        <Dialog title={(<h4 style={{ textTransform: "uppercase", textAlign: "center" }}>Ajouter une adresse</h4>)} isOpen={ this.state.dialogOpen } onClose={ this.handleSetDialogClose.bind(this) }>
+        <Dialog title={(<span style={{ textTransform: "uppercase", textAlign: "center" }}>Ajouter une adresse</span>)} isOpen={ this.state.dialogOpen } onClose={ this.handleSetDialogClose.bind(this) }>
           <Paper style={{ padding: '2em' }}>
             <form className="" onSubmit={ this.handleOnSubmit.bind(this) }> 
               <div className="row" style={{ marginLeft: 0, marginRight: 0}}> 
@@ -954,7 +954,7 @@ class StepperComponent extends React.Component {
                     variant="outlined"
                     value={ this.state.address.value } 
                     error={ this.state.address.error && this.state.address.error }
-                    onChange={ this.handleChangeAddress.bind(this) } 
+                    onChange={ this.handleChangeFormAddress.bind(this) } 
                     label="Adresse" 
                     name="address"
                     helperText={ this.state.address.error ? this.state.address.errorMessage : null }

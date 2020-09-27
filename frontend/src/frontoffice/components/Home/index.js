@@ -215,10 +215,10 @@ class Home extends React.Component {
                               <div
                                   style={{  
                                     backgroundImage: `url(${val.pictures[0]})`, 
-                                    width: '100%', 
-                                    height: 400, 
                                     backgroundSize: 'cover'
-                                  }}>
+                                  }}
+                                  class="home_news_pic_block"
+                                  >
                                 </div>
                                 <div className="latest-legend display-4">
                                   <h4 className='display-4'>{val.title}</h4>
