@@ -30,7 +30,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
     "antd": "^4.0.4",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "clx": "^1.0.0",
     "connected-react-router": "^6.8.0",
     "css-loader": "^3.4.2",
