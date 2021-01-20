@@ -9,8 +9,9 @@ pipeline {
       }
     }
      
-    stage('Build') {
+    stage('Build React') {
       steps {
+        sh 'cd frontend/'
         sh 'npm install'
         sh 'npm run buildfront'
         sh 'npm run buildback'
