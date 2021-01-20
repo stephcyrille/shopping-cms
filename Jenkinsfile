@@ -9,10 +9,26 @@ pipeline {
       }
     }
     
-    stage('Build React') {
+    stage('Install React dependencies') {
       steps {
         sh """
-              cd frontend/ && npm install && npm run buildfront && npm run buildback
+              cd frontend/ && npm install
+         """
+      }
+    }
+    
+    stage('Build React: Public App') {
+      steps {
+        sh """
+              cd frontend/ && npm run buildfront && npm run buildback
+         """
+      }
+    }
+    
+    stage('Build React: DashBoard App') {
+      steps {
+        sh """
+              cd frontend/ && npm run buildback
          """
       }
     }  
