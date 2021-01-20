@@ -12,7 +12,7 @@ pipeline {
     stage('Build React') {
       steps {
         sh """
-              cd frontend/ && npm install frontend/
+              cd frontend/ && npm install
               cd frontend/ && npm run buildfront 
               cd frontend/ && npm run buildback
          """
