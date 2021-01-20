@@ -13,8 +13,8 @@ pipeline {
       steps {
         sh """
               cd frontend/ && npm install
-              cd frontend/ && npm run buildfront 
-              cd frontend/ && npm run buildback
+              npm run buildfront 
+              npm run buildback
          """
       }
     }  
