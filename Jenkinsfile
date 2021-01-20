@@ -11,9 +11,11 @@ pipeline {
     
     stage('Build React') {
       steps {
-        sh 'cd frontend/ && npm install frontend/'
-        sh 'cd frontend/ && npm run buildfront '
-        sh 'cd frontend/ && npm run buildback'
+        sh """
+              cd frontend/ && npm install frontend/
+              cd frontend/ && npm run buildfront 
+              cd frontend/ && npm run buildback
+         """
       }
     }  
   }
