@@ -9,6 +9,14 @@ pipeline {
       }
     }
     
+    stage('Test python') {
+      steps {
+        sh """
+            python manage.py test  
+         """
+      }
+    }
+    
     stage('Install React dependencies') {
       steps {
         sh """
@@ -20,7 +28,7 @@ pipeline {
     stage('Build React: Public App') {
       steps {
         sh """
-              cd frontend/ && npm run buildfront && npm run buildback
+              cd frontend/ && npm run buildfront
          """
       }
     }
