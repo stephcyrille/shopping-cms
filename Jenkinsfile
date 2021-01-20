@@ -1,14 +1,22 @@
 pipeline {
   agent any
+    
+  tools {nodejs "node"}
+    
   stages {
-    stage('Builf Frontend') {
-      agent any
+        
+    stage('Git') {
       steps {
-        sh 'cd frontend/'
+        git 'https://github.com/stephcyrille/shopping-cms'
+      }
+    }
+     
+    stage('Build') {
+      steps {
+        sh 'npm install'
         sh 'npm run buildfront'
         sh 'npm run buildback'
       }
-    }
-
+    }  
   }
 }
