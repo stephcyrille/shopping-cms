@@ -1,8 +1,6 @@
 pipeline {
   agent any
-    
-  tools {nodejs "node"}
-    
+        
   stages {
         
     stage('Git') {
@@ -10,13 +8,38 @@ pipeline {
         git 'https://github.com/stephcyrille/shopping-cms'
       }
     }
-     
-    stage('Build') {
+    
+    stage('Test python') {
       steps {
-        sh 'npm install'
-        sh 'npm run buildfront'
-        sh 'npm run buildback'
+        sh """
+            python manage.py test
+         """
+      }
+    }
+    
+    stage('Install React dependencies') {
+      steps {
+        sh """
+              cd frontend/ && npm install
+         """
+      }
+    }
+    
+    stage('Build React: Public App') {
+      steps {
+        sh """
+              cd frontend/ && npm run buildfront
+         """
+      }
+    }
+    
+    stage('Build React: DashBoard App') {
+      steps {
+        sh """
+              cd frontend/ && npm run buildback
+         """
       }
     }  
+    
   }
 }
