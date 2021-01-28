@@ -6,7 +6,7 @@ from .apis.frontoffice import CategoryAPIView, ProductsAPIView, ProductSingleAPI
 from .apis.frontoffice.forms import AddCartItemAPIView
 
 urlpatterns = [
-    #path('core/backoffice/', include('backend.apis.urls.backoffice.urls')),
+    path('core/backoffice/', include('backend.apis.urls.backoffice.urls')),
     path('core/frontoffice/', include('backend.apis.urls.frontoffice.urls')),
 
     # TODO Redefine all these route with the new synthax
