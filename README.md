@@ -25,3 +25,5 @@ set of tools that get you there.
 
 Please visit [mascintelligence.pythonanywhere.org/documentation](https://www.mascintelligence.pythonanywhere.org/documentation/) for the online documentation
 of the project.
+
+Thank you for seeing
