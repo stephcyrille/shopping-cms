@@ -30,7 +30,7 @@ djangorestframework-oauth==1.1.0
 docutils==0.15.2
 idna==2.8
 imagesize==1.1.0
-ipython==7.9.0
+ipython==7.16.3
 ipython-genutils==0.2.0
 jedi==0.16.0
 Jinja2==2.10.1
